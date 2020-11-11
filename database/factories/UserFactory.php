@@ -18,11 +18,26 @@ use Illuminate\Support\Str;
 */
 
 $factory->define(User::class, function (Faker $faker) {
+    $phones = ['300', '301', '310', '311', '312', '313', '314', '315', '316', '317', '318', '320'];
+    $gender = (mt_rand(0, 1)  == 1) ? 'male' : 'female';
+    $name = $faker->name($gender);
+    $lastname = $faker->lastName;
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'email_verified_at' => now(),
-        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        'remember_token' => Str::random(10),
+        'name' => $name,
+        'document_id' => function () {
+            return factory(App\Models\Document::class)->create()->id;
+        },
+        'lastname' => $lastname,
+        'birthday' => $faker->date('Y-m-d', 'now -18 years'),
+        'phone' => $phones[mt_rand(0, sizeof($phones) - 1)] . strval($faker->unique()->randomNumber(7)),
+        'email' => $faker->unique()->freeEmail,
+        'password' => bcrypt('1234'),
+    ];
+});
+
+$factory->define(App\Models\Document::class, function (Faker $faker) {
+    return [
+        'document' => $faker->randomNumber(9),
+        'document_type_id' => 1
     ];
 });
