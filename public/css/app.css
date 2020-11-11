@@ -15511,3 +15511,27 @@ a.text-dark:focus {
   }
 }
 
+.myjumbotron {
+  background-color: #318118;
+  color: white;
+}
+
+.bg-sgsst {
+  background-color: #318118;
+  color: white;
+}
+
+.content-body {
+  min-height: calc(100vh);
+}
+
+.btn-login {
+  background-color: #318118;
+  color: white;
+}
+
+.btn-login:hover {
+  background-color: #266812;
+  color: white;
+}
+
