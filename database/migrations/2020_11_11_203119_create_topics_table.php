@@ -16,7 +16,7 @@ class CreateTopicsTable extends Migration
         Schema::create('topics', function (Blueprint $table) {
             $table->unsignedSmallInteger('id', true);
             $table->unsignedBigInteger('user_id');
-            $table->string('title', 80);
+            $table->string('title', 80)->unique('unique_title_users');
             $table->text('info');
             $table->timestamps();
             $table->engine = 'InnoDB';

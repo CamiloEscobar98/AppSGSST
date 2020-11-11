@@ -18,7 +18,7 @@ class CreateCapsulesTable extends Migration
             $table->unsignedSmallInteger('topic_id');
             $table->string('title', 80);
             $table->text('info');
-            $table->string('video');
+            $table->string('video')->unique('fk_video_capsules');
             $table->timestamps();
             $table->engine = 'InnoDB';
         });

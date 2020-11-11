@@ -15,7 +15,7 @@ class CreateRolesTable extends Migration
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->unsignedTinyInteger('id', true)->comment('Identificador del Rol');
-            $table->string('name', 50)->comment('Nombre del rol');
+            $table->string('name', 50)->comment('Nombre del rol')->unique('unique_roles');
             $table->timestamps();
             $table->engine = 'InnoDB';
         });
