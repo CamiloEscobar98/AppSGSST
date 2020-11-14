@@ -1,6 +1,9 @@
 <form action="{{ route('user.update') }}" method="post">
     @csrf
-    @method('patch')
+    @method('put')
+    @if (session('role') != 'administrador')
+        <input type="hidden" name="email" value="{{ Auth()->user()->email }}">
+    @endif
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">

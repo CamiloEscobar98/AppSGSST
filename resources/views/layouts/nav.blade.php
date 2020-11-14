@@ -19,7 +19,7 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="triggerId">
                             <a class="dropdown-item">Capacitadores</a>
-                            <a class="dropdown-item">Capacitantes</a>
+                        <a class="dropdown-item" href="{{route('capacitantes')}}">Capacitantes</a>
                         </div>
                     </div>
                 @endif

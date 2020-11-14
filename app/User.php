@@ -16,6 +16,7 @@ class User extends Authenticatable
         'lastname',
         'birthday',
         'phone',
+        'address',
         'email',
         'password',
     ];
@@ -70,5 +71,10 @@ class User extends Authenticatable
             return true;
         }
         return false;
+    }
+
+    public function fullname()
+    {
+        return $this->name . $this->lastname;
     }
 }

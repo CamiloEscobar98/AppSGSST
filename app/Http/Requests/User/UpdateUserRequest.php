@@ -26,13 +26,13 @@ class UpdateUserRequest extends FormRequest
         $usuario = \App\User::where('email', $this->email)->first();
         $rules = [
             'phone' => ['required', 'string'],
-            'birthday' => ['required', 'date'],
             'address' => ['required', 'string'],
+            'email' => ['required', 'email', 'unique:users,email,' . $usuario->id]
         ];
         if (session('role') == 'administrador') {
             $rules['name'] = ['required', 'string', 'max:80'];
             $rules['lastname'] = ['required', 'string', 'max:80'];
-            $rules['email'] = ['required', 'email', 'unique:users,email,' . $usuario->id];
+            $rules['birthday'] = ['required', 'date'];
             $rules['document'] = ['required', 'unique:documents,document,' . $usuario->document->id];
         }
         return $rules;

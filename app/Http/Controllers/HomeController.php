@@ -6,24 +6,21 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
         $documents_type = \App\Models\Document_type::all();
         return view('home', ['document_types' => $documents_type]);
+    }
+
+    public function lista_capacitantes()
+    {
+        $capacitantes = \App\Models\Role::where('name', 'capacitante')->first()->users()->orderBy('id', 'DESC')->paginate(10);
+        $documents_type = \App\Models\Document_type::all();
+        return view('auth.lista-capacitantes', ['capacitantes' => $capacitantes, 'document_types' => $documents_type]);
     }
 }
