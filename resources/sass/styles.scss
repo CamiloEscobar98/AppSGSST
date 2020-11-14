@@ -6,16 +6,31 @@
     background-color: rgb(49, 129, 24);
     color: white;
 }
-.content-body {
+
+.bg-sgsst2 {
+    background-color: rgb(130, 197, 110);
+    color: white;
+}
+#content-body{
     min-height: calc(100vh);
 }
 
 .btn-login {
-    background-color: rgb(49, 129, 24);
+    background-color: rgb(130, 197, 110);
     color: white;
 }
 
 .btn-login:hover {
+    background-color: rgb(38, 104, 18);
+    color: white;
+}
+
+.btn-login2 {
+    background-color: rgb(107, 160, 91);
+    color: white;
+}
+
+.btn-login2:hover {
     background-color: rgb(38, 104, 18);
     color: white;
 }

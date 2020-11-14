@@ -15521,16 +15521,31 @@ a.text-dark:focus {
   color: white;
 }
 
-.content-body {
+.bg-sgsst2 {
+  background-color: #82c56e;
+  color: white;
+}
+
+#content-body {
   min-height: calc(100vh);
 }
 
 .btn-login {
-  background-color: #318118;
+  background-color: #82c56e;
   color: white;
 }
 
 .btn-login:hover {
+  background-color: #266812;
+  color: white;
+}
+
+.btn-login2 {
+  background-color: #6ba05b;
+  color: white;
+}
+
+.btn-login2:hover {
   background-color: #266812;
   color: white;
 }

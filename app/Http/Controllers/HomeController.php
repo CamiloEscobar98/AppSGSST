@@ -23,6 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $documents_type = \App\Models\Document_type::all();
+        return view('home', ['document_types' => $documents_type]);
     }
 }
