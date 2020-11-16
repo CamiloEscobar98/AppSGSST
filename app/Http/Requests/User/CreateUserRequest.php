@@ -26,11 +26,10 @@ class CreateUserRequest extends FormRequest
         return [
             'name' => ['required', 'max:80', 'string'],
             'lastname' => ['required', 'max:80', 'string'],
-            'phone' => ['required', 'max:30'],
             'email' => ['required', 'email', 'unique:users,email'],
             'document' => ['required', 'unique:documents,document', 'max:50'],
             'document_type_id' => ['required', 'exists:document_types,type'],
-            'address' => ['required', 'max:191']
+            'role' => ['required', 'exists:roles,name']
         ];
     }
     /**
@@ -43,11 +42,10 @@ class CreateUserRequest extends FormRequest
         return [
             'name' => 'nombres',
             'lastname' => 'apellidos',
-            'phone' => 'celular',
             'email' => 'correo electrónico',
             'document' => 'documento',
             'document_type_id' => 'tipo de documento',
-            'address' => 'dirección de residencia'
+            'role' => 'tipo de usuario'
         ];
     }
 }

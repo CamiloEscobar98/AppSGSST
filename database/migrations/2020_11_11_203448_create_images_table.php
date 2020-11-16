@@ -17,6 +17,8 @@ class CreateImagesTable extends Migration
             $table->unsignedBigInteger('id', true);
             $table->unsignedBigInteger('imageable_id');
             $table->string('imageable_type');
+            $table->string('image', 50);
+            $table->string('url');
             $table->timestamps();
             $table->engine = 'InnoDB';
         });

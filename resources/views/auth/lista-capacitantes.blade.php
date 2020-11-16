@@ -32,17 +32,6 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="phone" class="font-weight-bold">Celular:</label>
-                                <input type="text" name="phone" id="phone"
-                                    class="form-control @error('phone') is-invalid @enderror" aria-describedby="helpId"
-                                    maxlength="15"
-                                    onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
-                                @error('phone')
-                                    <small id="helpId"
-                                        class="font-weight-bold text-white bg-danger py-2 px-2">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group">
                                 <label for="email" class="font-weight-bold">Correo electrónico:</label>
                                 <input type="email" name="email" id="email"
                                     class="form-control @error('email') is-invalid @enderror" aria-describedby="helpId">
@@ -78,15 +67,6 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="address" class="font-weight-bold">Dirección de residencia:</label>
-                                <textarea class="form-control @error('address') is-invalid @enderror" name="address"
-                                    id="address" rows="1"></textarea>
-                                @error('address')
-                                    <small id="helpId"
-                                        class="font-weight-bold text-white bg-danger py-2 px-2">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group">
                                 <button type="submit" class="btn btn-login btn-block">Registrar</button>
                             </div>
                         </form>
@@ -107,21 +87,24 @@
                                         <th style="width: 5%">No</th>
                                         <th>Capacitante</th>
                                         <th>Correo electrónico</th>
-                                        <th>Celular</th>
+                                        <th>Documento</th>
                                         <th>..</th>
                                     </tr>
                                 </thead>
-                                <tbody class="text-center">
-                                    @forelse ($capacitantes as $item)
-                                        <tr>
+                                <tbody>
+                                    @forelse ($capacitantes as $capacitante)
+                                        <tr class="text-center" id="fila{{ $loop->iteration }}">
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->fullname() }}</td>
-                                            <td>{{ $item->email }}</td>
-                                            <td>{{ $item->phone }}</td>
+                                            <td class="text-capitalize">{{ $capacitante->fullname() }}</td>
+                                            <td>{{ $capacitante->email }}</td>
+                                            <td>{{ $capacitante->document->document }}</td>
                                             <td>
                                                 <div class="btn-group w-100" role="group" aria-label="opciones">
                                                     <button type="button" class="btn btn-primary w-50">Ver</button>
-                                                    <button type="button" class="btn btn-danger w-50">Borrar</button>
+                                                    <button type="button" class="btn btn-danger w-50 delete-user"
+                                                        data-user="{{ $capacitante->fullname() }}"
+                                                        data-tr="{{ $loop->iteration }}"
+                                                        data-email="{{ $capacitante->email }}">Borrar</button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -135,7 +118,7 @@
                                     <th style="width: 5%">No</th>
                                     <th>Capacitante</th>
                                     <th>Correo electrónico</th>
-                                    <th>Celular</th>
+                                    <th>Documento</th>
                                     <th>..</th>
                                 </tfoot>
                             </table>
@@ -174,4 +157,37 @@
 
     </script>
 @endif
+<script>
+    $('.delete-user').on('click', function() {
+        var usuario = $(this).attr('data-user');
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¡El capacitante " + usuario.toUpperCase() + " Será eliminado!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '¡Si, eliminalo!',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var usuario = $(this).attr('data-email');
+                axios.post("{{ route('user.delete') }}", {
+                    _method: 'delete',
+                    usuario: usuario,
+                }).then(response => {
+                    Swal.fire(
+                        'Eliminado!',
+                        response.data,
+                        'success'
+                    )
+
+                });
+                var fila = $(this).attr('data-tr');
+                $("#fila" + fila).remove();
+            }
+        })
+    });
+
+</script>
 @endsection

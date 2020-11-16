@@ -18,9 +18,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::put('/update-user', 'UserController@update')->name('user.update');
-Route::patch('update-user-password', 'UserController@updatePassword')->name('user.update-password');
-Route::patch('/update-user-document', 'UserController@updateDocument')->name('user.update-document');
+Route::put('/user-update', 'UserController@update')->name('user.update');
+Route::patch('user-update-password', 'UserController@updatePassword')->name('user.update-password');
+Route::patch('/user-update-document', 'UserController@updateDocument')->name('user.update-document');
+Route::patch('/user-update-photo', 'UserController@updatePhoto')->name('user.update-photo');
+Route::delete('/user-delete', 'UserController@destroy')->name('user.delete');
 
 Route::post('/create-user', 'UserController@create')->name('user.create');
 

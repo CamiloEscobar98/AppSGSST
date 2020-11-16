@@ -13,7 +13,6 @@ class UserController extends Controller
 
     public function create(\App\Http\Requests\User\CreateUserRequest $request)
     {
-        // return $request;
         $validated = $request->validated();
         $save = $this->insertUser($validated);
         if ($save) {
@@ -61,6 +60,46 @@ class UserController extends Controller
         return redirect()->route('home')->with('update_failed', 'No se pudo actualizar el tipo de documento.');
     }
 
+    public function destroy(Request $request)
+    {
+        if ($request->ajax()) {
+            $usuario = \App\User::where('email', $request->usuario)->first();
+            $aux = $usuario;
+            if ($usuario->delete()) {
+                return 'Se ha eliminado correctamente a ' . $aux->name . ' ' . $aux->lastname;
+            }
+        }
+    }
+
+    public function updatePhoto(Request $request)
+    {
+        $rules = [
+            'email' => ['required', 'email', 'exists:users,email'],
+            'image' => ['required', 'image', 'mimes:jpeg,jpg,png', 'max:2048']
+        ];
+        $attributes = [
+            'image' => 'foto de perfil'
+        ];
+        $validated = $request->validate($rules, [], $attributes);
+        $usuario = \App\User::where('email', $validated['email'])->first();
+
+        $image_path = public_path('storage/images/profiles') . '/' . $usuario->image->image;
+        if ($usuario->image->image != 'default.png' && @getimagesize($image_path)) {
+            unlink($image_path);
+        }
+        $image = $request->file('image');
+        $nombre = time() . '_' . $usuario->document->document . '.' . $image->getClientOriginalExtension();
+        $destino = public_path('storage/images/profiles');
+        request()->image->move($destino, $nombre);
+        $usuario->image->image = $nombre;
+        $usuario->image->url = 'storage/images/profiles';
+        $update = $usuario->image->save();
+        if ($update) {
+            return redirect()->route('home')->with('update_complete', 'Se actualizó correctamente la foto de perfil.');
+        }
+        return redirect()->route('home')->with('update_failed', 'No se pudo actualizar la foto de perfil.');
+    }
+
     private function updateUser($validated)
     {
         $usuario = \App\User::where('email', $validated['email'])->first();
@@ -76,13 +115,17 @@ class UserController extends Controller
             'name' => strtolower($validated['name']),
             'lastname' => strtolower($validated['lastname']),
             'email' => strtolower($validated['email']),
-            'phone' => $validated['phone'],
-            'address' => strtolower($validated['address']),
             'document_id' => \App\Models\Document::create([
                 'document' => $validated['document'],
                 'document_type_id' => $document_type->id,
             ])->id,
             'password' => bcrypt('1234')
+        ]);
+        $role = \App\Models\Role::where('name', $validated['role'])->first();
+        $usuario->roles()->attach($role);
+        $usuario->image()->create([
+            'image' => 'default.png',
+            'url' => 'storage/images/profiles'
         ]);
         return $usuario;
     }
