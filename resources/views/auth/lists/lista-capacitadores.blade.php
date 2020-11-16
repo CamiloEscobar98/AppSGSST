@@ -6,13 +6,13 @@
             <div class="col-md-4">
                 <div class="card shadow">
                     <div class="card-header bg-sgsst2 py-4">
-                        <h4 class="my-0 font-weight-bold">Registrar Capacitante</h4>
+                        <h4 class="my-0 font-weight-bold">Registrar capacitador</h4>
                     </div>
                     <div class="card-body">
-                        <p class="card-title">Por favor llena toda la información para registrar el capacitante.</p>
+                        <p class="card-title">Por favor llena toda la información para registrar el capacitador.</p>
                         <form action="{{ route('user.create') }}" method="post">
                             @csrf
-                            <input type="hidden" name="role" value="capacitante">
+                            <input type="hidden" name="role" value="capacitador">
                             <div class="form-group">
                                 <label for="name" class="font-weight-bold">Nombres:</label>
                                 <input type="text" name="name" id="name"
@@ -77,7 +77,7 @@
             <div class="col-md-8">
                 <div class="card shadow">
                     <div class="card-header bg-sgsst2 py-4">
-                        <h4 class="my-0 font-weight-bold">Lista de capacitantes</h4>
+                        <h4 class="my-0 font-weight-bold">Lista de capacitadores</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -85,26 +85,27 @@
                                 <thead class="bg-sgsst2 font-weight-bold text-center">
                                     <tr>
                                         <th style="width: 5%">No</th>
-                                        <th>Capacitante</th>
+                                        <th>Capacitador</th>
                                         <th>Correo electrónico</th>
                                         <th>Documento</th>
                                         <th>..</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($capacitantes as $capacitante)
+                                    @forelse ($capacitadores as $capacitador)
                                         <tr class="text-center" id="fila{{ $loop->iteration }}">
                                             <td>{{ $loop->iteration }}</td>
-                                            <td class="text-capitalize">{{ $capacitante->fullname() }}</td>
-                                            <td>{{ $capacitante->email }}</td>
-                                            <td>{{ $capacitante->document->document }}</td>
+                                            <td class="text-capitalize">{{ $capacitador->fullname() }}</td>
+                                            <td>{{ $capacitador->email }}</td>
+                                            <td>{{ $capacitador->document->document }}</td>
                                             <td>
                                                 <div class="btn-group w-100" role="group" aria-label="opciones">
-                                                    <button type="button" class="btn btn-primary w-50">Ver</button>
+                                                    <a href="{{ route('user.show', $capacitador) }}" type="button"
+                                                        class="btn btn-primary w-50">Ver</a>
                                                     <button type="button" class="btn btn-danger w-50 delete-user"
-                                                        data-user="{{ $capacitante->fullname() }}"
+                                                        data-user="{{ $capacitador->fullname() }}"
                                                         data-tr="{{ $loop->iteration }}"
-                                                        data-email="{{ $capacitante->email }}">Borrar</button>
+                                                        data-email="{{ $capacitador->email }}">Borrar</button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -116,13 +117,13 @@
                                 </tbody>
                                 <tfoot class="bg-sgsst2 font-weight-bold text-center">
                                     <th style="width: 5%">No</th>
-                                    <th>Capacitante</th>
+                                    <th>Capacitador</th>
                                     <th>Correo electrónico</th>
                                     <th>Documento</th>
                                     <th>..</th>
                                 </tfoot>
                             </table>
-                            {{ $capacitantes->links() }}
+                            {{ $capacitadores->links() }}
                         </div>
                     </div>
                 </div>
@@ -162,7 +163,7 @@
         var usuario = $(this).attr('data-user');
         Swal.fire({
             title: '¿Estás seguro?',
-            text: "¡El capacitante " + usuario.toUpperCase() + " Será eliminado!",
+            text: "¡El capacitador " + usuario.toUpperCase() + " Será eliminado!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

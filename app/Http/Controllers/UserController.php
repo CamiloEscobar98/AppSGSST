@@ -26,9 +26,9 @@ class UserController extends Controller
         $validated = $request->validated();
         $update = $this->updateUser($validated);
         if ($update) {
-            return redirect()->route('home')->with('update_complete', 'Se actualizó correctamente el perfil.');
+            return redirect()->back()->with('update_complete', 'Se actualizó correctamente el perfil.');
         }
-        return redirect()->route('home')->with('update_failed', 'No se ha actualizado correctamente la información de su perfil');
+        return redirect()->back()->with('update_failed', 'No se ha actualizado correctamente la información de su perfil');
     }
 
     public function updatePassword(\App\Http\Requests\User\UpdateUserPasswordRequest $request)
@@ -37,9 +37,9 @@ class UserController extends Controller
         $usuario = \App\User::where('email', $validated['email']);
         $update = $usuario->update(['password' => bcrypt($validated['password'])]);
         if ($update) {
-            return redirect()->route('home')->with('update_complete', 'Se actualizó la contraseña correctamente.');
+            return redirect()->back()->with('update_complete', 'Se actualizó la contraseña correctamente.');
         }
-        return redirect()->route('home')->with('update_failed', 'No se pudo actualizar la contraseña.');
+        return redirect()->back()->with('update_failed', 'No se pudo actualizar la contraseña.');
     }
 
     public function updateDocument(Request $request)
@@ -55,9 +55,9 @@ class UserController extends Controller
         $usuario = \App\User::where('email', $validated['email'])->first();
         $update = $usuario->document->update($validated);
         if ($update) {
-            return redirect()->route('home')->with('update_complete', 'Se actualizó el tipo de documento correctamente.');
+            return redirect()->back()->with('update_complete', 'Se actualizó el tipo de documento correctamente.');
         }
-        return redirect()->route('home')->with('update_failed', 'No se pudo actualizar el tipo de documento.');
+        return redirect()->back()->with('update_failed', 'No se pudo actualizar el tipo de documento.');
     }
 
     public function destroy(Request $request)
@@ -95,9 +95,37 @@ class UserController extends Controller
         $usuario->image->url = 'storage/images/profiles';
         $update = $usuario->image->save();
         if ($update) {
-            return redirect()->route('home')->with('update_complete', 'Se actualizó correctamente la foto de perfil.');
+            return redirect()->back()->with('update_complete', 'Se actualizó correctamente la foto de perfil.');
         }
-        return redirect()->route('home')->with('update_failed', 'No se pudo actualizar la foto de perfil.');
+        return redirect()->back()->with('update_failed', 'No se pudo actualizar la foto de perfil.');
+    }
+
+    public function addRole(Request $request)
+    {
+        $rules = [
+            'role' => ['required', 'exists:roles,name'],
+            'email' => ['required', 'email', 'exists:users,email']
+        ];
+        $attributes = [
+            'role' => 'rol de usuario',
+        ];
+        $validated = $request->validate($rules, [], $attributes);
+        $usuario = \App\User::where('email', $validated['email'])->first();
+        $role = \App\Models\Role::where('name', $validated['role'])->first();
+        if (!$usuario->hasRole($role->name)) {
+            $usuario->roles()->attach($role);
+            return redirect()->back()->with('update_complete', 'Se agregó correctamente el rol de usuario.');
+        }
+        return redirect()->back()->with('update_failed', 'Ya tiene agregado este rol de usuario.');
+    }
+
+    public function deleteRole(Request $request)
+    {
+        if ($request->ajax()) {
+            $usuario = \App\User::where('email', $request->usuario)->first();
+            $role = \App\Models\Role::where('name', $request->role)->first();
+            $usuario->roles()->detach($role->id);
+        }
     }
 
     private function updateUser($validated)

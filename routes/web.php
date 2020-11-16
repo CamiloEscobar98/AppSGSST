@@ -23,10 +23,14 @@ Route::patch('user-update-password', 'UserController@updatePassword')->name('use
 Route::patch('/user-update-document', 'UserController@updateDocument')->name('user.update-document');
 Route::patch('/user-update-photo', 'UserController@updatePhoto')->name('user.update-photo');
 Route::delete('/user-delete', 'UserController@destroy')->name('user.delete');
+Route::get('/perfil/{usuario}', 'HomeController@perfil')->name('user.show');
+Route::post('/user-add-role', 'UserController@addRole')->name('user.addRole');
+Route::delete('/user-delete-role', 'UserController@deleteRole')->name('user.deleteRole');
 
 Route::post('/create-user', 'UserController@create')->name('user.create');
 
-Route::get('/lista-capacitadores', 'HomeController@lista_capacitantes')->name('capacitantes');
+Route::get('/lista-capacitantes', 'HomeController@lista_capacitantes')->name('capacitantes');
+Route::get('/lista-capacitadores', 'HomeController@lista_capacitadores')->name('capacitadores');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
