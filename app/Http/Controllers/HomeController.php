@@ -17,13 +17,6 @@ class HomeController extends Controller
         return view('home', ['document_types' => $documents_type]);
     }
 
-    public function perfil(\App\User $usuario)
-    {
-        $roles = \App\Models\Role::all();
-        $documents_type = \App\Models\Document_type::all();
-        return view('auth.profiles.usuario', ['usuario' => $usuario, 'document_types' => $documents_type, 'roles' => $roles]);
-    }
-
     public function lista_capacitantes()
     {
         $capacitantes = \App\Models\Role::where('name', 'capacitante')->first()->users()->orderBy('id', 'DESC')->paginate(6);
@@ -37,4 +30,19 @@ class HomeController extends Controller
         $documents_type = \App\Models\Document_type::all();
         return view('auth.lists.lista-capacitadores', ['capacitadores' => $capacitadores, 'document_types' => $documents_type]);
     }
+
+    public function lista_tematicas()
+    {
+        $capacitadores = \App\Models\Role::where('name', 'capacitador')->first()->users;
+        $tematicas = \App\Models\Topic::paginate(5);
+        return view('auth.lists.lista-tematicas', ['tematicas' => $tematicas, 'capacitadores' => $capacitadores]);
+    }
+
+    public function lista_capsulas()
+    {
+        $capsulas = \App\Models\Capsule::paginate(5);
+        $tematicas = \App\Models\Topic::all();
+        return view('auth.lists.lista-capsulas', ['capsulas' => $capsulas, 'tematicas' => $tematicas]);
+    }
+    
 }

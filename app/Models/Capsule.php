@@ -9,7 +9,8 @@ class Capsule extends Model
     protected $fillable = [
         'topic_id',
         'title',
-        'info'
+        'info',
+        'video'
     ];
 
     public function topic()

@@ -18,19 +18,28 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::put('/user-update', 'UserController@update')->name('user.update');
-Route::patch('user-update-password', 'UserController@updatePassword')->name('user.update-password');
-Route::patch('/user-update-document', 'UserController@updateDocument')->name('user.update-document');
-Route::patch('/user-update-photo', 'UserController@updatePhoto')->name('user.update-photo');
-Route::delete('/user-delete', 'UserController@destroy')->name('user.delete');
-Route::get('/perfil/{usuario}', 'HomeController@perfil')->name('user.show');
-Route::post('/user-add-role', 'UserController@addRole')->name('user.addRole');
-Route::delete('/user-delete-role', 'UserController@deleteRole')->name('user.deleteRole');
+Route::post('/user-create', [\App\Http\Controllers\UserController::class, 'create'])->name('user.create');
+Route::put('/user-update', [\App\Http\Controllers\UserController::class, 'update'])->name('user.update');
+Route::patch('user-update-password', [\App\Http\Controllers\UserController::class, 'updatePassword'])->name('user.update-password');
+Route::patch('/user-update-document', [\App\Http\Controllers\UserController::class, 'updateDocument'])->name('user.update-document');
+Route::patch('/user-update-photo', [\App\Http\Controllers\UserController::class, 'updatePhoto'])->name('user.update-photo');
+Route::delete('/user-delete', [\App\Http\Controllers\UserController::class, 'destroy'])->name('user.delete');
+Route::get('/perfil/{usuario}', [\App\Http\Controllers\UserController::class, 'show'])->name('user.show');
+Route::post('/user-add-role', [\App\Http\Controllers\UserController::class, 'addRole'])->name('user.addRole');
+Route::delete('/user-delete-role', [\App\Http\Controllers\UserController::class, 'deleteRole'])->name('user.deleteRole');
 
-Route::post('/create-user', 'UserController@create')->name('user.create');
+Route::post('/topic-create', [\App\Http\Controllers\TopicController::class, 'create'])->name('topic.create');
+Route::delete('/topic-delete', [\App\Http\Controllers\TopicController::class, 'destroy'])->name('topic.delete');
+Route::get('/tematica/{topic}', [\App\Http\Controllers\TopicController::class, 'show'])->name('topic.show');
+Route::put('/topic-update', [\App\Http\Controllers\TopicController::class, 'update'])->name('topic.update');
+Route::patch('/topic-update-capacitante', [\App\Http\Controllers\TopicController::class, 'update_capacitante'])->name('topic.update-capacitante');
 
-Route::get('/lista-capacitantes', 'HomeController@lista_capacitantes')->name('capacitantes');
-Route::get('/lista-capacitadores', 'HomeController@lista_capacitadores')->name('capacitadores');
+Route::post('/capsule-create', [\App\Http\Controllers\CapsuleController::class, 'create'])->name('capsule.create');
+
+Route::get('/lista-capacitantes', [\App\Http\Controllers\HomeController::class, 'lista_capacitantes'])->name('capacitantes');
+Route::get('/lista-capacitadores', [\App\Http\Controllers\HomeController::class, 'lista_capacitadores'])->name('capacitadores');
+Route::get('/lista-temáticas', [\App\Http\Controllers\HomeController::class, 'lista_tematicas'])->name('tematicas');
+Route::get('/lista-capsulas', [\App\Http\Controllers\HomeController::class, 'lista_capsulas'])->name('capsulas');
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', [\App\http\Controllers\HomeController::class, 'index'])->name('home');

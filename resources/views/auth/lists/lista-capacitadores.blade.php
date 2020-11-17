@@ -81,7 +81,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped">
+                            <table class="table table-striped table-hover">
                                 <thead class="bg-sgsst2 font-weight-bold text-center">
                                     <tr>
                                         <th style="width: 5%">No</th>
@@ -101,11 +101,13 @@
                                             <td>
                                                 <div class="btn-group w-100" role="group" aria-label="opciones">
                                                     <a href="{{ route('user.show', $capacitador) }}" type="button"
-                                                        class="btn btn-primary w-50">Ver</a>
+                                                        class="btn btn-primary w-50"><i class="fa fa-eye"
+                                                            aria-hidden="true"></i></a>
                                                     <button type="button" class="btn btn-danger w-50 delete-user"
                                                         data-user="{{ $capacitador->fullname() }}"
                                                         data-tr="{{ $loop->iteration }}"
-                                                        data-email="{{ $capacitador->email }}">Borrar</button>
+                                                        data-email="{{ $capacitador->email }}"><i class="fa fa-trash"
+                                                            aria-hidden="true"></i></button>
                                                 </div>
                                             </td>
                                         </tr>

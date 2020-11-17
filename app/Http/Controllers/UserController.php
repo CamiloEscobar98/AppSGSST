@@ -18,7 +18,14 @@ class UserController extends Controller
         if ($save) {
             return redirect()->back()->with('create_complete', 'Se registró correctamente el usuario: ' . $save->name . ' ' . $save->lastname);
         }
-        return redirect()->back()->with('create_failed', 'No se ha actualizado correctamente la información de su perfil');
+        return redirect()->back()->with('create_failed', 'No se ha registrado correctamente al usuario');
+    }
+
+    public function show(\App\User $usuario)
+    {
+        $roles = \App\Models\Role::all();
+        $documents_type = \App\Models\Document_type::all();
+        return view('auth.profiles.usuario', ['usuario' => $usuario, 'document_types' => $documents_type, 'roles' => $roles]);
     }
 
     public function update(\App\Http\Requests\User\UpdateUserRequest $request)
