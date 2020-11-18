@@ -42,6 +42,11 @@ Route::patch('/capsule-update-topic', [\App\Http\Controllers\CapsuleController::
 Route::delete('/capsule-delete', [\App\Http\Controllers\CapsuleController::class, 'destroy'])->name('capsule.delete');
 
 Route::post('/game-create', [\App\Http\Controllers\GamesController::class, 'create'])->name('game.create');
+Route::get('/juego/{game}', [\App\Http\Controllers\GamesController::class, 'show'])->name('game.show');
+Route::put('/game-update', [\App\Http\Controllers\GamesController::class, 'update'])->name('game.update');
+
+Route::post('/word-create', [\App\Http\Controllers\WordController::class, 'create'])->name('word.create');
+Route::delete('/word-delete', [\App\Http\Controllers\WordController::class, 'destroy'])->name('word.delete');
 
 Route::get('/lista-capacitantes', [\App\Http\Controllers\HomeController::class, 'lista_capacitantes'])->name('capacitantes');
 Route::get('/lista-capacitadores', [\App\Http\Controllers\HomeController::class, 'lista_capacitadores'])->name('capacitadores');

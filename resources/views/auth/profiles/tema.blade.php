@@ -190,6 +190,7 @@
                                         <div class="form-group">
                                             <label for="title_game" class="font-weight-bold">Titulo del Juego</label>
                                             <input type="text" name="title_game" id="title_game"
+                                                value="{{ old('title_game') }}"
                                                 class="form-control @error('title_game') is-invalid @enderror"
                                                 placeholder="Titulo del juego" aria-describedby="helpId">
                                             @error('title_game')
@@ -202,8 +203,8 @@
                                             <select class="custom-select @error('game_type') is-invalid @enderror"
                                                 name="game_type" id="game_type">
                                                 <option value="-1" selected>Seleccione un tipo de juego</option>
-                                                <option value="1">Crucigrama</option>
-                                                <option value="2">Ahorcado</option>
+                                                <option value="1">Ahorcado</option>
+                                                <option value="2">Crucigrama</option>
                                             </select>
                                             @error('game_type')
                                                 <small id="helpId"
@@ -215,9 +216,18 @@
                                         </div>
                                     </form>
                                 @else
-                                    <button class="btn btn-block btn-danger">Jugar</button>
+                                    @if ($tema->game->gameable->words()->count() != null)
+                                        <button class="btn btn-block btn-danger">Jugar</button>
+                                        <a href="{{ route('game.show', $tema->game) }}" class="btn btn-block btn-login">Ver
+                                            juego</a>
+                                    @else
+                                        <a href="{{ route('game.show', $tema->game) }}" class="btn btn-block btn-login">Ver
+                                            juego</a>
+                                    @endif
                                 @endif
-                                @if (session('play'))
+                                <div id="play_game">
+                                    
+                                </div>
                                 @endif
                             </div>
                             <div class="card-footer bg-sgsst2 py-4"></div>
@@ -229,90 +239,90 @@
     </div>
 @endsection
 @section('scripts')
-<script>
-    $('.delete-capsule').on('click', function() {
-        var capsule = $(this).attr('data-title');
-        Swal.fire({
-            title: '¿Estás seguro?',
-            text: "¡La cápsula " + capsule.toUpperCase() + " Será eliminado!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: '¡Si, eliminalo!',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                var capsule = $(this).attr('data-capsule');
-                axios.post("{{ route('capsule.delete') }}", {
-                    _method: 'delete',
-                    capsule: capsule,
-                }).then(res => {
-                    var titulo = (res.data.alert == 'success') ? '¡Eliminado!' : '¡Error';
-                    Swal.fire(
-                        titulo,
-                        res.data.message,
-                        res.data.alert
-                    )
-
-                });
-                var fila = $(this).attr('data-tr');
-                $("#fila" + fila).remove();
-            }
-        })
-    });
-
-</script>
-@if (session()->has('create_complete'))
     <script>
-        Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: '¡Éxito!',
-            text: "{{ session('create_complete') }}",
-            showConfirmButton: false,
-            timer: 1500
-        })
+        $('.delete-capsule').on('click', function() {
+            var capsule = $(this).attr('data-title');
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¡La cápsula " + capsule.toUpperCase() + " Será eliminado!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '¡Si, eliminalo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var capsule = $(this).attr('data-capsule');
+                    axios.post("{{ route('capsule.delete') }}", {
+                        _method: 'delete',
+                        capsule: capsule,
+                    }).then(res => {
+                        var titulo = (res.data.alert == 'success') ? '¡Eliminado!' : '¡Error';
+                        Swal.fire(
+                            titulo,
+                            res.data.message,
+                            res.data.alert
+                        )
+
+                    });
+                    var fila = $(this).attr('data-tr');
+                    $("#fila" + fila).remove();
+                }
+            })
+        });
 
     </script>
-@endif
-@if (session()->has('create_failed'))
-    <script>
-        Swal.fire({
-            position: 'top-end',
-            icon: 'error',
-            title: "¡Error!",
-            text: "{{ session('create_failed') }}",
-            showConfirmButton: false,
-            timer: 1500
-        })
+    @if (session()->has('create_complete'))
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: '¡Éxito!',
+                text: "{{ session('create_complete') }}",
+                showConfirmButton: false,
+                timer: 1500
+            })
 
-    </script>
-@endif
-@if (session()->has('update_complete'))
-    <script>
-        Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: '¡Éxito!',
-            text: "{{ session('update_complete') }}",
-            showConfirmButton: false,
-            timer: 1500
-        })
+        </script>
+    @endif
+    @if (session()->has('create_failed'))
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: "¡Error!",
+                text: "{{ session('create_failed') }}",
+                showConfirmButton: false,
+                timer: 1500
+            })
 
-    </script>
-@endif
-@if (session()->has('update_failed'))
-    <script>
-        Swal.fire({
-            position: 'top-end',
-            icon: 'error',
-            title: "¡Error!",
-            text: "{{ session('update_failed') }}",
-            showConfirmButton: false,
-            timer: 1500
-        })
+        </script>
+    @endif
+    @if (session()->has('update_complete'))
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: '¡Éxito!',
+                text: "{{ session('update_complete') }}",
+                showConfirmButton: false,
+                timer: 1500
+            })
 
-    </script>
-@endif
+        </script>
+    @endif
+    @if (session()->has('update_failed'))
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: "¡Error!",
+                text: "{{ session('update_failed') }}",
+                showConfirmButton: false,
+                timer: 1500
+            })
+
+        </script>
+    @endif
 @endsection

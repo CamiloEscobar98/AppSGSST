@@ -28,13 +28,14 @@
                             <a class="dropdown-item" href="{{ route('capacitantes') }}">Capacitantes</a>
                         </div>
                     </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('tematicas') }}">Temáticas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('capsulas') }}">Cápsulas</a>
+                    </li>
                 @endif
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('tematicas') }}">Temáticas</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('capsulas') }}">Cápsulas</a>
-                </li>
+
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -54,7 +55,7 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
-                                                                                                                                                                                 document.getElementById('logout-form').submit();">
+                                                                                                                                                                                     document.getElementById('logout-form').submit();">
                                 Cerrar Sesión
                             </a>
 
