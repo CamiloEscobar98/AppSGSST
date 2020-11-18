@@ -33,8 +33,15 @@ Route::delete('/topic-delete', [\App\Http\Controllers\TopicController::class, 'd
 Route::get('/tematica/{topic}', [\App\Http\Controllers\TopicController::class, 'show'])->name('topic.show');
 Route::put('/topic-update', [\App\Http\Controllers\TopicController::class, 'update'])->name('topic.update');
 Route::patch('/topic-update-capacitante', [\App\Http\Controllers\TopicController::class, 'update_capacitante'])->name('topic.update-capacitante');
+Route::patch('/topic-update-photo', [\App\Http\Controllers\TopicController::class, 'updatePhoto'])->name('topic.update-photo');
 
 Route::post('/capsule-create', [\App\Http\Controllers\CapsuleController::class, 'create'])->name('capsule.create');
+Route::get('/capsula/{capsule}', [\App\Http\Controllers\CapsuleController::class, 'show'])->name('capsule.show');
+Route::put('/capsule-update', [\App\Http\Controllers\CapsuleController::class, 'update'])->name('capsule.update');
+Route::patch('/capsule-update-topic', [\App\Http\Controllers\CapsuleController::class, 'changeTopic'])->name('capsule.changeTopic');
+Route::delete('/capsule-delete', [\App\Http\Controllers\CapsuleController::class, 'destroy'])->name('capsule.delete');
+
+Route::post('/game-create', [\App\Http\Controllers\GamesController::class, 'create'])->name('game.create');
 
 Route::get('/lista-capacitantes', [\App\Http\Controllers\HomeController::class, 'lista_capacitantes'])->name('capacitantes');
 Route::get('/lista-capacitadores', [\App\Http\Controllers\HomeController::class, 'lista_capacitadores'])->name('capacitadores');

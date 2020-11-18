@@ -17,9 +17,4 @@ class Capsule extends Model
     {
         return $this->belongsTo(\App\Models\Topic::class);
     }
-
-    public function image()
-    {
-        return $this->morphOne(\App\Models\Image::class, 'imageable');
-    }
 }

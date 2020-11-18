@@ -11,6 +11,12 @@ class TopicSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Models\Topic::class, 10)->create();
+        factory(\App\Models\Topic::class, 10)->create()
+            ->each(function ($topic) {
+                $topic->image()->create([
+                    'image' => 'default.png',
+                    'url' => 'storage/images/topics'
+                ]);
+            });
     }
 }

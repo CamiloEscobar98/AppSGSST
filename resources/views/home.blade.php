@@ -9,7 +9,9 @@
                         <h1 class="font-weight-bold my-0 text-center text-capitalize">{{ session('role') }}</h1>
                     </div>
                     <div class="card-body">
-                        <img src="{{ asset(Auth()->user()->image->url . '/' . Auth()->user()->image->image) }}"
+                        <img src="{{ asset(
+                                Auth()->user()->image->fullimage(),
+                            ) }}"
                             class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|} mx-auto d-block"
                             alt="Foto de perfil" width="200vh">
                         <form action="{{ route('user.update-photo') }}" method="POST" class="mt-4"

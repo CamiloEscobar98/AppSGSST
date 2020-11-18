@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Temáticas')
+@section('title', 'Cápsulas')
 @section('content')
     <div class="container-fluid mb-4">
         <div class="row">
@@ -61,7 +61,7 @@
             <div class="col-md-8 mt-5">
                 <div class="card shadow">
                     <div class="card-header bg-sgsst2 py-4">
-                        <h4 class="font-weight-bold text-white my-0">Lista de temáticas</h4>
+                        <h4 class="font-weight-bold text-white my-0">Lista de Cápsulas</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -77,13 +77,16 @@
                                 <tbody>
                                     @forelse ($capsulas as $capsula)
                                         <tr class="text-center" id="fila{{ $loop->iteration }}">
-                                            <td>{{ $capsula->topic->title }}</td>
+                                            <td><a
+                                                    href="{{ route('topic.show', $capsula->topic) }}">{{ $capsula->topic->title }}</a>
+                                            </td>
                                             <td>{{ $capsula->title }}</td>
                                             <td>{{ $capsula->info }}</td>
                                             <td>
                                                 <div class="btn-group w-100">
-                                                    <button type="button" class="btn btn-primary w-50"><i class="fa fa-eye"
-                                                            aria-hidden="true"></i></button>
+                                                    <a href="{{ route('capsule.show', $capsula) }}" type="button"
+                                                        class="btn btn-primary w-50"><i class="fa fa-eye"
+                                                            aria-hidden="true"></i></a>
                                                     <button type="button" class="btn btn-danger w-50 delete-capsule"
                                                         data-tr="{{ $loop->iteration }}" data-title="{{ $capsula->title }}"
                                                         data-capsule="{{ $capsula->id }}"><i class="fa fa-trash"
@@ -114,10 +117,10 @@
 @section('scripts')
 <script>
     $('.delete-capsule').on('click', function() {
-        var topic = $(this).attr('data-title');
+        var capsule = $(this).attr('data-title');
         Swal.fire({
             title: '¿Estás seguro?',
-            text: "¡La temática " + topic.toUpperCase() + " Será eliminado!",
+            text: "¡La cápsula " + capsule.toUpperCase() + " Será eliminado!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -126,10 +129,10 @@
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                var topic = $(this).attr('data-topic');
-                axios.post("{{ route('topic.delete') }}", {
+                var capsule = $(this).attr('data-capsule');
+                axios.post("{{ route('capsule.delete') }}", {
                     _method: 'delete',
-                    topic: topic,
+                    capsule: capsule,
                 }).then(res => {
                     var titulo = (res.data.alert == 'success') ? '¡Eliminado!' : '¡Error';
                     Swal.fire(

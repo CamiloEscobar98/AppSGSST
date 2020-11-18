@@ -21,4 +21,14 @@ class Topic extends Model
     {
         return $this->belongsTo(\App\User::class);
     }
+
+    public function capsules()
+    {
+        return $this->hasMany(\App\Models\Capsule::class);
+    }
+
+    public function game()
+    {
+        return $this->hasOne(\App\Models\Game::class);
+    }
 }

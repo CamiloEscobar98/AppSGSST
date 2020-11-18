@@ -14,4 +14,9 @@ class Image extends Model
     {
         return $this->morphTo();
     }
+
+    public function fullimage()
+    {
+        return $this->url . '/' . $this->image;
+    }
 }

@@ -61,20 +61,22 @@
                             <table class="table table-striped table-hover">
                                 <thead class="bg-sgsst2 font-weight-bold text-center">
                                     <tr>
-                                        <th class="">Encargado</th>
-                                        <th class="">Título</th>
-                                        <th class="w-50">Descripción</th>
+                                        <th>Foto</th>
+                                        <th>Encargado</th>
+                                        <th>Título</th>
                                         <th>...</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($tematicas as $tema)
                                         <tr class="text-center" id="fila{{ $loop->iteration }}">
+                                            <td> <img src="{{ asset($tema->image->fullimage()) }}"
+                                                    class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|} mx-auto d-block"
+                                                    alt="" width="50vh"></td>
                                             <td><a
                                                     href="{{ route('user.show', $tema->user) }}">{{ $tema->user->fullname() }}</a>
                                             </td>
                                             <td>{{ $tema->title }}</td>
-                                            <td>{{ $tema->info }}</td>
                                             <td>
                                                 <div class="btn-group w-100">
                                                     <a href="{{ route('topic.show', $tema) }}" type="button"
@@ -92,9 +94,9 @@
                                     @endforelse
                                 </tbody>
                                 <tfoot class="bg-sgsst2 font-weight-bold text-center">
+                                    <th>Foto</th>
                                     <th>Encargado</th>
                                     <th>Título</th>
-                                    <th>Descripción</th>
                                     <th>...</th>
                                 </tfoot>
                             </table>
