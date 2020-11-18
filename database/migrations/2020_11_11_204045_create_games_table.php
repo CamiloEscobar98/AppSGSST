@@ -19,6 +19,7 @@ class CreateGamesTable extends Migration
             $table->unsignedSmallInteger('gameable_id');
             $table->string('gameable_type');
             $table->string('title', 80);
+            $table->enum('type', [1,2,3]);
             $table->timestamps();
             $table->engine = 'InnoDB';
         });

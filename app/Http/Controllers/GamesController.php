@@ -31,6 +31,21 @@ class GamesController extends Controller
         return redirect()->back()->with('update_failed', 'No se ha actualizado correctamente el juego.');
     }
 
+    public function getHangman(Request $request)
+    {
+        if ($request->ajax()) {
+            $hangman = \App\Models\Hangman::find($request->id);
+            return $hangman->words;
+        }
+    }
+
+    public function getWordFind(Request $request)
+    {
+        if ($request->ajax()) {
+            $wordfind = \App\Models\Wordfind::find($request->id);
+            return $wordfind->words;
+        }
+    }
     private function insertGame($validated)
     {
         switch ($validated['game_type']) {
@@ -39,11 +54,21 @@ class GamesController extends Controller
                 $hangman = \App\Models\Hangman::create();
                 $game =  $hangman->game()->create([
                     'topic_id' => $validated['topic'],
+                    'type' => $validated['game_type'],
                     'title' => strtolower($validated['title_game'])
                 ]);
                 return $game;
                 break;
 
+            case 2:
+                $wordfind = \App\Models\Wordfind::create();
+                $game = $wordfind->game()->create([
+                    'topic_id' => $validated['topic'],
+                    'type' => $validated['game_type'],
+                    'title' => strtolower($validated['title_game'])
+                ]);
+                return $game;
+                break;
             default:
                 # code...
                 break;

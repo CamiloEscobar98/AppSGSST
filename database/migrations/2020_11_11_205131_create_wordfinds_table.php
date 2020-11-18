@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWordsTable extends Migration
+class CreateWordfindsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,9 @@ class CreateWordsTable extends Migration
      */
     public function up()
     {
-        Schema::create('words', function (Blueprint $table) {
+        Schema::create('wordfinds', function (Blueprint $table) {
             $table->id();
-            $table->unsignedSmallInteger('wordeable_id');
-            $table->string('wordeable_type');
-            $table->string('word');
-            $table->text('clue')->nullable();
             $table->timestamps();
-            $table->engine = 'InnoDB';
         });
     }
 
@@ -31,6 +26,6 @@ class CreateWordsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('words');
+        Schema::dropIfExists('wordfinds');
     }
 }
