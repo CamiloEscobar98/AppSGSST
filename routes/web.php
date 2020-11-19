@@ -44,6 +44,7 @@ Route::delete('/capsule-delete', [\App\Http\Controllers\CapsuleController::class
 Route::post('/game-create', [\App\Http\Controllers\GamesController::class, 'create'])->name('game.create');
 Route::get('/juego/{game}', [\App\Http\Controllers\GamesController::class, 'show'])->name('game.show');
 Route::put('/game-update', [\App\Http\Controllers\GamesController::class, 'update'])->name('game.update');
+Route::delete('/game-delete', [\App\Http\Controllers\GamesController::class, 'destroy'])->name('game.delete');
 
 Route::post('/word-create', [\App\Http\Controllers\WordController::class, 'create'])->name('word.create');
 Route::delete('/word-delete', [\App\Http\Controllers\WordController::class, 'destroy'])->name('word.delete');

@@ -19,7 +19,7 @@
                                     <div class="form-group">
                                         <label for="title" class="font-weight-bold">Tiutlo</label>
                                         <input type="text" name="title" id="title"
-                                            class="form-control @error('title') is-invalid @enderror"
+                                            class="form-control text-capitalize @error('title') is-invalid @enderror"
                                             value="{{ $capsule->title }}" aria-describedby="helpId">
                                         @error('title')
                                             <small id="helpId"
@@ -92,7 +92,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="embed-responsive embed-responsive-16by9">
-                                    <iframe class="embed-responsive-item" src="{{ $capsule->video }}" frameborder="0"
+                                    <iframe class="embed-responsive-item" src="{!! $capsule->video !!}"
                                         allowfullscreen></iframe>
                                 </div>
                             </div>

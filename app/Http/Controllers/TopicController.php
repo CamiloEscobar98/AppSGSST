@@ -96,6 +96,10 @@ class TopicController extends Controller
             'info' => $validated['info'],
             'user_id' => $capacitador->id
         ]);
+        $topic->image()->create([
+            'image' => 'default.png',
+            'url' => 'storage/images/topics'
+        ]);
 
         return $topic;
     }

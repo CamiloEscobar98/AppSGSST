@@ -2,7 +2,7 @@
 @section('title', 'Perfil-Juego')
 @section('content')
     <div class="container-fluid mb-4">
-        <a href="{{ url()->previous() }}" class="btn btn-secondary mt-4">Retroceder</a>
+        {{-- <a href="{{ url()->previous() }}" class="btn btn-secondary mt-4">Retroceder</a> --}}
         <div class="row">
             <div class="col-md-4">
                 <div class="row">

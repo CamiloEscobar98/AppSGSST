@@ -73,7 +73,7 @@ class UserController extends Controller
             $usuario = \App\User::where('email', $request->usuario)->first();
             $aux = $usuario;
             if ($usuario->delete()) {
-                return 'Se ha eliminado correctamente a ' . $aux->name . ' ' . $aux->lastname;
+                return response()->json(['alert' => 'success', 'message' => 'Se ha eliminado correctamente a ' . $aux->name . ' ' . $aux->lastname]);
             }
         }
     }

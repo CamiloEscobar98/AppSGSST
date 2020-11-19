@@ -16,7 +16,7 @@
                                 <label for="title" class="font-weight-bold">Título:</label>
                                 <input type="text" name="title" id="title"
                                     class="form-control @error('title') is-invalid @enderror" placeholder=""
-                                    aria-describedby="helpId">
+                                    value="{{ old('title') }}" aria-describedby="helpId">
                                 @error('title')
                                     <small id="helpId" class="text-white font-weight-bold bg-danger py-1">{{ $message }}</small>
                                 @enderror
@@ -24,7 +24,7 @@
                             <div class="form-group">
                                 <label for="info" class="font-weight-bold">Descripción:</label>
                                 <textarea class="form-control @error('info') is-invalid @enderror" name="info" id="info"
-                                    aria-describedby="helpId" rows="3"></textarea>
+                                    aria-describedby="helpId" rows="3">{{ old('info') }}</textarea>
                                 @error('info')
                                     <small id="helpId" class="text-white font-weight-bold bg-danger py-1">{{ $message }}</small>
                                 @enderror

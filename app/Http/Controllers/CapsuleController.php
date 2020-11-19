@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 class CapsuleController extends Controller
 {
+
+   
+
     public function create(\App\Http\Requests\Capsule\CreateCapsuleRequest $request)
     {
         $validated = $request->validated();
@@ -70,7 +73,7 @@ class CapsuleController extends Controller
         $capsula->update([
             'title' => strtolower($validated['title']),
             'info' => $validated['info'],
-            'video' => strtolower($validated['video'])
+            'video' => $validated['video']
         ]);
 
         return $capsula;

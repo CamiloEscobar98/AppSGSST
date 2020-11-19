@@ -6,10 +6,10 @@
 *     http://github.com/bunkat/wordfind
 */
 
-
 /**
 * Styles for the puzzle
 */
+
 #puzzle {
   border: 1px solid black;
   padding: 20px;
@@ -22,6 +22,7 @@
 }
 
 /* style for each square in the puzzle */
+
 #puzzle .puzzleSquare {
   height: 40px;
   width: 40px;
@@ -36,11 +37,13 @@ button::-moz-focus-inner {
 }
 
 /* indicates when a square has been selected */
+
 #puzzle .selected {
   background-color: orange;
 }
 
-/* indicates that the square is part of a word that has been found */ 
+/* indicates that the square is part of a word that has been found */
+
 #puzzle .found {
   background-color: rgb(23, 133, 91);
   color: white;
@@ -52,13 +55,15 @@ button::-moz-focus-inner {
 }
 
 /* indicates that all words have been found */
+
 #puzzle .complete {
-  background-color: green;
+  background-color: purple;
 }
 
 /**
 * Styles for the word list
 */
+
 #words {
   padding-top: 20px;
   -moz-column-count: 2;
@@ -80,6 +85,7 @@ button::-moz-focus-inner {
 }
 
 /* indicates that the word has been found */
+
 #words .wordFound {
   text-decoration: line-through;
   color: gray;

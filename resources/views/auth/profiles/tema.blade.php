@@ -11,6 +11,8 @@
                                 <h4 class="my-0 font-weight-bold">Temática</h4>
                             </div>
                             <div class="card-body">
+                                <p class="card-title font-weight-bold">Capacitador</p>
+                                <p class="card-text">{{ $tema->user->fullname() }}</p>
                                 <p class="card-text">Actualizar la información de la temática.</p>
                                 <img src="{{ asset($tema->image->fullimage()) }}"
                                     class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|} mx-auto d-block"
@@ -68,10 +70,12 @@
                                                             <option value="{{ $capacitador->email }}" selected>
                                                                 {{ $capacitador->fullname() }}
                                                             </option>
+                                                        @else
+                                                            <option value="{{ $capacitador->email }}">
+                                                                {{ $capacitador->fullname() }}
+                                                            </option>
                                                         @endif
-                                                        <option value="{{ $capacitador->email }}">
-                                                            {{ $capacitador->fullname() }}
-                                                        </option>
+
                                                     @endforeach
                                                 </select>
                                                 @error('capacitador')
@@ -89,7 +93,7 @@
                             <div class="col-md-6">
                                 <div class="card shadow">
                                     <div class="card-header bg-sgsst2 py-4">
-                                        <h4 class="text-white font-weight-bold my-0">Cambiar Foto de Perfil</h4>
+                                        <h4 class="text-white font-weight-bold my-0">Cambiar Foto</h4>
                                     </div>
                                     <div class="card-body">
                                         <form action="{{ route('topic.update-photo') }}" method="POST" class="mt-4"
@@ -219,13 +223,18 @@
                                     </form>
                                 @else
                                     @if ($tema->game->gameable->words()->count() != null)
-                                        <button class="btn btn-block btn-danger"
+                                        <button class="btn btn-block btn-primary"
                                             onclick="mostrar_ocultar_juego('play_game')">Jugar</button>
                                         <a href="{{ route('game.show', $tema->game) }}" class="btn btn-block btn-login">Ver
                                             juego</a>
+                                        <button type="button" class="btn btn-block btn-danger delete-game"
+                                            data-game="{{ $tema->game->id }}">Eliminar</button>
+
                                     @else
                                         <a href="{{ route('game.show', $tema->game) }}" class="btn btn-block btn-login">Ver
                                             juego</a>
+                                        <button type="button" class="btn btn-block btn-danger delete-game"
+                                            data-game="{{ $tema->game->id }}">Eliminar</button>
                                     @endif
                                     <div id="play_game">
                                         @if ($tema->game->type == 1)
@@ -339,4 +348,38 @@
 
     </script>
 @endif
+<script>
+    $('.delete-game').on('click', function() {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "Se eliminará el juego..",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '¡Si, eliminalo!',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var game = $(this).attr('data-game');
+                axios.post("{{ route('game.delete') }}", {
+                    _method: 'delete',
+                    game: game,
+                }).then(res => {
+                    var titulo = (res.data.alert == 'success') ? '¡Eliminado!' : '¡Error';
+                    Swal.fire(
+                        titulo,
+                        res.data.message,
+                        res.data.alert
+                    )
+                    setTimeout(() => {
+                        location.reload(true)
+                    }, 2000);;
+
+                });
+            }
+        })
+    });
+
+</script>
 @endsection

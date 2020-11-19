@@ -16,7 +16,8 @@
                             <div class="form-group">
                                 <label for="name" class="font-weight-bold">Nombres:</label>
                                 <input type="text" name="name" id="name"
-                                    class="form-control @error('name') is-invalid @enderror" aria-describedby="helpId">
+                                    class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}"
+                                    aria-describedby="helpId">
                                 @error('name')
                                     <small id="helpId"
                                         class="font-weight-bold text-white bg-danger py-2 px-2">{{ $message }}</small>
@@ -25,7 +26,8 @@
                             <div class="form-group">
                                 <label for="lastname" class="font-weight-bold">Apellidos:</label>
                                 <input type="text" name="lastname" id="lastname"
-                                    class="form-control @error('lastname') is-invalid @enderror" aria-describedby="helpId">
+                                    class="form-control @error('lastname') is-invalid @enderror"
+                                    value="{{ old('lastname') }}" aria-describedby="helpId">
                                 @error('lastname')
                                     <small id="helpId"
                                         class="font-weight-bold text-white bg-danger py-2 px-2">{{ $message }}</small>
@@ -34,7 +36,8 @@
                             <div class="form-group">
                                 <label for="email" class="font-weight-bold">Correo electrónico:</label>
                                 <input type="email" name="email" id="email"
-                                    class="form-control @error('email') is-invalid @enderror" aria-describedby="helpId">
+                                    class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}"
+                                    aria-describedby="helpId">
                                 @error('email')
                                     <small id="helpId"
                                         class="font-weight-bold text-white bg-danger py-2 px-2">{{ $message }}</small>
@@ -43,8 +46,8 @@
                             <div class="form-group">
                                 <label for="document" class="font-weight-bold">Documento:</label>
                                 <input type="text" name="document" id="document"
-                                    class="form-control @error('document') is-invalid @enderror" aria-describedby="helpId"
-                                    maxlength="15"
+                                    class="form-control @error('document') is-invalid @enderror"
+                                    value="{{ old('document') }}" aria-describedby="helpId" maxlength="15"
                                     onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
                                 @error('document')
                                     <small id="helpId"
@@ -84,7 +87,7 @@
                             <table class="table table-striped table-hover">
                                 <thead class="bg-sgsst2 font-weight-bold text-center">
                                     <tr>
-                                        <th style="width: 5%">No</th>
+                                        <th style="width: 5%">Foto</th>
                                         <th>Capacitante</th>
                                         <th>Correo electrónico</th>
                                         <th>Documento</th>
@@ -94,7 +97,9 @@
                                 <tbody>
                                     @forelse ($capacitantes as $capacitante)
                                         <tr class="text-center" id="fila{{ $loop->iteration }}">
-                                            <td>{{ $loop->iteration }}</td>
+                                            <td> <img src="{{ asset($capacitante->image->fullimage()) }}"
+                                                    class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|} mx-auto d-block"
+                                                    alt="" width="50vh"></td>
                                             <td class="text-capitalize">{{ $capacitante->fullname() }}</td>
                                             <td>{{ $capacitante->email }}</td>
                                             <td>{{ $capacitante->document->document }}</td>
@@ -178,11 +183,12 @@
                 axios.post("{{ route('user.delete') }}", {
                     _method: 'delete',
                     usuario: usuario,
-                }).then(response => {
+                }).then(res => {
+                    console.log(res.data);
                     Swal.fire(
-                        'Eliminado!',
-                        response.data,
-                        'success'
+                        'Eliminación..',
+                        res.data.message,
+                        res.data.alert
                     )
 
                 });

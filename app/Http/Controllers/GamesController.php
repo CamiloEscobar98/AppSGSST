@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 class GamesController extends Controller
 {
+
     public function create(\App\Http\Requests\Game\CreateGameRequest $request)
     {
         $validated = $request->validated();
@@ -46,6 +47,20 @@ class GamesController extends Controller
             return $wordfind->words;
         }
     }
+
+    public function destroy(Request $request)
+    {
+        if ($request->ajax()) {
+            $game = \App\Models\Game::find($request->game);
+            $game->gameable()->delete();
+            $aux = $game;
+            if ($game->delete()) {
+                return response()->json(['alert' => 'success', 'message' => 'Se ha eliminado correctamente el juego ' . $aux->title]);
+            }
+            return response()->json(['alert' => 'error', 'message' => 'Error en la eliminación de el juego.']);
+        }
+    }
+
     private function insertGame($validated)
     {
         switch ($validated['game_type']) {
