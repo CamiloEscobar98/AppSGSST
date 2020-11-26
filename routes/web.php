@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $topics = \App\Models\Topic::all();
+    return view('welcome', ['topics' => $topics]);
 });
 
 Route::post('/user-create', [\App\Http\Controllers\UserController::class, 'create'])->name('user.create');

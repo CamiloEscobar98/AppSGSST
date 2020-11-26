@@ -374,7 +374,7 @@
                     )
                     setTimeout(() => {
                         location.reload(true)
-                    }, 2000);;
+                    }, 2000);
 
                 });
             }

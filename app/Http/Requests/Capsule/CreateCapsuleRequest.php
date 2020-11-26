@@ -25,9 +25,9 @@ class CreateCapsuleRequest extends FormRequest
     {
         return [
             'topic' => ['required', 'exists:topics,id'],
-            'title' => ['required', 'string', 'unique:topics,title', 'max:80'],
+            'title' => ['required', 'string', 'unique:capsules,title', 'max:80'],
             'info' => ['required', 'string'],
-            'video' => ['required', 'url']
+            'video' => ['required', 'url', 'unique:capsules,video']
         ];
     }
 

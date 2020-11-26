@@ -99,8 +99,6 @@
                                             <td>{{ $word->clue }}</td>
                                             <td>
                                                 <div class="btn-group" role="group" aria-label="">
-                                                    <button type="button" class="btn btn-primary"><i class="fa fa-eye"
-                                                            aria-hidden="true"></i></button>
                                                     <button type="button" class="btn btn-danger delete-word"
                                                         data-tr="{{ $loop->iteration }}" data-title="{{ $word->word }}"
                                                         data-word="{{ $word->id }}"><i class="fa fa-trash"

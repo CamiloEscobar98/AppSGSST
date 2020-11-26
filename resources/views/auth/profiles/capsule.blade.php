@@ -67,11 +67,11 @@
                                         <label for="topic" class="font-weight-bold">Temática</label>
                                         <select class="form-control" name="topic" id="topic">
                                             <option value="-1">Seleccione una temática</option>
-                                            @foreach ($tematicas as $item)
-                                                @if ($item->id == $capsule->topic->id)
-                                                    <option value="{{ $item->id }}" selected>{{ $item->title }}</option>
+                                            @foreach ($tematicas as $topic)
+                                                @if ($topic->id == $capsule->topic->id)
+                                                    <option value="{{ $topic->id }}" selected>{{ $topic->title }}</option>
                                                 @endif
-                                                <option value="{{ $item->id }}">{{ $item->title }}</option>
+                                                <option value="{{ $topic->id }}">{{ $topic->title }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -92,7 +92,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="embed-responsive embed-responsive-16by9">
-                                    <iframe class="embed-responsive-item" src="{!! $capsule->video !!}"
+                                    <iframe class="embed-responsive-item" src="{{ $capsule->video }}"
                                         allowfullscreen></iframe>
                                 </div>
                             </div>

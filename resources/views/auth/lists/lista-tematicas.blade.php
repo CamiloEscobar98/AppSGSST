@@ -139,6 +139,9 @@
                 });
                 var fila = $(this).attr('data-tr');
                 $("#fila" + fila).remove();
+                setTimeout(() => {
+                        location.reload(true)
+                    }, 2000);
             }
         })
     });
