@@ -39,6 +39,11 @@ class User extends Authenticatable
         return $this->belongsToMany(\App\Models\Role::class, 'role_users')->withTimestamps();
     }
 
+    public function topics()
+    {
+        return $this->hasMany(\App\Models\Topic::class);
+    }
+
     public function image()
     {
         return $this->morphOne(\App\Models\Image::class, 'imageable');
@@ -47,6 +52,12 @@ class User extends Authenticatable
     public function authorizeRoles($roles)
     {
         abort_unless($this->hasAnyRole($roles), 401);
+        return true;
+    }
+
+    public function authorizeRolesSession($roles)
+    {
+        abort_unless($this->hasAnyRoleSession($roles), 401);
         return true;
     }
     public function hasAnyRole($roles)
@@ -69,6 +80,33 @@ class User extends Authenticatable
     {
         if ($this->roles()->where('name', $role)->first()) {
             return true;
+        }
+        return false;
+    }
+
+    public function hasRoleSession($role)
+    {
+        $aux = $this->roles()->where('name', $role)->first();
+        if ($aux) {
+            if ($aux->name == session('role')) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function hasAnyRoleSession($roles)
+    {
+        if (is_array($roles)) {
+            foreach ($roles as $role) {
+                if ($this->hasRoleSession($role)) {
+                    return true;
+                }
+            }
+        } else {
+            if ($this->hasRoleSession($roles)) {
+                return true;
+            }
         }
         return false;
     }

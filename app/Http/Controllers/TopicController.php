@@ -6,6 +6,12 @@ use Illuminate\Http\Request;
 
 class TopicController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware("checkRoute:capacitador_administrador")->only(['update', 'updatePhoto']);
+    }
+
     public function create(\App\Http\Requests\Topic\CreateTopicRequest $request)
     {
         $validated = $request->validated();

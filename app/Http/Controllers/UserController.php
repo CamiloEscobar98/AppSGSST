@@ -13,6 +13,7 @@ class UserController extends Controller
 
     public function create(\App\Http\Requests\User\CreateUserRequest $request)
     {
+        $request->user()->authorizeRolesSession(['administrador']);
         $validated = $request->validated();
         $save = $this->insertUser($validated);
         if ($save) {
@@ -163,5 +164,12 @@ class UserController extends Controller
             'url' => 'storage/images/profiles'
         ]);
         return $usuario;
+    }
+
+    public function topics()
+    {
+        $user = \App\User::find(Auth()->user()->id);
+        $topics = $user->topics;
+        return view('auth.lists.mis-tematicas', ['topics' => $topics]);
     }
 }

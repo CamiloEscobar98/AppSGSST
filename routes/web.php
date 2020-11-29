@@ -28,6 +28,7 @@ Route::delete('/user-delete', [\App\Http\Controllers\UserController::class, 'des
 Route::get('/perfil/{usuario}', [\App\Http\Controllers\UserController::class, 'show'])->name('user.show');
 Route::post('/user-add-role', [\App\Http\Controllers\UserController::class, 'addRole'])->name('user.addRole');
 Route::delete('/user-delete-role', [\App\Http\Controllers\UserController::class, 'deleteRole'])->name('user.deleteRole');
+Route::get('/mis-tematicas', [\App\Http\Controllers\UserController::class, 'topics'])->name('user.my-topics');
 
 Route::post('/topic-create', [\App\Http\Controllers\TopicController::class, 'create'])->name('topic.create');
 Route::delete('/topic-delete', [\App\Http\Controllers\TopicController::class, 'destroy'])->name('topic.delete');
