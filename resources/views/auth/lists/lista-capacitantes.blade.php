@@ -1,83 +1,120 @@
 @extends('layouts.app')
 @section('title', 'Capacitantes')
 @section('content')
-    <div class="container-fluid mb-4 mt-5">
+    <div class="container-fluid mb-4">
         <div class="row justify-content-center">
             <div class="col-md-4">
-                <div class="card shadow">
-                    <div class="card-header bg-sgsst2 py-4">
-                        <h4 class="my-0 font-weight-bold">Registrar Capacitante</h4>
+                <div class="row">
+                    <div class="col-12 mt-4">
+                        <div class="card shadow">
+                            <div class="card-header bg-sgsst2 py-4">
+                                <h4 class="my-0 font-weight-bold">Registrar Capacitante</h4>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-title">Por favor llena toda la información para registrar el capacitante.</p>
+                                <form action="{{ route('user.create') }}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="role" value="capacitante">
+                                    <div class="form-group">
+                                        <label for="name" class="font-weight-bold">Nombres:</label>
+                                        <input type="text" name="name" id="name"
+                                            class="form-control @error('name') is-invalid @enderror"
+                                            value="{{ old('name') }}" aria-describedby="helpId">
+                                        @error('name')
+                                            <small id="helpId"
+                                                class="font-weight-bold text-white bg-danger py-2 px-2">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lastname" class="font-weight-bold">Apellidos:</label>
+                                        <input type="text" name="lastname" id="lastname"
+                                            class="form-control @error('lastname') is-invalid @enderror"
+                                            value="{{ old('lastname') }}" aria-describedby="helpId">
+                                        @error('lastname')
+                                            <small id="helpId"
+                                                class="font-weight-bold text-white bg-danger py-2 px-2">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email" class="font-weight-bold">Correo electrónico:</label>
+                                        <input type="email" name="email" id="email"
+                                            class="form-control @error('email') is-invalid @enderror"
+                                            value="{{ old('email') }}" aria-describedby="helpId">
+                                        @error('email')
+                                            <small id="helpId"
+                                                class="font-weight-bold text-white bg-danger py-2 px-2">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="document" class="font-weight-bold">Documento:</label>
+                                        <input type="text" name="document" id="document"
+                                            class="form-control @error('document') is-invalid @enderror"
+                                            value="{{ old('document') }}" aria-describedby="helpId" maxlength="15"
+                                            onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
+                                        @error('document')
+                                            <small id="helpId"
+                                                class="font-weight-bold text-white bg-danger py-2 px-2">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="document" class="font-weight-bold">Tipo de documento:</label>
+                                        <select name="document_type_id" id="document_type_id"
+                                            class="custom-select text-capitalize @error('document_type_id') is-invalid @enderror">
+                                            <option value="-1">Seleccione una opción</option>
+                                            @foreach ($document_types as $document_type)
+                                                <option value="{{ $document_type->type }}">{{ $document_type->info }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('document_type_id')
+                                            <small id="helpId"
+                                                class="font-weight-bold text-white bg-danger py-2 px-2">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-login btn-block">Registrar</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-footer bg-sgsst2 py-4"></div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <p class="card-title">Por favor llena toda la información para registrar el capacitante.</p>
-                        <form action="{{ route('user.create') }}" method="post">
-                            @csrf
-                            <input type="hidden" name="role" value="capacitante">
-                            <div class="form-group">
-                                <label for="name" class="font-weight-bold">Nombres:</label>
-                                <input type="text" name="name" id="name"
-                                    class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}"
-                                    aria-describedby="helpId">
-                                @error('name')
-                                    <small id="helpId"
-                                        class="font-weight-bold text-white bg-danger py-2 px-2">{{ $message }}</small>
-                                @enderror
+                    <div class="col-12 mt-4">
+                        <div class="card shadow">
+                            <div class="card-header py-4 bg-sgsst2">
+                                <h4 class="my-0 font-weight-bold">Registrar Capacitantes CSV</h4>
                             </div>
-                            <div class="form-group">
-                                <label for="lastname" class="font-weight-bold">Apellidos:</label>
-                                <input type="text" name="lastname" id="lastname"
-                                    class="form-control @error('lastname') is-invalid @enderror"
-                                    value="{{ old('lastname') }}" aria-describedby="helpId">
-                                @error('lastname')
-                                    <small id="helpId"
-                                        class="font-weight-bold text-white bg-danger py-2 px-2">{{ $message }}</small>
-                                @enderror
+                            <div class="card-body">
+                                <form action="{{ route('user.massive') }}" method="post" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="form-group">
+                                        <div class="custom-file">
+                                            <input type="file"
+                                                class="custom-file-input @error('users') is-invalid @enderror"
+                                                id="customFile" name="users">
+                                            <label class="custom-file-label" for="customFile">Seleccionar archivo CSV a
+                                                subir</label>
+                                        </div>
+                                        @error('users')
+                                            <small id="helpId"
+                                                class="form-text bg-danger font-weight-bold py-2 text-white px-2">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-block btn-login">Subir</button>
+                                    </div>
+                                </form>
+                                <div class="my-2">
+                                    <a href="{{ asset('storage/users.xlsx') }}" class="btn btn-block btn-info">Descargar
+                                        formato</a>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="email" class="font-weight-bold">Correo electrónico:</label>
-                                <input type="email" name="email" id="email"
-                                    class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}"
-                                    aria-describedby="helpId">
-                                @error('email')
-                                    <small id="helpId"
-                                        class="font-weight-bold text-white bg-danger py-2 px-2">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="document" class="font-weight-bold">Documento:</label>
-                                <input type="text" name="document" id="document"
-                                    class="form-control @error('document') is-invalid @enderror"
-                                    value="{{ old('document') }}" aria-describedby="helpId" maxlength="15"
-                                    onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
-                                @error('document')
-                                    <small id="helpId"
-                                        class="font-weight-bold text-white bg-danger py-2 px-2">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="document" class="font-weight-bold">Tipo de documento:</label>
-                                <select name="document_type_id" id="document_type_id"
-                                    class="custom-select text-capitalize @error('document_type_id') is-invalid @enderror">
-                                    <option value="-1">Seleccione una opción</option>
-                                    @foreach ($document_types as $document_type)
-                                        <option value="{{ $document_type->type }}">{{ $document_type->info }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('document_type_id')
-                                    <small id="helpId"
-                                        class="font-weight-bold text-white bg-danger py-2 px-2">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-login btn-block">Registrar</button>
-                            </div>
-                        </form>
+                            <div class="card-footer bg-sgsst2 py-4"></div>
+                        </div>
                     </div>
-                    <div class="card-footer bg-sgsst2 py-4"></div>
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 mt-4">
                 <div class="card shadow">
                     <div class="card-header bg-sgsst2 py-4">
                         <h4 class="my-0 font-weight-bold">Lista de capacitantes</h4>
@@ -199,6 +236,13 @@
                 }, 2000);
             }
         })
+    });
+
+</script>
+<script>
+    $(".custom-file-input").on("change", function() {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
 
 </script>

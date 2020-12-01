@@ -3,12 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    public function userImport(Request $request)
+    {
+        $rules = [
+            'users' => ['required', 'file', 'mimes:xlsx']
+        ];
+        $attributes = ['users' => 'Archivo de capacitantes'];
+        $validated = $request->validate($rules, [], $attributes);
+        $file = $request->file('users');
+        Excel::import(new \App\Imports\UsersImport, $file);
+        return redirect()->back()->with('create_complete', 'Se registró correctamente a todos los usuarios');
     }
 
     public function create(\App\Http\Requests\User\CreateUserRequest $request)

@@ -2,7 +2,7 @@
 @section('title', 'Temáticas')
 @section('content')
     <div class="container-fluid">
-        <div class="row justify-content-center">
+        <div class="row">
             @forelse ($topics as $topic)
                 <div class="col-12 col-md-3 my-4">
                     <div class="card h-100">

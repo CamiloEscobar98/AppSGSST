@@ -94,68 +94,73 @@
                                     </div>
                                 </div>
                             @endif
-                            <div class=" @if ($tema->game == null)
-                                    <form action="{{ route('game.create') }}" method="post" class="col-md-8">
-                                        @csrf
-                                        <input type="hidden" name="topic" value="{{ $tema->id }}">
-                                        <div class="form-group">
-                                            <label for="title_game" class="font-weight-bold">Titulo del Juego</label>
-                                            <input type="text" name="title_game" id="title_game"
-                                                value="{{ old('title_game') }}"
-                                                class="form-control @error('title_game') is-invalid @enderror"
-                                                placeholder="Titulo del juego" aria-describedby="helpId">
-                                            @error('title_game')
-                                                <small id="helpId"
-                                                    class="text-white font-weight-bold bg-danger py-1">{{ $message }}</small>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="game_type" class="font-weight-bold">Tipo de juego</label>
-                                            <select class="custom-select @error('game_type') is-invalid @enderror"
-                                                name="game_type" id="game_type">
-                                                <option value="-1" selected>Seleccione un tipo de juego</option>
-                                                <option value="1">Ahorcado</option>
-                                                <option value="2">Sopa de Letras</option>
-                                            </select>
-                                            @error('game_type')
-                                                <small id="helpId"
-                                                    class="text-white font-weight-bold bg-danger py-1">{{ $message }}</small>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-block btn-login">Registrar juego</button>
-                                        </div>
-                                    </form>
-                                @else
-                                    @if ($tema->game->gameable->words()->count() != null)
-                                        <button class="btn btn-block btn-primary"
-                                            onclick="mostrar_ocultar_juego('play_game')">Jugar</button>
-                                        <a href="{{ route('game.show', $tema->game) }}" class="btn btn-block btn-login">Ver
-                                            juego</a>
-                                        <button type="button" class="btn btn-block btn-danger delete-game"
-                                            data-game="{{ $tema->game->id }}">Eliminar</button>
 
-                                    @else
-                                        <a href="{{ route('game.show', $tema->game) }}" class="btn btn-block btn-login">Ver
-                                            juego</a>
-                                        <button type="button" class="btn btn-block btn-danger delete-game"
-                                            data-game="{{ $tema->game->id }}">Eliminar</button>
-                                    @endif
-                                    <div id="play_game">
-                                        @if ($tema->game->type == 1)
-                                            @include('auth.games.hangman')
-                                        @endif
-                                        @if ($tema->game->type == 2)
-                                            @include('auth.games.wordfind')
-                                        @endif
-                                    </div>
-                                @endif
-
-                            </div>
-                            <div class="card-footer bg-sgsst2 py-4"></div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-8 mt-4">
+                @if ($tema->game == null)
+                    <div class="card">
+                        <div class="card-header bg-sgsst2 py-4"></div>
+                        <div class="card-body">
+                            <form action="{{ route('game.create') }}" method="post">
+                                @csrf
+                                <input type="hidden" name="topic" value="{{ $tema->id }}">
+                                <div class="form-group">
+                                    <label for="title_game" class="font-weight-bold">Titulo del Juego</label>
+                                    <input type="text" name="title_game" id="title_game" value="{{ old('title_game') }}"
+                                        class="form-control @error('title_game') is-invalid @enderror"
+                                        placeholder="Titulo del juego" aria-describedby="helpId">
+                                    @error('title_game')
+                                        <small id="helpId"
+                                            class="text-white font-weight-bold bg-danger py-1">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="game_type" class="font-weight-bold">Tipo de juego</label>
+                                    <select class="custom-select @error('game_type') is-invalid @enderror" name="game_type"
+                                        id="game_type">
+                                        <option value="-1" selected>Seleccione un tipo de juego</option>
+                                        <option value="1">Ahorcado</option>
+                                        <option value="2">Sopa de Letras</option>
+                                    </select>
+                                    @error('game_type')
+                                        <small id="helpId"
+                                            class="text-white font-weight-bold bg-danger py-1">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-block btn-login">Registrar juego</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-footer bg-sgsst2 py-4"></div>
+                    </div>
+                @else
+                    @if ($tema->game->gameable->words()->count() != null)
+                        <button class="btn btn-block btn-primary"
+                            onclick="mostrar_ocultar_juego('play_game')">Jugar</button>
+                        <a href="{{ route('game.show', $tema->game) }}" class="btn btn-block btn-login">Ver
+                            juego</a>
+                        <button type="button" class="btn btn-block btn-danger delete-game"
+                            data-game="{{ $tema->game->id }}">Eliminar</button>
+
+                    @else
+                        <a href="{{ route('game.show', $tema->game) }}" class="btn btn-block btn-login">Ver
+                            juego</a>
+                        <button type="button" class="btn btn-block btn-danger delete-game"
+                            data-game="{{ $tema->game->id }}">Eliminar</button>
+                    @endif
+                    <div id="play_game">
+                        @if ($tema->game->type == 1)
+                            @include('auth.games.hangman')
+                        @endif
+                        @if ($tema->game->type == 2)
+                            @include('auth.games.wordfind')
+                        @endif
+                    </div>
+                @endif
             </div>
         </div>
     </div>
