@@ -18,7 +18,7 @@ class UsersImport implements ToModel, WithHeadingRow, WithEvents, WithUpserts
      */
     public function model(array $row)
     {
-        return new User([
+        $user = User::updateOrCreate([
             'name' => $row['nombres'],
             'lastname' => $row['apellidos'],
             'email' => $row['email'],
@@ -27,6 +27,13 @@ class UsersImport implements ToModel, WithHeadingRow, WithEvents, WithUpserts
                 'document_type_id' => \App\Models\Document_type::where('type', $row['tipodocumento'])->first()->id,
             ])->id,
             'password' => bcrypt('1234')
+        ]);
+
+        $role = \App\Models\Role::where('name', 'capacitante')->first();
+        $user->roles()->attach($role);
+        $user->image()->create([
+            'image' => 'default.png',
+            'url' => 'storage/images/profiles'
         ]);
     }
 

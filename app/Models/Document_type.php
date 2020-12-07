@@ -11,6 +11,7 @@ class Document_type extends Model
         'info'
     ];
 
+
     public function documents()
     {
         return $this->hasMany(\App\Models\Document::class);

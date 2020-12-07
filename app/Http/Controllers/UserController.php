@@ -20,7 +20,7 @@ class UserController extends Controller
         $attributes = ['users' => 'Archivo de capacitantes'];
         $validated = $request->validate($rules, [], $attributes);
         $file = $request->file('users');
-        Excel::import(new \App\Imports\UsersImport, $file);
+        $users =  Excel::import(new \App\Imports\UsersImport, $file);
         return redirect()->back()->with('create_complete', 'Se registró correctamente a todos los usuarios');
     }
 

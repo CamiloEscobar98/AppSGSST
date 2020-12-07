@@ -2,7 +2,7 @@
 @section('title', 'Temáticas')
 @section('content')
     <div class="container-fluid">
-        <div class="row">
+        <div class="row ">
             @forelse ($topics as $topic)
                 <div class="col-12 col-md-3 my-4">
                     <div class="card h-100">
@@ -20,7 +20,11 @@
                     </div>
                 </div>
             @empty
-
+                <div class="col-8 mx-auto text-center my-4">
+                    <div class="alert alert-danger">
+                        <strong>No tienes temáticas asignadas. Por favor, solicita que el administrador te asigne alguna temática.</strong>
+                    </div>
+                </div>
             @endforelse
         </div>
     </div>

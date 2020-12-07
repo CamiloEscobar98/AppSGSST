@@ -82,7 +82,7 @@
                     <div class="col-12 mt-4">
                         <div class="card shadow">
                             <div class="card-header py-4 bg-sgsst2">
-                                <h4 class="my-0 font-weight-bold">Registrar Capacitantes CSV</h4>
+                                <h4 class="my-0 font-weight-bold">Cargar Capacitantes</h4>
                             </div>
                             <div class="card-body">
                                 <form action="{{ route('user.massive') }}" method="post" enctype="multipart/form-data">
@@ -92,7 +92,7 @@
                                             <input type="file"
                                                 class="custom-file-input @error('users') is-invalid @enderror"
                                                 id="customFile" name="users">
-                                            <label class="custom-file-label" for="customFile">Seleccionar archivo CSV a
+                                            <label class="custom-file-label" for="customFile">Seleccionar archivo a
                                                 subir</label>
                                         </div>
                                         @error('users')

@@ -27,7 +27,7 @@ class CreateUserRequest extends FormRequest
             'name' => ['required', 'max:80', 'string'],
             'lastname' => ['required', 'max:80', 'string'],
             'email' => ['required', 'email', 'unique:users,email'],
-            'document' => ['required', 'unique:documents,document', 'max:50', 'alpha_num'],
+            'document' => ['required', 'unique:documents,document', 'digits_between:10,50', 'numeric'],
             'document_type_id' => ['required', 'exists:document_types,type'],
             'role' => ['required', 'exists:roles,name']
         ];

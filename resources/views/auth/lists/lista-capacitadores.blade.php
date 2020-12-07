@@ -190,13 +190,19 @@
                         res.data.message,
                         res.data.alert
                     )
-
-                });
-                var fila = $(this).attr('data-tr');
-                $("#fila" + fila).remove();
-                setTimeout(() => {
+                    var fila = $(this).attr('data-tr');
+                    $("#fila" + fila).remove();
+                    setTimeout(() => {
                         location.reload(true)
                     }, 2000);
+                }).catch(res => {
+                    Swal.fire(
+                        'Error..',
+                        res.data.message,
+                        res.data.alert
+                    )
+                });
+
             }
         })
     });
