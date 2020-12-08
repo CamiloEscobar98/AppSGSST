@@ -82,12 +82,12 @@ class LoginController extends Controller
     protected function validateLogin(Request $request)
     {
         $rules = [
-            $this->username() => ['required', 'string'],
+            $this->username() => ['required', 'string', 'exists:users,' . $this->username()],
             'password' => ['required', 'string'],
             'role_id' => ['required', 'integer', 'min:0']
         ];
         $attributes = [
-            'email' => 'código del usuario',
+            'email' => 'correo electrónico del usuario',
             'password' => 'contraseña del usuario',
             'role_id' => 'rol del usuario'
         ];

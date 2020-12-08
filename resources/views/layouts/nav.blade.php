@@ -17,7 +17,18 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
-                @if (session('role') == 'administrador')
+                @switch(session('role'))
+                    @case('capacitante')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('user.topics') }}">Temáticas</a>
+                    </li>
+                    @break
+                    @case('capacitador')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('user.my-topics') }}">Mis temáticas</a>
+                    </li>
+                    @break
+                    @default
                     <div class="dropdown">
                         <button class="btn dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
@@ -34,18 +45,10 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('capsulas') }}">Cápsulas</a>
                     </li>
-                @endif
-                @if (session('role') == 'capacitador')
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('user.my-topics') }}">Mis temáticas</a>
-                    </li>
-                @endif
+                @endswitch
 
             </ul>
-
-            <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
-                <!-- Authentication Links -->
                 @guest
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">Iniciar Sesión</a>
@@ -56,11 +59,10 @@
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
-
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
-                                                                                                                                                                                             document.getElementById('logout-form').submit();">
+                                                                                                                                                                                                                                             document.getElementById('logout-form').submit();">
                                 Cerrar Sesión
                             </a>
 

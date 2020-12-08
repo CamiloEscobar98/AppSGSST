@@ -22,6 +22,11 @@ class Topic extends Model
         return $this->belongsTo(\App\User::class);
     }
 
+    public function users()
+    {
+        return $this->belongsToMany(\App\User::class, 'users_progress')->withPivot(['completed']);
+    }
+
     public function capsules()
     {
         return $this->hasMany(\App\Models\Capsule::class);

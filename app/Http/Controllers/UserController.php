@@ -179,10 +179,40 @@ class UserController extends Controller
         return $usuario;
     }
 
-    public function topics()
+    public function myTopics(Request $request)
     {
+        $request->user()->authorizeRolesSession(['capacitador']);
         $user = \App\User::find(Auth()->user()->id);
         $topics = $user->topics;
         return view('auth.lists.mis-tematicas', ['topics' => $topics]);
+    }
+
+    public function topics(Request $request)
+    {
+        $request->user()->authorizeRolesSession(['capacitante']);
+        $topics = \App\Models\Topic::paginate(5);
+        return view('auth.lists.tematicas', [
+            'topics' => $topics
+        ]);
+    }
+
+    public function addTopic(Request $request)
+    {
+        if ($request->ajax()) {
+            $topic = \App\Models\Topic::where('title', $request->topic)->first();
+            $user = \App\User::find($request->user);
+            if (!$user->hasTopic($topic->title)) {
+                $user->myTopics()->attach($topic);
+                return response()->json([
+                    'alert' => 'success',
+                    'message' => 'Se ha inscrito a la temática correctamente.'
+                ]);
+            } else {
+                return response()->json([
+                    'alert' => 'error',
+                    'message' => 'Error,no se ha inscrito a la temática'
+                ]);
+            }
+        }
     }
 }

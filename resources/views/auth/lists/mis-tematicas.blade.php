@@ -13,7 +13,6 @@
                                 alt="">
                             <h4 class="card-title">Temática:</h4>
                             <p>{{ $topic->title }}</p>
-                            <p class="card-text text-justify">{{ $topic->info }}</p>
                             <a href="{{ route('topic.show', $topic) }}" class="btn btn-block btn-login">Ver</a>
                         </div>
                         <div class="card-footer bg-sgsst2 py-4"></div>

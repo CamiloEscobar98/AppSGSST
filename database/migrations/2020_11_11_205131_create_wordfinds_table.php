@@ -16,6 +16,7 @@ class CreateWordfindsTable extends Migration
         Schema::create('wordfinds', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->engine = 'InnoDB';
         });
     }
 

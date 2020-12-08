@@ -39,6 +39,19 @@ class User extends Authenticatable
         return $this->belongsToMany(\App\Models\Role::class, 'role_users')->withTimestamps();
     }
 
+    public function myTopics()
+    {
+        return $this->belongsToMany(\App\Models\Topic::class, 'users_progress')->withPivot(['completed']);
+    }
+
+    public function hasTopic($topic)
+    {
+        if ($this->myTopics()->where('title', $topic)->first()) {
+            return true;
+        }
+        return false;
+    }
+
     public function topics()
     {
         return $this->hasMany(\App\Models\Topic::class);
