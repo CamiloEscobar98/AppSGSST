@@ -1,12 +1,47 @@
-@extends('layouts.app')
+@extends('layouts.argon')
 @section('title', 'Inicio')
 @section('content')
-    <section class="container-fluid mb-4">
-        <div class="row justify-content-center">
+    <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                <!-- Navbar links -->
+                <ul class="navbar-nav align-items-center  ml-md-auto ">
+                    <li class="nav-item d-xl-none">
+                        <!-- Sidenav toggler -->
+                        <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin"
+                            data-target="#sidenav-main">
+                            <div class="sidenav-toggler-inner">
+                                <i class="sidenav-toggler-line"></i>
+                                <i class="sidenav-toggler-line"></i>
+                                <i class="sidenav-toggler-line"></i>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                @include('layouts.argon_user_nav')
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="messages">
+            @if (session()->has('update_complete'))
+                <div class="alert alert-success" role="alert">
+                    <strong>¡Éxito!</strong>{{ session('update_complete') }}
+                </div>
+            @endif
+            @if (session()->has('update_failed'))
+                <div class="alert alert-danger" role="alert">
+                    <strong>¡Error!</strong>{{ session('update_failed') }}
+                </div>
+            @endif
+        </div>
+
+        <div class="row">
             <div class="col-md-3 mt-5">
                 <div class="card shadow">
-                    <div class="card-header bg-sgsst2 py-5">
-                        <h1 class="font-weight-bold my-0 text-center text-capitalize">{{ session('role') }}</h1>
+                    <div class="card-header bg-primary py-5">
+                        <h1 class="font-weight-bold my-0 text-center text-capitalize text-white">{{ session('role') }}</h1>
                     </div>
                     <div class="card-body">
                         <img src="{{ asset(
@@ -22,8 +57,8 @@
                             <div class="form-group">
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input @error('image') is-invalid @enderror"
-                                        id="customFile" name="image">
-                                    <label class="custom-file-label" for="customFile">Seleccionar foto de perfil</label>
+                                        id="customFileLang" lang="en" name="image">
+                                    <label class="custom-file-label" for="customFileLang"></label>
                                 </div>
                                 @error('image')
                                     <small id="helpId"
@@ -31,32 +66,30 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-login btn-block">Actualizar foto</button>
+                                <button type="submit" class="btn btn-primary btn-block">Actualizar foto</button>
                             </div>
                         </form>
                     </div>
-                    <div class="card-footer bg-sgsst2 py-4"></div>
+                    <div class="card-footer bg-primary py-4"></div>
                 </div>
             </div>
             <div class="col-md-6 mt-5">
                 <div class="card shadow">
-                    <div class="card-header bg-sgsst2 py-5">
-                        <h1 class="font-weight-bold my-0 text-center text-capitalize">{{ session('role') }}</h1>
-                    </div>
+                    <div class="card-header bg-primary py-5"></div>
                     <div class="card-body">
                         <h4 class="card-title float-right">Perfil de usuario</h4>
                         <p class="card-text">Actualiza tu información</p>
                         @include('layouts.user.update-form')
                     </div>
-                    <div class="card-footer bg-sgsst2 py-4"></div>
+                    <div class="card-footer bg-primary py-4"></div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="row">
                     <div class="col-12 mt-5">
                         <div class="card shadow">
-                            <div class="card-header bg-sgsst2 py-4">
-                                <h4 class="my-0 font-weight-bold text-center">Cambiar contraseña</h4>
+                            <div class="card-header bg-primary py-4">
+                                <h4 class="my-0 font-weight-bold text-center text-white">Cambiar contraseña</h4>
                             </div>
                             <div class="card-body">
                                 <form action="{{ route('user.update-password') }}" method="post">
@@ -75,18 +108,19 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-login btn-block">Actualizar contraseña</button>
+                                        <button type="submit" class="btn btn-primary btn-block">Actualizar
+                                            contraseña</button>
                                     </div>
                                 </form>
                             </div>
-                            <div class="card-footer bg-sgsst2 py-4"></div>
+                            <div class="card-footer bg-primary py-4"></div>
                         </div>
                     </div>
                     @if (session('role') == 'administrador')
                         <div class="col-12 mt-4">
                             <div class="card shadow">
-                                <div class="card-header bg-sgsst2 py-4">
-                                    <h4 class="my-0 font-weight-bold text-center">Cambiar tipo de documento</h4>
+                                <div class="card-header bg-primary py-4">
+                                    <h4 class="my-0 font-weight-bold text-center text-white">Cambiar tipo de documento</h4>
                                 </div>
                                 <div class="card-body">
                                     <form action="{{ route('user.update-document') }}" method="post">
@@ -119,18 +153,20 @@
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-login btn-block">Actualizar</button>
+                                            <button type="submit" class="btn btn-primary btn-block">Actualizar</button>
                                         </div>
                                     </form>
                                 </div>
-                                <div class="card-footer bg-sgsst2 py-4"></div>
+                                <div class="card-footer bg-primary py-4"></div>
                             </div>
                         </div>
                     @endif
                 </div>
             </div>
         </div>
-    </section>
+        <!-- Footer -->
+        @include('layouts.argon_footer')
+    </div>
 @endsection
 @section('scripts')
     <script>
@@ -141,30 +177,4 @@
         });
 
     </script>
-    @if (session()->has('update_complete'))
-        <script>
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: '¡Éxito!',
-                text: "{{ session('update_complete') }}",
-                showConfirmButton: false,
-                timer: 1500
-            })
-
-        </script>
-    @endif
-    @if (session()->has('update_failed'))
-        <script>
-            Swal.fire({
-                position: 'top-end',
-                icon: 'error',
-                title: "¡Error!",
-                text: "{{ session('update_failed') }}",
-                showConfirmButton: false,
-                timer: 1500
-            })
-
-        </script>
-    @endif
 @endsection

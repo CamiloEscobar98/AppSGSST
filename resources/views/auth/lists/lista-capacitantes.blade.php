@@ -1,14 +1,36 @@
-@extends('layouts.app')
+@extends('layouts.argon')
 @section('title', 'Capacitantes')
 @section('content')
-    <div class="container-fluid mb-4">
+    <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                <!-- Navbar links -->
+                <ul class="navbar-nav align-items-center  ml-md-auto ">
+                    <li class="nav-item d-xl-none">
+                        <!-- Sidenav toggler -->
+                        <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin"
+                            data-target="#sidenav-main">
+                            <div class="sidenav-toggler-inner">
+                                <i class="sidenav-toggler-line"></i>
+                                <i class="sidenav-toggler-line"></i>
+                                <i class="sidenav-toggler-line"></i>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                @include('layouts.argon_user_nav')
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid mb-4 mt-5">
         <div class="row justify-content-center">
             <div class="col-md-4">
                 <div class="row">
                     <div class="col-12 mt-4">
                         <div class="card shadow">
-                            <div class="card-header bg-sgsst2 py-4">
-                                <h4 class="my-0 font-weight-bold">Registrar Capacitante</h4>
+                            <div class="card-header bg-primary py-4">
+                                <h4 class="my-0 font-weight-bold text-white">Registrar Capacitante</h4>
                             </div>
                             <div class="card-body">
                                 <p class="card-title">Por favor llena toda la información para registrar el capacitante.</p>
@@ -72,16 +94,16 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-login btn-block">Registrar</button>
+                                        <button type="submit" class="btn btn-primary btn-block">Registrar</button>
                                     </div>
                                 </form>
                             </div>
-                            <div class="card-footer bg-sgsst2 py-4"></div>
+                            <div class="card-footer bg-primary py-4"></div>
                         </div>
                     </div>
                     <div class="col-12 mt-4">
                         <div class="card shadow">
-                            <div class="card-header py-4 bg-sgsst2">
+                            <div class="card-header py-4 bg-primary">
                                 <h4 class="my-0 font-weight-bold">Cargar Capacitantes</h4>
                             </div>
                             <div class="card-body">
@@ -92,8 +114,7 @@
                                             <input type="file"
                                                 class="custom-file-input @error('users') is-invalid @enderror"
                                                 id="customFile" name="users">
-                                            <label class="custom-file-label" for="customFile">Seleccionar archivo a
-                                                subir</label>
+                                            <label class="custom-file-label" for="customFile"></label>
                                         </div>
                                         @error('users')
                                             <small id="helpId"
@@ -101,28 +122,28 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-block btn-login">Subir</button>
+                                        <button type="submit" class="btn btn-block btn-primary">Subir</button>
                                     </div>
                                 </form>
                                 <div class="my-2">
-                                    <a href="{{ asset('storage/users.xlsx') }}" class="btn btn-block btn-info">Descargar
+                                    <a href="{{ asset('storage/users.xlsx') }}" class="btn btn-block btn-warning">Descargar
                                         formato</a>
                                 </div>
                             </div>
-                            <div class="card-footer bg-sgsst2 py-4"></div>
+                            <div class="card-footer bg-primary py-4"></div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-8 mt-4">
                 <div class="card shadow">
-                    <div class="card-header bg-sgsst2 py-4">
-                        <h4 class="my-0 font-weight-bold">Lista de capacitantes</h4>
+                    <div class="card-header bg-primary py-4">
+                        <h4 class="my-0 font-weight-bold text-white">Lista de capacitantes</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
-                                <thead class="bg-sgsst2 font-weight-bold text-center">
+                                <thead class="bg-primary font-weight-bold text-center text-white">
                                     <tr>
                                         <th style="width: 5%">Foto</th>
                                         <th>Capacitante</th>
@@ -159,7 +180,7 @@
                                         </tr>
                                     @endforelse
                                 </tbody>
-                                <tfoot class="bg-sgsst2 font-weight-bold text-center">
+                                <tfoot class="bg-primary font-weight-bold text-center text-white">
                                     <th style="width: 5%">No</th>
                                     <th>Capacitante</th>
                                     <th>Correo electrónico</th>
@@ -170,6 +191,7 @@
                             {{ $capacitantes->links() }}
                         </div>
                     </div>
+                    <div class="card-footer bg-primary py-4"></div>
                 </div>
             </div>
         </div>

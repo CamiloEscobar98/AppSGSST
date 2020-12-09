@@ -83,13 +83,13 @@ class UserController extends Controller
 
     public function destroy(Request $request)
     {
-        if ($request->ajax()) {
-            $usuario = \App\User::where('email', $request->usuario)->first();
-            $aux = $usuario;
-            if ($usuario->delete()) {
-                return response()->json(['alert' => 'success', 'message' => 'Se ha eliminado correctamente a ' . $aux->name . ' ' . $aux->lastname]);
-            }
+        $usuario = \App\User::where('email', $request->usuario)->first();
+        $aux = $usuario;
+        $delete = \App\User::destroy($usuario->id);
+        if ($delete) {
+            return response()->json(['alert' => 'success', 'message' => 'Se ha eliminado correctamente a ' . $aux->name . ' ' . $aux->lastname]);
         }
+        return response()->json(['alert' => 'failed', 'message' => 'No se ha eliminado correctamente a ' . $aux->name . ' ' . $aux->lastname]);
     }
 
     public function updatePhoto(Request $request)
