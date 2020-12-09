@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class CapsuleController extends Controller
 {
 
-   
+
 
     public function create(\App\Http\Requests\Capsule\CreateCapsuleRequest $request)
     {
@@ -81,13 +81,11 @@ class CapsuleController extends Controller
 
     public function destroy(Request $request)
     {
-        if ($request->ajax()) {
-            $capsule = \App\Models\Capsule::find($request->capsule);
-            $aux = $capsule;
-            if ($capsule->delete()) {
-                return response()->json(['alert' => 'success', 'message' => 'Se ha eliminado correctamente la cápsula ' . $aux->title]);
-            }
-            return response()->json(['alert' => 'error', 'message' => 'Error en la eliminación de la cápsula.']);
+        $capsule = \App\Models\Capsule::find($request->capsule);
+        $aux = $capsule;
+        if ($capsule->delete()) {
+            return response()->json(['alert' => 'success', 'message' => 'Se ha eliminado correctamente la cápsula ' . $aux->title]);
         }
+        return response()->json(['alert' => 'error', 'message' => 'Error en la eliminación de la cápsula.']);
     }
 }

@@ -207,19 +207,18 @@
                 axios.post("{{ route('user.delete') }}", {
                     _method: 'delete',
                     usuario: usuario,
-                    _token: "{{ csrf_token() }}",
                 }).then(res => {
-                    console.log(res.data.data);
+                    console.log(res.data);
                     Swal.fire(
                         'Eliminación..',
                         res.data.message,
                         res.data.alert
                     )
-                    // var fila = $(this).attr('data-tr');
-                    // $("#fila" + fila).remove();
-                    // setTimeout(() => {
-                    //     location.reload(true)
-                    // }, 2000);
+                    var fila = $(this).attr('data-tr');
+                    $("#fila" + fila).remove();
+                    setTimeout(() => {
+                        location.reload(true)
+                    }, 2000);
                 }).catch(res => {
                     Swal.fire(
                         'Error..',

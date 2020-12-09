@@ -84,14 +84,12 @@ class TopicController extends Controller
 
     public function destroy(Request $request)
     {
-        if ($request->ajax()) {
-            $topic = \App\Models\Topic::find($request->topic);
-            $aux = $topic;
-            if ($topic->delete()) {
-                return response()->json(['alert' => 'success', 'message' => 'Se ha eliminado correctamente la temática ' . $aux->title]);
-            }
-            return response()->json(['alert' => 'error', 'message' => 'Error en la eliminación de la temática.']);
+        $topic = \App\Models\Topic::find($request->topic);
+        $aux = $topic;
+        if ($topic->delete()) {
+            return response()->json(['alert' => 'success', 'message' => 'Se ha eliminado correctamente la temática ' . $aux->title]);
         }
+        return response()->json(['alert' => 'error', 'message' => 'Error en la eliminación de la temática.']);
     }
 
     private function inserTopic($validated)

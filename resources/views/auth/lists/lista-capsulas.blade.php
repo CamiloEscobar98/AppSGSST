@@ -1,12 +1,34 @@
-@extends('layouts.app')
+@extends('layouts.argon')
 @section('title', 'Cápsulas')
 @section('content')
+    <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                <!-- Navbar links -->
+                <ul class="navbar-nav align-items-center  ml-md-auto ">
+                    <li class="nav-item d-xl-none">
+                        <!-- Sidenav toggler -->
+                        <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin"
+                            data-target="#sidenav-main">
+                            <div class="sidenav-toggler-inner">
+                                <i class="sidenav-toggler-line"></i>
+                                <i class="sidenav-toggler-line"></i>
+                                <i class="sidenav-toggler-line"></i>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                @include('layouts.argon_user_nav')
+            </div>
+        </div>
+    </nav>
     <div class="container-fluid mb-4">
         <div class="row">
             <div class="col-md-4 mt-5">
                 <div class="card shadow">
-                    <div class="card-header bg-sgsst2 py-4">
-                        <h4 class="font-weight-bold my-0">Registrar Cápsula</h4>
+                    <div class="card-header bg-primary py-4">
+                        <h4 class="font-weight-bold my-0 text-white">Registrar Cápsula</h4>
                     </div>
                     <div class="card-body">
                         <p class="card-text">Por favor llena toda la información para registrar la cápsula.</p>
@@ -51,22 +73,22 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-block btn-login">Registrar</button>
+                                <button type="submit" class="btn btn-block btn-primary">Registrar</button>
                             </div>
                         </form>
                     </div>
-                    <div class="card-footer bg-sgsst2 py-4"></div>
+                    <div class="card-footer bg-primary py-4"></div>
                 </div>
             </div>
             <div class="col-md-8 mt-5">
                 <div class="card shadow">
-                    <div class="card-header bg-sgsst2 py-4">
+                    <div class="card-header bg-primary py-4">
                         <h4 class="font-weight-bold text-white my-0">Lista de Cápsulas</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
-                                <thead class="bg-sgsst2 font-weight-bold text-center">
+                                <thead class="bg-primary font-weight-bold text-white text-center">
                                     <tr>
                                         <th class="">Temática</th>
                                         <th class="">Título</th>
@@ -98,7 +120,7 @@
                                         <tr>No hay cápsuals registradas</tr>
                                     @endforelse
                                 </tbody>
-                                <tfoot class="bg-sgsst2 font-weight-bold text-center">
+                                <tfoot class="bg-primary font-weight-bold text-white text-center">
                                     <th>Encargado</th>
                                     <th>Título</th>
                                     <th>Descripción</th>
@@ -108,7 +130,7 @@
                         </div>
                         {{ $capsulas->links() }}
                     </div>
-                    <div class="card-footer bg-sgsst2 py-4"></div>
+                    <div class="card-footer bg-primary py-4"></div>
                 </div>
             </div>
         </div>

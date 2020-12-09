@@ -19,8 +19,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
-    <meta name="author" content="Creative Tim">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
     <!-- CSS -->
 
@@ -37,6 +36,8 @@
     <link rel="stylesheet" href="{{ asset('dashboard/css/argon.css?v=1.2.0') }}" type="text/css">
     {{--
     <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
+ 
+    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
 </head>
 
 <body>
@@ -58,10 +59,10 @@
     <script src="{{ asset('dashboard/vendor/chart.js/dist/Chart.extension.js') }}"></script>
     <!-- Argon JS -->
     <script src="{{ asset('dashboard/js/argon.js?v=1.2.0') }}"></script>
-    {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     @yield('scripts')
-    <script src="{{ asset('js/app.js') }}"></script>
+   
 </body>
 
 </html>
