@@ -27,7 +27,7 @@
         <div class="row justify-content-center">
             <div class="col-md-4">
                 <div class="row">
-                    <div class="col-12 mt-4">
+                    <div class="col-12">
                         <div class="card shadow">
                             <div class="card-header bg-primary py-4">
                                 <h4 class="my-0 font-weight-bold text-white">Registrar Capacitante</h4>
@@ -101,10 +101,10 @@
                             <div class="card-footer bg-primary py-4"></div>
                         </div>
                     </div>
-                    <div class="col-12 mt-4">
+                    <div class="col-12">
                         <div class="card shadow">
                             <div class="card-header py-4 bg-primary">
-                                <h4 class="my-0 font-weight-bold">Cargar Capacitantes</h4>
+                                <h4 class="my-0 font-weight-bold text-white">Cargar Capacitantes</h4>
                             </div>
                             <div class="card-body">
                                 <form action="{{ route('user.massive') }}" method="post" enctype="multipart/form-data">
@@ -135,7 +135,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-8 mt-4">
+            <div class="col-md-8">
                 <div class="card shadow">
                     <div class="card-header bg-primary py-4">
                         <h4 class="my-0 font-weight-bold text-white">Lista de capacitantes</h4>

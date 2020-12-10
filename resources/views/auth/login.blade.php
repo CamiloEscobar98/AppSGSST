@@ -34,9 +34,8 @@
     <!-- Navbar -->
     <nav id="navbar-main" class="navbar navbar-horizontal navbar-transparent navbar-main navbar-expand-lg navbar-light">
         <div class="container">
-            <a class="navbar-brand" href="dashboard.html">
-                <img src="{{ asset('dashboard/img/brand/white.png') }}">
-            </a>
+            <h4 class="text-white font-weight-bold">Plataforma del Sistema de Gestión de la Salud y la Seguridad en el
+                Trabajo</h4>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse"
                 aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -80,11 +79,10 @@
         <!-- Header -->
         <div class="header bg-gradient-primary py-7 py-lg-8 pt-lg-9">
             <div class="container">
-                <div class="header-body text-center mb-7">
+                <div class="header-body text-center mb-2">
                     <div class="row justify-content-center">
                         <div class="col-xl-5 col-lg-6 col-md-8 px-5">
                             <h1 class="text-white">Bienvenido!</h1>
-                            <p class="text-lead text-white">Plataforma para la salud y la seguridad en el trabajo</p>
                         </div>
                     </div>
                 </div>
@@ -106,15 +104,22 @@
                         </div>
                         <div class="card-body px-lg-5 py-lg-5">
                             <div class="text-center text-muted mb-4">
-                                <small>Or sign in with credentials</small>
+                                <small>Inicia sesión con tus credenciales.</small>
                             </div>
-                            <form role="form">
+                            <form role="form" method="POST" action="{{ route('login') }}">
+                                @csrf
                                 <div class="form-group mb-3">
                                     <div class="input-group input-group-merge input-group-alternative">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                                         </div>
-                                        <input class="form-control" placeholder="Email" type="email">
+                                        <input class="form-control @error('email') is-invalid @enderror"
+                                            placeholder="Correo electrónico" type="email" name="email">
+                                        @error('email')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -122,29 +127,44 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                                         </div>
-                                        <input class="form-control" placeholder="Password" type="password">
+                                        <input class="form-control @error('password') is-invalid @enderror"
+                                            placeholder="Contraseña" type="password" name="password">
+                                        @error('password')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
-                                <div class="custom-control custom-control-alternative custom-checkbox">
-                                    <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
-                                    <label class="custom-control-label" for=" customCheckLogin">
-                                        <span class="text-muted">Remember me</span>
-                                    </label>
+                                <div class="form-group">
+                                    <select name="role_id"
+                                        class="custom-select text-capitalize @error('role_id') is-invalid @enderror">
+                                        <option value="1">Seleccione un tipo de usuario</option>
+                                        @foreach ($roles->except(1) as $role)
+                                            <option value="{{ $role->id }}" class="text-capitalize">{{ $role->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('role_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="text-center">
-                                    <button type="button" class="btn btn-primary my-4">Sign in</button>
+                                    <button type="submit" class="btn btn-primary my-4">Iniciar Sesión</button>
                                 </div>
                             </form>
                         </div>
                     </div>
-                    <div class="row mt-3">
+                    {{-- <div class="row mt-3">
                         <div class="col-6">
                             <a href="#" class="text-light"><small>Forgot password?</small></a>
                         </div>
                         <div class="col-6 text-right">
                             <a href="#" class="text-light"><small>Create new account</small></a>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -156,24 +176,23 @@
                 <div class="col-xl-6">
                     <div class="copyright text-center text-xl-left text-muted">
                         &copy; 2020 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1"
-                            target="_blank">Creative Tim</a>
+                            target="_blank">SGSST</a>
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <ul class="nav nav-footer justify-content-center justify-content-xl-end">
                         <li class="nav-item">
-                            <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a>
+                            <a href="" class="nav-link" target="_blank">Creative Tim</a>
                         </li>
                         <li class="nav-item">
-                            <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About
+                            <a href="" class="nav-link" target="_blank">About
                                 Us</a>
                         </li>
                         <li class="nav-item">
-                            <a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a>
+                            <a href="" class="nav-link" target="_blank">Blog</a>
                         </li>
                         <li class="nav-item">
-                            <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md"
-                                class="nav-link" target="_blank">MIT License</a>
+                            <a href="" class="nav-link" target="_blank">MIT License</a>
                         </li>
                     </ul>
                 </div>
@@ -192,78 +211,3 @@
 </body>
 
 </html>
-
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow">
-                <div class="card-header bg-sgsst2 py-5"></div>
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
-                        <div class="card-title">
-                            <p class="font-weight-bold text-right">Por favor, llenar todas las credenciales para poder
-                                iniciar sesión.</p>
-                        </div>
-                        <div class="form-group my-3">
-                            <label for="email" class="font-weight-bolder">
-                                Correo Electrónico:
-                            </label>
-                            <input id="email" type="email"
-                                class="form-control my-2 @error('email') is-invalid @enderror" name="email"
-                                value="{{ old('email') }}" autocomplete="email" autofocus>
-                            @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="password" class="font-weight-bolder">
-                                Contraseña:
-                            </label>
-                            <input id="password" type="password"
-                                class="form-control @error('password') is-invalid @enderror" name="password"
-                                autocomplete="current-password">
-                            @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="role"
-                                class="font-weight-bolder @error('role_id') is-invalid @enderror">Seleccione el tipo de
-                                usuario:</label>
-                            <select name=" role_id" class="custom-select text-capitalize">
-                                <option value="1">Seleccione un tipo de usuario</option>
-                                @foreach ($roles->except(1) as $role)
-                                    <option value="{{ $role->id }}" class="text-capitalize">{{ $role->name }}</option>
-                                @endforeach
-                            </select>
-                            @error('role_id')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <div class="btn-group w-100">
-                                <button type="submit" class="btn btn-login">
-                                    Iniciar Sesión
-                                </button>
-
-                                {{-- @if (Route::has('password.request'))
-                                    <a class="btn btn-login2" href="{{ route('password.request') }}">
-                                        ¿Olvidaste tu contraseña?
-                                    </a>
-                                @endif --}}
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="card-footer bg-sgsst2 py-4"></div>
-            </div>
-        </div>
-    </div>
-</div>

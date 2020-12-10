@@ -1,5 +1,5 @@
 @extends('layouts.argon')
-@section('title', 'Capacitantes')
+@section('title', 'Capacitadores')
 @section('content')
     <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
         <div class="container-fluid">
@@ -25,95 +25,21 @@
     </nav>
     <div class="container-fluid mb-4 mt-5">
         <div class="row justify-content-center">
-            <div class="col-md-4">
+            <div class="col-md-12">
                 <div class="card shadow">
-                    <div class="card-header bg-primary py-4">
-                        <h4 class="my-0 font-weight-bold text-white">Registrar capacitador</h4>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-title">Por favor llena toda la información para registrar el capacitador.</p>
-                        <form action="{{ route('user.create') }}" method="post">
-                            @csrf
-                            <input type="hidden" name="role" value="capacitador">
-                            <div class="form-group">
-                                <label for="name" class="font-weight-bold">Nombres:</label>
-                                <input type="text" name="name" id="name"
-                                    class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}"
-                                    aria-describedby="helpId">
-                                @error('name')
-                                    <small id="helpId"
-                                        class="font-weight-bold text-white bg-danger py-2 px-2">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="lastname" class="font-weight-bold">Apellidos:</label>
-                                <input type="text" name="lastname" id="lastname"
-                                    class="form-control @error('lastname') is-invalid @enderror"
-                                    value="{{ old('lastname') }}" aria-describedby="helpId">
-                                @error('lastname')
-                                    <small id="helpId"
-                                        class="font-weight-bold text-white bg-danger py-2 px-2">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="email" class="font-weight-bold">Correo electrónico:</label>
-                                <input type="email" name="email" id="email"
-                                    class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}"
-                                    aria-describedby="helpId">
-                                @error('email')
-                                    <small id="helpId"
-                                        class="font-weight-bold text-white bg-danger py-2 px-2">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="document" class="font-weight-bold">Documento:</label>
-                                <input type="text" name="document" id="document"
-                                    class="form-control @error('document') is-invalid @enderror"
-                                    value="{{ old('document') }}" aria-describedby="helpId" maxlength="15"
-                                    onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
-                                @error('document')
-                                    <small id="helpId"
-                                        class="font-weight-bold text-white bg-danger py-2 px-2">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="document" class="font-weight-bold">Tipo de documento:</label>
-                                <select name="document_type_id" id="document_type_id"
-                                    class="custom-select text-capitalize @error('document_type_id') is-invalid @enderror">
-                                    <option value="-1">Seleccione una opción</option>
-                                    @foreach ($document_types as $document_type)
-                                        <option value="{{ $document_type->type }}">{{ $document_type->info }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('document_type_id')
-                                    <small id="helpId"
-                                        class="font-weight-bold text-white bg-danger py-2 px-2">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-block">Registrar</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="card-footer bg-primary py-4"></div>
-                </div>
-            </div>
-            <div class="col-md-8">
-                <div class="card shadow">
-                    <div class="card-header bg-primary py-4">
-                        <h4 class="my-0 font-weight-bold text-white">Lista de capacitadores</h4>
+                    <div class="card-header bg-translucent-white">
+                        <h2 class="mt-4 font-weight-bold">Lista de capacitadores</h2>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                            <table class="table table-striped table-hover table-bordered">
                                 <thead class="bg-primary font-weight-bold text-center text-white">
                                     <tr>
-                                        <th style="width: 5%">No</th>
-                                        <th>Capacitador</th>
-                                        <th>Correo electrónico</th>
-                                        <th>Documento</th>
-                                        <th>..</th>
+                                        <th class="bg-translucent-default" style="width: 5%">No</th>
+                                        <th class="bg-translucent-white">Capacitador</th>
+                                        <th class="bg-translucent-default">Correo electrónico</th>
+                                        <th class="bg-translucent-white">Documento</th>
+                                        <th class="bg-translucent-default" style="width: 5%">..</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -126,11 +52,11 @@
                                             <td>{{ $capacitador->email }}</td>
                                             <td>{{ $capacitador->document->document }}</td>
                                             <td>
-                                                <div class="btn-group w-100" role="group" aria-label="opciones">
+                                                <div class="btn-group" role="group" aria-label="opciones">
                                                     <a href="{{ route('user.show', $capacitador) }}" type="button"
-                                                        class="btn btn-primary w-50"><i class="fa fa-eye"
+                                                        class="btn btn-primary btn-sm"><i class="fa fa-eye"
                                                             aria-hidden="true"></i></a>
-                                                    <button type="button" class="btn btn-danger w-50 delete-user"
+                                                    <button type="button" class="btn btn-danger btn-sm delete-user"
                                                         data-user="{{ $capacitador->fullname() }}"
                                                         data-tr="{{ $loop->iteration }}"
                                                         data-email="{{ $capacitador->email }}"><i class="fa fa-trash"
@@ -144,20 +70,110 @@
                                         </tr>
                                     @endforelse
                                 </tbody>
-                                <tfoot class="bg-primary font-weight-bold text-center text-white">
-                                    <th style="width: 5%">No</th>
-                                    <th>Capacitador</th>
-                                    <th>Correo electrónico</th>
-                                    <th>Documento</th>
-                                    <th>..</th>
-                                </tfoot>
                             </table>
                             {{ $capacitadores->links() }}
                         </div>
                     </div>
-                    <div class="card-footer bg-primary py-4"></div>
                 </div>
             </div>
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="card-header bg-translucent-white">
+                        <h1 class="mt-4 font-weight-bold">Registrar capacitador</h1>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-title">Por favor llena toda la información para registrar el capacitador.</p>
+                        <form action="{{ route('user.create') }}" method="post">
+                            @csrf
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-12 col-md-4">
+                                            <div class="form-group">
+                                                <label for="name" class="font-weight-bold">Nombres:</label>
+                                                <input type="text" name="name" id="name"
+                                                    class="form-control @error('name') is-invalid @enderror"
+                                                    value="{{ old('name') }}" aria-describedby="helpId">
+                                                @error('name')
+                                                    <small id="helpId"
+                                                        class="font-weight-bold text-white bg-danger py-2 px-2">{{ $message }}</small>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <div class="form-group">
+                                                <label for="lastname" class="font-weight-bold">Apellidos:</label>
+                                                <input type="text" name="lastname" id="lastname"
+                                                    class="form-control @error('lastname') is-invalid @enderror"
+                                                    value="{{ old('lastname') }}" aria-describedby="helpId">
+                                                @error('lastname')
+                                                    <small id="helpId"
+                                                        class="font-weight-bold text-white bg-danger py-2 px-2">{{ $message }}</small>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <div class="form-group">
+                                                <label for="document" class="font-weight-bold">Documento:</label>
+                                                <input type="text" name="document" id="document"
+                                                    class="form-control @error('document') is-invalid @enderror"
+                                                    value="{{ old('document') }}" aria-describedby="helpId" maxlength="15"
+                                                    onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
+                                                @error('document')
+                                                    <small id="helpId"
+                                                        class="font-weight-bold text-white bg-danger py-2 px-2">{{ $message }}</small>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-8">
+                                    <div class="row justify-content-center">
+                                        <div class="col-12 col-md-6">
+                                            <div class="form-group">
+                                                <label for="document" class="font-weight-bold">Tipo de documento:</label>
+                                                <select name="document_type_id" id="document_type_id"
+                                                    class="custom-select text-capitalize @error('document_type_id') is-invalid @enderror">
+                                                    <option value="-1">Seleccione una opción</option>
+                                                    @foreach ($document_types as $document_type)
+                                                        <option value="{{ $document_type->type }}">
+                                                            {{ $document_type->info }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('document_type_id')
+                                                    <small id="helpId"
+                                                        class="font-weight-bold text-white bg-danger py-2 px-2">{{ $message }}</small>
+                                                @enderror
+                                            </div>
+
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <div class="form-group">
+                                                <label for="email" class="font-weight-bold">Correo electrónico:</label>
+                                                <input type="email" name="email" id="email"
+                                                    class="form-control @error('email') is-invalid @enderror"
+                                                    value="{{ old('email') }}" aria-describedby="helpId">
+                                                @error('email')
+                                                    <small id="helpId"
+                                                        class="font-weight-bold text-white bg-danger py-2 px-2">{{ $message }}</small>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="role" value="capacitador">
+                            <div class="form-group w-100 justify-content-end mr-4">
+                                <button type="submit" class="btn btn-primary float-right">
+                                    <h3 class="text-white my-0">Registrar</h3>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
         </div>
         @include('layouts.argon_footer')
     </div>

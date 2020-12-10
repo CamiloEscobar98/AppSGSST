@@ -32,10 +32,11 @@
     <link rel="stylesheet" href="{{ asset('dashboard/vendor/@fortawesome/fontawesome-free/css/all.min.css') }}"
         type="text/css">
     <!-- Page plugins -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- Argon CSS -->
     <link rel="stylesheet" href="{{ asset('dashboard/css/argon.css?v=1.2.0') }}" type="text/css">
-    {{--
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
+
+
 </head>
 
 <body>
