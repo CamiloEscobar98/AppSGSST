@@ -86,7 +86,8 @@ class TopicController extends Controller
     {
         $topic = \App\Models\Topic::find($request->topic);
         $aux = $topic;
-        if ($topic->delete()) {
+        $delete = \App\Models\Topic::destroy($topic->id);
+        if ($delete) {
             return response()->json(['alert' => 'success', 'message' => 'Se ha eliminado correctamente la temática ' . $aux->title]);
         }
         return response()->json(['alert' => 'error', 'message' => 'Error en la eliminación de la temática.']);

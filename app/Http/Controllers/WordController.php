@@ -18,14 +18,12 @@ class WordController extends Controller
 
     public function destroy(Request $request)
     {
-        if ($request->ajax()) {
-            $word = \App\Models\Word::find($request->word);
-            $aux = $word;
-            if ($word->delete()) {
-                return response()->json(['alert' => 'success', 'message' => 'Se ha eliminado correctamente la palabra ' . $aux->word]);
-            }
-            return response()->json(['alert' => 'error', 'message' => 'Error en la eliminación de la palabra.']);
+        $word = \App\Models\Word::find($request->word);
+        $aux = $word;
+        if ($word->delete()) {
+            return response()->json(['alert' => 'success', 'message' => 'Se ha eliminado correctamente la palabra ' . $aux->word]);
         }
+        return response()->json(['alert' => 'error', 'message' => 'Error en la eliminación de la palabra.']);
     }
 
     private function insertWord($validated)

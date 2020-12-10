@@ -1,14 +1,36 @@
-@extends('layouts.app')
+@extends('layouts.argon')
 @section('title', 'Cápsula')
 @section('content')
+    <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                <!-- Navbar links -->
+                <ul class="navbar-nav align-items-center  ml-md-auto ">
+                    <li class="nav-item d-xl-none">
+                        <!-- Sidenav toggler -->
+                        <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin"
+                            data-target="#sidenav-main">
+                            <div class="sidenav-toggler-inner">
+                                <i class="sidenav-toggler-line"></i>
+                                <i class="sidenav-toggler-line"></i>
+                                <i class="sidenav-toggler-line"></i>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                @include('layouts.argon_user_nav')
+            </div>
+        </div>
+    </nav>
     <div class="container-fluid mb-4">
         <div class="row">
             <div class="col-md-4">
                 <div class="row">
                     <div class="col-12 mt-4">
                         <div class="card">
-                            <div class="card-header bg-sgsst2 py-4">
-                                <h4 class="my-0 font-weight-bold">Cápsula</h4>
+                            <div class="card-header bg-primary py-4">
+                                <h4 class="my-0 font-weight-bold text-white">Cápsula</h4>
                             </div>
                             <div class="card-body">
                                 <p class="card-text">Para actualizar la cápsula, llena las credenciales</p>
@@ -46,17 +68,17 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-block btn-login">Actualizar</button>
+                                        <button type="submit" class="btn btn-block btn-primary">Actualizar</button>
                                     </div>
                                 </form>
                             </div>
-                            <div class="card-footer bg-sgsst2 py-4"></div>
+                            <div class="card-footer bg-primary py-4"></div>
                         </div>
                     </div>
                     <div class="col-12 mt-4">
                         <div class="card">
-                            <div class="card-header bg-sgsst2 py-4">
-                                <h4 class="font-weight-bold my-0">Cambiar temática</h4>
+                            <div class="card-header bg-primary py-4">
+                                <h4 class="font-weight-bold my-0 text-white">Cambiar temática</h4>
                             </div>
                             <div class="card-body">
                                 <form action="{{ route('capsule.changeTopic') }}" method="post">
@@ -76,18 +98,18 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-block btn-login">Cambiar temática</button>
+                                        <button type="submit" class="btn btn-block btn-primary">Cambiar temática</button>
                                     </div>
                                 </form>
                             </div>
-                            <div class="card-footer bg-sgsst2 py-4"></div>
+                            <div class="card-footer bg-primary py-4"></div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-8 mt-4">
                 <div class="card">
-                    <div class="card-header bg-sgsst2 py-4"></div>
+                    <div class="card-header bg-primary py-4"></div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
@@ -98,7 +120,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer bg-sgsst2 py-4"></div>
+                    <div class="card-footer bg-primary py-4"></div>
                 </div>
             </div>
         </div>

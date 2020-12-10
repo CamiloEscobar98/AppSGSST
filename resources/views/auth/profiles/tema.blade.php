@@ -1,14 +1,36 @@
-@extends('layouts.app')
+@extends('layouts.argon')
 @section('title', 'Temática')
 @section('content')
+    <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                <!-- Navbar links -->
+                <ul class="navbar-nav align-items-center  ml-md-auto ">
+                    <li class="nav-item d-xl-none">
+                        <!-- Sidenav toggler -->
+                        <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin"
+                            data-target="#sidenav-main">
+                            <div class="sidenav-toggler-inner">
+                                <i class="sidenav-toggler-line"></i>
+                                <i class="sidenav-toggler-line"></i>
+                                <i class="sidenav-toggler-line"></i>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                @include('layouts.argon_user_nav')
+            </div>
+        </div>
+    </nav>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-4 mt-4">
                 <div class="row">
                     <div class="col-12">
                         <div class="card shadow">
-                            <div class="card-header bg-sgsst2 pt">
-                                <h4 class="my-0 font-weight-bold">Temática</h4>
+                            <div class="card-header bg-primary pt">
+                                <h4 class="my-0 font-weight-bold text-white">Temática</h4>
                             </div>
                             <div class="card-body">
                                 <p class="card-title font-weight-bold">Capacitador</p>
@@ -41,11 +63,11 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-block btn-login">Actualizar</button>
+                                        <button type="submit" class="btn btn-block btn-primary">Actualizar</button>
                                     </div>
                                 </form>
                             </div>
-                            <div class="card-footer bg-sgsst2 py-4"></div>
+                            <div class="card-footer bg-primary py-4"></div>
                         </div>
                     </div>
                     <div class="col-12 mt-4 mb-4">
@@ -53,7 +75,7 @@
                             @if (session('role') == 'administrador')
                                 <div class="col-md-6">
                                     <div class="card">
-                                        <div class="card-header bg-sgsst2 py-4">
+                                        <div class="card-header bg-primary py-4">
                                             <h4 class="text-white font-weight-bold my-0">Cambiar Capacitador</h4>
                                         </div>
                                         <div class="card-body">
@@ -86,11 +108,11 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <button type="submit"
-                                                        class="btn btn-block btn-login">Actualizar</button>
+                                                        class="btn btn-block btn-primary">Actualizar</button>
                                                 </div>
                                             </form>
                                         </div>
-                                        <div class="card-footer bg-sgsst2 py-4"></div>
+                                        <div class="card-footer bg-primary py-4"></div>
                                     </div>
                                 </div>
                             @endif
@@ -102,7 +124,7 @@
             <div class="col-md-8 mt-4">
                 @if ($tema->game == null)
                     <div class="card">
-                        <div class="card-header bg-sgsst2 py-4"></div>
+                        <div class="card-header bg-primary py-4"></div>
                         <div class="card-body">
                             <form action="{{ route('game.create') }}" method="post">
                                 @csrf
@@ -131,23 +153,23 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-block btn-login">Registrar juego</button>
+                                    <button type="submit" class="btn btn-block btn-primary">Registrar juego</button>
                                 </div>
                             </form>
                         </div>
-                        <div class="card-footer bg-sgsst2 py-4"></div>
+                        <div class="card-footer bg-primary py-4"></div>
                     </div>
                 @else
                     @if ($tema->game->gameable->words()->count() != null)
                         <button class="btn btn-block btn-primary"
                             onclick="mostrar_ocultar_juego('play_game')">Jugar</button>
-                        <a href="{{ route('game.show', $tema->game) }}" class="btn btn-block btn-login">Ver
+                        <a href="{{ route('game.show', $tema->game) }}" class="btn btn-block btn-primary">Ver
                             juego</a>
                         <button type="button" class="btn btn-block btn-danger delete-game"
                             data-game="{{ $tema->game->id }}">Eliminar</button>
 
                     @else
-                        <a href="{{ route('game.show', $tema->game) }}" class="btn btn-block btn-login">Ver
+                        <a href="{{ route('game.show', $tema->game) }}" class="btn btn-block btn-primary">Ver
                             juego</a>
                         <button type="button" class="btn btn-block btn-danger delete-game"
                             data-game="{{ $tema->game->id }}">Eliminar</button>

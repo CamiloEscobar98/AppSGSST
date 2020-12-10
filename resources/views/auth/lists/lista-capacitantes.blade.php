@@ -254,7 +254,12 @@
                     setTimeout(() => {
                         location.reload(true)
                     }, 2000);
-
+                }).catch(res => {
+                    Swal.fire(
+                        'Error..',
+                        res.data.message,
+                        res.data.alert
+                    )
                 });
 
             }

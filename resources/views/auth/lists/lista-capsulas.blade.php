@@ -117,7 +117,9 @@
                                             </td>
                                         </tr>
                                     @empty
-                                        <tr>No hay cápsuals registradas</tr>
+                                        <tr>
+                                            <h4 class="text-center my-4">No hay cápsulas registradas.</h4>
+                                        </tr>
                                     @endforelse
                                 </tbody>
                                 <tfoot class="bg-primary font-weight-bold text-white text-center">

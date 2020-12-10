@@ -36,8 +36,6 @@
     <link rel="stylesheet" href="{{ asset('dashboard/css/argon.css?v=1.2.0') }}" type="text/css">
     {{--
     <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
- 
-    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
 </head>
 
 <body>
@@ -60,9 +58,13 @@
     <!-- Argon JS -->
     <script src="{{ asset('dashboard/js/argon.js?v=1.2.0') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
     @yield('scripts')
-   
+
 </body>
 
 </html>

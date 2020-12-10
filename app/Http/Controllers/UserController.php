@@ -142,11 +142,9 @@ class UserController extends Controller
 
     public function deleteRole(Request $request)
     {
-        if ($request->ajax()) {
-            $usuario = \App\User::where('email', $request->usuario)->first();
-            $role = \App\Models\Role::where('name', $request->role)->first();
-            $usuario->roles()->detach($role->id);
-        }
+        $usuario = \App\User::where('email', $request->usuario)->first();
+        $role = \App\Models\Role::where('name', $request->role)->first();
+        $usuario->roles()->detach($role->id);
     }
 
     private function updateUser($validated)
