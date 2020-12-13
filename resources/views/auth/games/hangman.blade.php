@@ -5,6 +5,8 @@
         <div class="card-body">
             <div class="wrapper">
                 <input type="hidden" id="hangman_id" value="{{ $tema->game->gameable->id }}">
+                <input type="hidden" id="role" value="{{ session('role') }}">
+                <input type="hidden" id="user" value="{{ Auth()->user()->email }}">
                 <h1>{{ $tema->game->gameable->word }}</h1>
                 <h2>El clasico juego del Ahorcado</h2>
                 <p>Utilice el alfabeto de abajo para adivinar la palabra, o haga clic en Revelar Pista para obtener una

@@ -14,7 +14,7 @@ class AlterTableTopics extends Migration
     public function up()
     {
         Schema::table('topics', function (Blueprint $table) {
-            $table->foreign('user_id', 'fk_users_topics')->references('id')->on('users')->cascadeOnUpdate()->onDelete('restrict');
+            $table->foreign('user_id', 'fk_users_topics')->references('id')->on('users')->cascadeOnUpdate()->onDelete('set null');
         });
     }
 

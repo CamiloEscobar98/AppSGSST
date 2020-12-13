@@ -1,45 +1,55 @@
-@extends('layouts.app')
+@extends('layouts.argon')
 @section('title', 'Todas las temáticas')
 @section('content')
-    <div class="container-fluid">
-        <h4 class="mt-4 mb-2">Todas las temáticas</h4>
+    @include('layouts.argon_nav_user_2')
+    <div class="container-fluid mt-4">
+        <h2 class="font-weight-bold">Todas las temáticas</h2>
         <hr>
         <div class="row justify-content-start">
             @forelse ($topics as $topic)
                 <div class="col-12 col-md-4 mt-2 mb-4">
-                    <div class="card h-100">
-                        <div class="card-header bg-sgsst2 py-4"></div>
+                    <div class="card h-100 rounded">
+                        <div class="card-header bg-default"></div>
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-12 col-md-4">
-                                    <img src="{{ asset($topic->image->fullimage()) }}"
-                                        class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|} mx-auto d-block"
-                                        alt="" width="100vh">
-                                </div>
-                                <div class="col-12 col-md-8">
-                                    <h4 class="card-title font-weight-bold">Temática </h4>
-                                    <p class="card-text">
-                                        {{ $topic->title }}
-                                    </p>
-                                </div>
+                            <h4 class="card-title">
+                                Estado
+                            </h4>
+                            {!! isCompleted($topic) !!}
+                            <img src="{{ asset($topic->image->fullimage()) }}"
+                                class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|} mx-auto d-block"
+                                alt="" width="100vh">
+                            <h4 class="card-title font-weight-bold">Tema </h4>
+                            <div class="card-text">
+                                <p> {{ $topic->title }}</p>
                             </div>
-                            <hr>
-                            <div class="btn-group w-100 mt-2" role="group" aria-label="">
+                            <div class="card-title">
+                                Descripción
+                            </div>
+                            <p class="card-text">{{ $topic->info }}</p>
+
+                        </div>
+                        <div class="card-footer bg-transparent">
+                            <div class="btn-group float-right" role="group" aria-label="">
 
                                 @if (!Auth()
                 ->user()
                 ->hasTopic($topic->title))
-                                    <button type="button" class="btn btn-info btn-insc"
-                                        data-topic="{{ $topic->title }}">Inscribir</button>
+                                    <button type="button" class="btn btn-outline-success btn-inscribir"
+                                        data-topic="{{ $topic->title }}">Iniciar</button>
                                 @else
-                                    <button type="button" class="btn btn-primary"><i class="fa fa-eye mr-2"
-                                            aria-hidden="true"></i>Visualizar</button>
+                                    @if ($topic->game)
+                                        <a href="{{ route('topic.show', $topic) }}" class="btn btn-outline-primary"><i
+                                                class="fa fa-eye mr-2" aria-hidden="true"></i>Visualizar</a>
+                                    @else
+                                        <div class="alert alert-danger" role="alert">
+                                            <strong>No disponible</strong>
+                                        </div>
+                                    @endif
                                 @endif
 
 
                             </div>
                         </div>
-                        <div class="card-footer bg-sgsst2 py-4"></div>
                     </div>
                 </div>
             @empty
@@ -51,24 +61,26 @@
 @endsection
 @section('scripts')
 <script>
-    $('.btn-insc').on('click', function() {
+    $('.btn-inscribir').on('click', function() {
         var topic = $(this).attr('data-topic');
         axios.post("{{ route('user.addtopic') }}", {
             topic: topic,
             user: "{{ Auth()->user()->id }}"
         }).then(res => {
-            console.log(res.data);
+            // console.log(res.data);
             Swal.fire({
-                title: '¡Éxito!',
+                title: res.data.title,
                 text: res.data.message,
                 icon: res.data.alert
             });
+            setTimeout(() => {
+                location.reload(true)
+            }, 2000);
 
         }).catch(res => {
-            console.log(res);
-            var titulo = (res.alert == 'success') ? '¡Eliminado!' : '¡Error';
+            // console.log(res);
             Swal.fire({
-                title: '¡Error!',
+                title: res.data.title,
                 text: 'Error, no se ha inscrito correctamente a la temática.',
                 icon: 'error'
             });

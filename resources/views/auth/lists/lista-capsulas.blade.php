@@ -1,39 +1,63 @@
 @extends('layouts.argon')
 @section('title', 'Cápsulas')
 @section('content')
-    <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
-        <div class="container-fluid">
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-                <!-- Navbar links -->
-                <ul class="navbar-nav align-items-center  ml-md-auto ">
-                    <li class="nav-item d-xl-none">
-                        <!-- Sidenav toggler -->
-                        <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin"
-                            data-target="#sidenav-main">
-                            <div class="sidenav-toggler-inner">
-                                <i class="sidenav-toggler-line"></i>
-                                <i class="sidenav-toggler-line"></i>
-                                <i class="sidenav-toggler-line"></i>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-                @include('layouts.argon_user_nav')
+    @include('layouts.argon_nav_user_2')
+    <div class="container-fluid mb-4">
+        <div class="card shadow mt-5">
+            <div class="card-header bg-translucent-white">
+                <h2 class="font-weight-bold mt-3">Lista de Cápsulas</h2>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="bg-primary font-weight-bold text-white text-center">
+                            <tr>
+                                <th class="bg-translucent-default">Temática</th>
+                                <th class="bg-translucent-white">Título</th>
+                                <th class="bg-translucent-default w-50">Descripción</th>
+                                <th class="bg-translucent-white" style="width: 5%">...</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($capsulas as $capsula)
+                                <tr class="text-center" id="fila{{ $loop->iteration }}">
+                                    <td><a href="{{ route('topic.show', $capsula->topic) }}">{{ $capsula->topic->title }}</a>
+                                    </td>
+                                    <td>{{ $capsula->title }}</td>
+                                    <td>{{ $capsula->info }}</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a href="{{ route('capsule.show', $capsula) }}" type="button"
+                                                class="btn btn-outline-primary mr-2"><i class="fa fa-eye"
+                                                    aria-hidden="true"></i></a>
+                                            <button type="button" class="btn btn-outline-danger  delete-capsule"
+                                                data-tr="{{ $loop->iteration }}" data-title="{{ $capsula->title }}"
+                                                data-capsule="{{ $capsula->id }}"><i class="fa fa-trash"
+                                                    aria-hidden="true"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <h4 class="text-center my-4">No hay cápsulas registradas.</h4>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+                <div class="float-left ml-3">
+                    {{ $capsulas->links() }}
+                </div>
             </div>
         </div>
-    </nav>
-    <div class="container-fluid mb-4">
-        <div class="row">
-            <div class="col-md-4 mt-5">
-                <div class="card shadow">
-                    <div class="card-header bg-primary py-4">
-                        <h4 class="font-weight-bold my-0 text-white">Registrar Cápsula</h4>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">Por favor llena toda la información para registrar la cápsula.</p>
-                        <form action="{{ route('capsule.create') }}" method="post">
-                            @csrf
+        <div class="card shadow">
+            <div class="card-header bg-translucent-white">
+                <h2 class="font-weight-bold mt-3">Registrar Cápsula</h2>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Por favor llena toda la información para registrar la cápsula.</p>
+                <form action="{{ route('capsule.create') }}" method="post">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="title" class="font-weight-bold">Título:</label>
                                 <input type="text" name="title" id="title"
@@ -51,6 +75,8 @@
                                     <small id="helpId" class="text-white font-weight-bold bg-danger py-1">{{ $message }}</small>
                                 @enderror
                             </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="video" class="font-weight-bold">URL del vídeo:</label>
                                 <input type="url" name="video" id="video"
@@ -72,68 +98,12 @@
                                     <small id="helpId" class="text-white bg-danger py-1">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-block btn-primary">Registrar</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="card-footer bg-primary py-4"></div>
-                </div>
-            </div>
-            <div class="col-md-8 mt-5">
-                <div class="card shadow">
-                    <div class="card-header bg-primary py-4">
-                        <h4 class="font-weight-bold text-white my-0">Lista de Cápsulas</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover">
-                                <thead class="bg-primary font-weight-bold text-white text-center">
-                                    <tr>
-                                        <th class="">Temática</th>
-                                        <th class="">Título</th>
-                                        <th class="w-50">Descripción</th>
-                                        <th>...</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse ($capsulas as $capsula)
-                                        <tr class="text-center" id="fila{{ $loop->iteration }}">
-                                            <td><a
-                                                    href="{{ route('topic.show', $capsula->topic) }}">{{ $capsula->topic->title }}</a>
-                                            </td>
-                                            <td>{{ $capsula->title }}</td>
-                                            <td>{{ $capsula->info }}</td>
-                                            <td>
-                                                <div class="btn-group w-100">
-                                                    <a href="{{ route('capsule.show', $capsula) }}" type="button"
-                                                        class="btn btn-primary w-50"><i class="fa fa-eye"
-                                                            aria-hidden="true"></i></a>
-                                                    <button type="button" class="btn btn-danger w-50 delete-capsule"
-                                                        data-tr="{{ $loop->iteration }}" data-title="{{ $capsula->title }}"
-                                                        data-capsule="{{ $capsula->id }}"><i class="fa fa-trash"
-                                                            aria-hidden="true"></i></button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <h4 class="text-center my-4">No hay cápsulas registradas.</h4>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                                <tfoot class="bg-primary font-weight-bold text-white text-center">
-                                    <th>Encargado</th>
-                                    <th>Título</th>
-                                    <th>Descripción</th>
-                                    <th>...</th>
-                                </tfoot>
-                            </table>
                         </div>
-                        {{ $capsulas->links() }}
                     </div>
-                    <div class="card-footer bg-primary py-4"></div>
-                </div>
+                    <div class="form-group float-right">
+                        <button type="submit" class="btn btn-outline-primary">Registrar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

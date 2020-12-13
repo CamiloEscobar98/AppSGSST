@@ -78,8 +78,8 @@
             <small id="helpId" class="form-text bg-danger font-weight-bold py-2 text-white px-2">{{ $message }}</small>
         @enderror
     </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-block">Actualizar</button>
+    <div class="row justify-content-end w-auto">
+        <button type="submit" class="btn btn-outline-primary">Actualizar</button>
     </div>
 
 </form>

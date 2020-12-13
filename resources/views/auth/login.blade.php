@@ -77,7 +77,7 @@
     <!-- Main content -->
     <div class="main-content">
         <!-- Header -->
-        <div class="header bg-gradient-primary py-7 py-lg-8 pt-lg-9">
+        <div class="header bg-gradient-success py-7 py-lg-8 pt-lg-9">
             <div class="container">
                 <div class="header-body text-center mb-2">
                     <div class="row justify-content-center">
@@ -99,7 +99,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-5 col-md-7">
                     <div class="card bg-secondary border-0 mb-0">
-                        <div class="card-header bg-primary pb-5">
+                        <div class="card-header bg-default pb-5">
 
                         </div>
                         <div class="card-body px-lg-5 py-lg-5">
@@ -114,7 +114,8 @@
                                             <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                                         </div>
                                         <input class="form-control @error('email') is-invalid @enderror"
-                                            placeholder="Correo electrónico" type="email" name="email">
+                                            placeholder="Correo electrónico" type="email" name="email"
+                                            value="{{ old('email') }}">
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -152,7 +153,7 @@
                                     @enderror
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary my-4">Iniciar Sesión</button>
+                                    <button type="submit" class="btn btn-outline-success my-4">Iniciar Sesión</button>
                                 </div>
                             </form>
                         </div>
@@ -175,26 +176,9 @@
             <div class="row align-items-center justify-content-xl-between">
                 <div class="col-xl-6">
                     <div class="copyright text-center text-xl-left text-muted">
-                        &copy; 2020 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1"
+                        &copy; 2020 <a href="#" class="font-weight-bold ml-1 text-success"
                             target="_blank">SGSST</a>
                     </div>
-                </div>
-                <div class="col-xl-6">
-                    <ul class="nav nav-footer justify-content-center justify-content-xl-end">
-                        <li class="nav-item">
-                            <a href="" class="nav-link" target="_blank">Creative Tim</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="" class="nav-link" target="_blank">About
-                                Us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="" class="nav-link" target="_blank">Blog</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="" class="nav-link" target="_blank">MIT License</a>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </div>

@@ -17,7 +17,7 @@ class CreateUsersProgressTable extends Migration
             $table->unsignedBigInteger('id', true);
             $table->unsignedBigInteger('user_id');
             $table->unsignedSmallInteger('topic_id');
-            $table->boolean('completed');
+            $table->boolean('completed')->default(0);
             $table->timestamps();
             $table->engine = 'InnoDB';
         });

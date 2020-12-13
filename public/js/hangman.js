@@ -63,13 +63,42 @@ window.onload = function () {
     // Show lives
     comments = function () {
         showLives.innerHTML = "Tienes " + lives + " vidas";
+        var aux = false;
         if (lives < 1) {
             showLives.innerHTML = "¡Fin del juego!";
         }
         for (var i = 0; i < geusses.length; i++) {
             if (counter + space === geusses.length) {
+                aux = true;
                 showLives.innerHTML = "¡Excelente! Ganaste el juego.";
+
+
             }
+        }
+        if (aux) {
+            console.log('Entro acá antes');
+            var hangman_id = $tmp = document.getElementById('hangman_id').value;
+            var role = $tmp = document.getElementById('role').value;
+            var user = $tmp = document.getElementById('user').value;
+            $.ajax({
+                async: false,
+                type: 'POST',
+                url: '/api/game/hangman/win',
+                data: {
+                    hangman_id: hangman_id,
+                    game_type: 'hangman',
+                    role: role,
+                    user: user,
+                    _method: 'POST'
+                },
+                dataType: 'json'
+            }).done(function (res) {
+                Swal.fire(
+                    '¡Éxito!',
+                    res.message,
+                    res.alert
+                )
+            });
         }
     }
     // Animate man

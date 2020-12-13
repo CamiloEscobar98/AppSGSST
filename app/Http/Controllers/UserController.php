@@ -48,8 +48,9 @@ class UserController extends Controller
         $update = $this->updateUser($validated);
         if ($update) {
             return redirect()->back()->with('update_complete', 'Se actualizó correctamente el perfil.');
+        } else {
+            return redirect()->back()->with('update_failed', 'No se ha actualizado correctamente la información de su perfil');
         }
-        return redirect()->back()->with('update_failed', 'No se ha actualizado correctamente la información de su perfil');
     }
 
     public function updatePassword(\App\Http\Requests\User\UpdateUserPasswordRequest $request)
@@ -59,8 +60,9 @@ class UserController extends Controller
         $update = $usuario->update(['password' => bcrypt($validated['password'])]);
         if ($update) {
             return redirect()->back()->with('update_complete', 'Se actualizó la contraseña correctamente.');
+        } else {
+            return redirect()->back()->with('update_failed', 'No se pudo actualizar la contraseña.');
         }
-        return redirect()->back()->with('update_failed', 'No se pudo actualizar la contraseña.');
     }
 
     public function updateDocument(Request $request)
@@ -85,11 +87,13 @@ class UserController extends Controller
     {
         $usuario = \App\User::where('email', $request->usuario)->first();
         $aux = $usuario;
-        $delete = \App\User::destroy($usuario->id);
-        if ($delete) {
-            return response()->json(['alert' => 'success', 'message' => 'Se ha eliminado correctamente a ' . $aux->name . ' ' . $aux->lastname]);
+        try {
+            if ($usuario->delete()) {
+                return response()->json(['alert' => 'success', 'message' => 'Se ha eliminado correctamente a ' . $aux->name . ' ' . $aux->lastname]);
+            }
+        } catch (\Throwable $th) {
+            return response()->json(['alert' => 'error', 'message' => 'No se ha eliminado correctamente a ' . $aux->name . ' ' . $aux->lastname]);
         }
-        return response()->json(['alert' => 'failed', 'message' => 'No se ha eliminado correctamente a ' . $aux->name . ' ' . $aux->lastname]);
     }
 
     public function updatePhoto(Request $request)
@@ -196,21 +200,55 @@ class UserController extends Controller
 
     public function addTopic(Request $request)
     {
-        if ($request->ajax()) {
-            $topic = \App\Models\Topic::where('title', $request->topic)->first();
-            $user = \App\User::find($request->user);
-            if (!$user->hasTopic($topic->title)) {
-                $user->myTopics()->attach($topic);
-                return response()->json([
-                    'alert' => 'success',
-                    'message' => 'Se ha inscrito a la temática correctamente.'
-                ]);
+        $topic = \App\Models\Topic::where('title', $request->topic)->first();
+        $user = \App\User::find($request->user);
+        if (!$user->hasTopic($topic->title)) {
+            $last = $user->myTopics()->orderBy('id', 'DESC')->get()->first();
+            if ($last) {
+                if ($last->pivot->completed == '1') {
+                    if ($topic->game) {
+                        $user->myTopics()->attach($topic->id);
+                        return response()->json([
+                            'title' => '¡Éxito!',
+                            'alert' => 'success',
+                            'message' => 'Se ha inscrito a la temática correctamente.'
+                        ]);
+                    } else {
+                        return response()->json([
+                            'title' => '!Error!',
+                            'alert' => 'error',
+                            'message' => 'Error, esta temática no tiene una actividad interactiva.'
+                        ]);
+                    }
+                } else {
+                    return response()->json([
+                        'title' => '!Alto!',
+                        'alert' => 'warning',
+                        'message' => 'No has completado tu última temática.'
+                    ]);
+                }
             } else {
-                return response()->json([
-                    'alert' => 'error',
-                    'message' => 'Error,no se ha inscrito a la temática'
-                ]);
+                if ($topic->game) {
+                    $user->myTopics()->attach($topic->id);
+                    return response()->json([
+                        'title' => '¡Éxito!',
+                        'alert' => 'success',
+                        'message' => 'Se ha inscrito a la temática correctamente.'
+                    ]);
+                } else {
+                    return response()->json([
+                        'title' => '!Error!',
+                        'alert' => 'error',
+                        'message' => 'Error, esta temática no tiene una actividad interactiva.'
+                    ]);
+                }
             }
+        } else {
+            return response()->json([
+                'title' => '!Error!',
+                'alert' => 'error',
+                'message' => 'Error,no se ha inscrito a la temática'
+            ]);
         }
     }
 }

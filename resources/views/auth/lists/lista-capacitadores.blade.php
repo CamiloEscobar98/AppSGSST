@@ -1,34 +1,13 @@
 @extends('layouts.argon')
 @section('title', 'Capacitadores')
 @section('content')
-    <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
-        <div class="container-fluid">
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-                <!-- Navbar links -->
-                <ul class="navbar-nav align-items-center  ml-md-auto ">
-                    <li class="nav-item d-xl-none">
-                        <!-- Sidenav toggler -->
-                        <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin"
-                            data-target="#sidenav-main">
-                            <div class="sidenav-toggler-inner">
-                                <i class="sidenav-toggler-line"></i>
-                                <i class="sidenav-toggler-line"></i>
-                                <i class="sidenav-toggler-line"></i>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-                @include('layouts.argon_user_nav')
-            </div>
-        </div>
-    </nav>
+    @include('layouts.argon_nav_user_2')
     <div class="container-fluid mb-4 mt-5">
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card shadow">
                     <div class="card-header bg-translucent-white">
-                        <h2 class="mt-4 font-weight-bold">Lista de capacitadores</h2>
+                        <h2 class="my-0 mt-3 font-weight-bold">Lista de capacitadores</h2>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -54,9 +33,9 @@
                                             <td>
                                                 <div class="btn-group" role="group" aria-label="opciones">
                                                     <a href="{{ route('user.show', $capacitador) }}" type="button"
-                                                        class="btn btn-primary btn-sm"><i class="fa fa-eye"
+                                                        class="btn btn-outline-primary mr-2"><i class="fa fa-eye"
                                                             aria-hidden="true"></i></a>
-                                                    <button type="button" class="btn btn-danger btn-sm delete-user"
+                                                    <button type="button" class="btn btn-outline-danger delete-user"
                                                         data-user="{{ $capacitador->fullname() }}"
                                                         data-tr="{{ $loop->iteration }}"
                                                         data-email="{{ $capacitador->email }}"><i class="fa fa-trash"
@@ -71,7 +50,9 @@
                                     @endforelse
                                 </tbody>
                             </table>
-                            {{ $capacitadores->links() }}
+                            <div class="float-left ml-3">
+                                {{ $capacitadores->links() }}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -164,9 +145,9 @@
                                 </div>
                             </div>
                             <input type="hidden" name="role" value="capacitador">
-                            <div class="form-group w-100 justify-content-end mr-4">
-                                <button type="submit" class="btn btn-primary float-right">
-                                    <h3 class="text-white my-0">Registrar</h3>
+                            <div class="form-group float-right">
+                                <button type="submit" class="btn btn-outline-primary">
+                                    Registrar
                                 </button>
                             </div>
                         </form>
@@ -223,6 +204,7 @@
                 axios.post("{{ route('user.delete') }}", {
                     _method: 'delete',
                     usuario: usuario,
+                    _token: "{{ csrf_token() }}"
                 }).then(res => {
                     console.log(res.data);
                     Swal.fire(
@@ -230,12 +212,16 @@
                         res.data.message,
                         res.data.alert
                     )
-                    var fila = $(this).attr('data-tr');
-                    $("#fila" + fila).remove();
-                    setTimeout(() => {
-                        location.reload(true)
-                    }, 2000);
+                    if (res.data.alert == 'success') {
+                        var fila = $(this).attr('data-tr');
+                        $("#fila" + fila).remove();
+                        setTimeout(() => {
+                            location.reload(true)
+                        }, 2000);
+                    }
+
                 }).catch(res => {
+                    console.log(res.data);
                     Swal.fire(
                         'Error..',
                         res.data.message,

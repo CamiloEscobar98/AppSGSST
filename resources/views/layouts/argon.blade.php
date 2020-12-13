@@ -14,12 +14,12 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
 <!DOCTYPE html>
-<html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
     <title>@yield('title')</title>
     <!-- CSS -->
 
@@ -29,12 +29,12 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
     <!-- Icons -->
     <link rel="stylesheet" href="{{ asset('dashboard/vendor/nucleo/css/nucleo.css') }}" type="text/css">
-    <link rel="stylesheet" href="{{ asset('dashboard/vendor/@fortawesome/fontawesome-free/css/all.min.css') }}"
-        type="text/css">
+    {{-- <link rel="stylesheet" href="{{ asset('dashboard/vendor/@fortawesome/fontawesome-free/css/all.min.css') }}"
+        type="text/css"> --}}
     <!-- Page plugins -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- Argon CSS -->
-    <link rel="stylesheet" href="{{ asset('dashboard/css/argon.css?v=1.2.0') }}" type="text/css">
+    {{-- <link rel="stylesheet" href="{{ asset('dashboard/css/argon.css?v=1.2.0') }}" type="text/css"> --}}
 
 
 </head>

@@ -1,4 +1,4 @@
-<ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
+<ul class="navbar-nav align-items-center ml-auto ml-md-0 ">
     <li class="nav-item dropdown">
         <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
@@ -16,27 +16,15 @@
         <div class="dropdown-menu  dropdown-menu-right ">
             <div class="dropdown-header noti-title">
                 <h6 class="text-overflow m-0">¡Bienvenido!</h6>
+                <h3>{{ session('role') }}</h3>
             </div>
-            {{-- <a href="#!" class="dropdown-item">
+            <a class="dropdown-item" href="{{ route('home') }}">
                 <i class="ni ni-single-02"></i>
-                <span>My profile</span>
-            </a> --}}
-            {{-- <a href="#!" class="dropdown-item">
-                <i class="ni ni-settings-gear-65"></i>
-                <span>Settings</span>
-            </a> --}}
-            {{-- <a href="#!" class="dropdown-item">
-                <i class="ni ni-calendar-grid-58"></i>
-                <span>Activity</span>
-            </a> --}}
-            {{-- <a href="#!" class="dropdown-item">
-                <i class="ni ni-support-16"></i>
-                <span>Support</span>
-            </a> --}}
+                <span>Perfil</span>
+            </a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{ route('logout') }}"
-                onclick="event.preventDefault();
-                                                                                                                                                                                                                                         document.getElementById('logout-form').submit();">
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <i class="ni ni-user-run"></i>
                 <span>Cerrar Sesión</span>
             </a>

@@ -41,13 +41,13 @@ class User extends Authenticatable
 
     public function myTopics()
     {
-        return $this->belongsToMany(\App\Models\Topic::class, 'users_progress')->withPivot(['completed']);
+        return $this->belongsToMany(\App\Models\Topic::class, 'users_progress')->withPivot('completed');
     }
 
     public function hasTopic($topic)
     {
         if ($this->myTopics()->where('title', $topic)->first()) {
-            return true;
+            return $this->myTopics()->where('title', $topic)->first();
         }
         return false;
     }

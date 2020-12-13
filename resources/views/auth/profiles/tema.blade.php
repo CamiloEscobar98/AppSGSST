@@ -1,53 +1,45 @@
 @extends('layouts.argon')
 @section('title', 'Temática')
 @section('content')
-    <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
-        <div class="container-fluid">
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-                <!-- Navbar links -->
-                <ul class="navbar-nav align-items-center  ml-md-auto ">
-                    <li class="nav-item d-xl-none">
-                        <!-- Sidenav toggler -->
-                        <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin"
-                            data-target="#sidenav-main">
-                            <div class="sidenav-toggler-inner">
-                                <i class="sidenav-toggler-line"></i>
-                                <i class="sidenav-toggler-line"></i>
-                                <i class="sidenav-toggler-line"></i>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-                @include('layouts.argon_user_nav')
-            </div>
-        </div>
-    </nav>
+    @include('layouts.argon_nav_user_2')
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-4 mt-4">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card shadow">
-                            <div class="card-header bg-primary pt">
-                                <h4 class="my-0 font-weight-bold text-white">Temática</h4>
+        <div class="row justify-content-center">
+            <div class="col-12 {{ checkColTopic(session('role')) }} mt-4">
+                <div class="card shadow">
+                    <div class="card-header bg-translucent">
+                        <h2 class="my-0 font-weight-bold mt-3">Perfil Tema</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-md-3">
+                                <img src="{{ asset($tema->image->fullimage()) }}" class="img-fluid mx-auto d-block" alt=""
+                                    width="200vh">
                             </div>
-                            <div class="card-body">
-                                <p class="card-title font-weight-bold">Capacitador</p>
-                                <p class="card-text">{{ $tema->user->fullname() }}</p>
-                                <p class="card-text">Actualizar la información de la temática.</p>
-                                <img src="{{ asset($tema->image->fullimage()) }}"
-                                    class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|} mx-auto d-block"
-                                    alt="" width="200vh">
-                                <form action="{{ route('topic.update') }}" method="post">
+                            <div class="col-12 col-md-7">
+                                <h3 class="card-title font-weight-bold">Capacitador</h3>
+                                @if ($tema->user)
+                                    <a href="{{ route('user.show', $tema->user) }}">
+                                        <p class="card-text font-weight-bold">{{ $tema->user->fullname() }}</p>
+                                    </a>
+                                @else
+                                    <div class="row justify-content-center">
+                                        <div class="col-12 col-md-8">
+                                            <p class="px-2 bg-danger text-white font-weight-bold text-center">No tiene
+                                                encargado asignado.</p>
+                                        </div>
+                                    </div>
+                                @endif
+                                @if (session('role') != 'capacitante')
+                                    <p class="card-text font-weight-bold">Actualizar la información de la temática.</p>
+                                @endif
+                                <form action="{{ route('topic.update') }}" method="post" class="mt-4">
                                     @csrf
                                     @method('put')
-                                    <input type="hidden" name="topic" value="{{ $tema->id }}">
                                     <div class="form-group">
                                         <label for="title" class="font-weight-bold">Título:</label>
                                         <input type="text" name="title" id="title" value="{{ $tema->title }}"
-                                            class="form-control @error('title') is-invalid @enderror" placeholder=""
-                                            aria-describedby="helpId">
+                                            class="form-control @error('title') is-invalid @enderror"
+                                            {{ checkInput(session('role')) }} aria-describedby="helpId">
                                         @error('title')
                                             <small id="helpId"
                                                 class="text-white font-weight-bold bg-danger py-1">{{ $message }}</small>
@@ -56,136 +48,180 @@
                                     <div class="form-group">
                                         <label for="info" class="font-weight-bold">Descripción:</label>
                                         <textarea class="form-control @error('info') is-invalid @enderror" name="info"
-                                            id="info" aria-describedby="helpId" rows="3">{{ $tema->info }}</textarea>
+                                            id="info" aria-describedby="helpId" rows="3"
+                                            {{ checkInput(session('role')) }}>{{ $tema->info }}</textarea>
                                         @error('info')
                                             <small id="helpId"
                                                 class="text-white font-weight-bold bg-danger py-1">{{ $message }}</small>
                                         @enderror
                                     </div>
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-block btn-primary">Actualizar</button>
-                                    </div>
+                                    <input type="hidden" name="topic" value="{{ $tema->id }}">
+
+
+                                    @if (session('role') != 'capacitante')
+                                        <div class="form-group float-left">
+                                            <button type="submit"
+                                                class="btn btn-block btn-outline-primary">Actualizar</button>
+                                        </div>
+                                    @endif
                                 </form>
                             </div>
-                            <div class="card-footer bg-primary py-4"></div>
                         </div>
-                    </div>
-                    <div class="col-12 mt-4 mb-4">
-                        <div class="row">
-                            @if (session('role') == 'administrador')
-                                <div class="col-md-6">
-                                    <div class="card">
-                                        <div class="card-header bg-primary py-4">
-                                            <h4 class="text-white font-weight-bold my-0">Cambiar Capacitador</h4>
-                                        </div>
-                                        <div class="card-body">
-                                            <form action="{{ route('topic.update-capacitante') }}" method="post">
-                                                @csrf
-                                                @method('patch')
-                                                <input type="hidden" name="topic" value="{{ $tema->id }}">
-                                                <div class="form-group">
-                                                    <label for="capacitador" class="font-weight-bold">Capacitador:</label>
-                                                    <select class="form-control @error('capacitador') is-invalid @enderror"
-                                                        name="capacitador" id="capacitador">
-                                                        <option value="-1">Seleccione un capacitador</option>
-                                                        @foreach ($capacitadores as $capacitador)
-                                                            @if ($capacitador->email == $tema->user->email)
-                                                                <option value="{{ $capacitador->email }}" selected>
-                                                                    {{ $capacitador->fullname() }}
-                                                                </option>
-                                                            @else
-                                                                <option value="{{ $capacitador->email }}">
-                                                                    {{ $capacitador->fullname() }}
-                                                                </option>
-                                                            @endif
 
-                                                        @endforeach
-                                                    </select>
-                                                    @error('capacitador')
-                                                        <small id="helpId"
-                                                            class="text-white bg-danger py-1">{{ $message }}</small>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <button type="submit"
-                                                        class="btn btn-block btn-primary">Actualizar</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="card-footer bg-primary py-4"></div>
-                                    </div>
-                                </div>
-                            @endif
-
-                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-8 mt-4">
-                @if ($tema->game == null)
-                    <div class="card">
-                        <div class="card-header bg-primary py-4"></div>
+            @if (session('role') == 'administrador')
+                <div class="col-12 col-md-5 mt-4">
+                    <div class="card shadow">
+                        <div class="card-header bg-translucent-white">
+                            @if ($tema->user)
+                                <h2 class="font-weight-bold mt-3">Cambiar Capacitador</h2>
+                            @else
+                                <h2 class="font-weight-bold mt-3">Asignar Capacitador</h2>
+                            @endif
+                        </div>
                         <div class="card-body">
-                            <form action="{{ route('game.create') }}" method="post">
+                            <form action="{{ route('topic.update-capacitante') }}" method="post">
                                 @csrf
+                                @method('patch')
                                 <input type="hidden" name="topic" value="{{ $tema->id }}">
                                 <div class="form-group">
-                                    <label for="title_game" class="font-weight-bold">Titulo del Juego</label>
-                                    <input type="text" name="title_game" id="title_game" value="{{ old('title_game') }}"
-                                        class="form-control @error('title_game') is-invalid @enderror"
-                                        placeholder="Titulo del juego" aria-describedby="helpId">
-                                    @error('title_game')
-                                        <small id="helpId"
-                                            class="text-white font-weight-bold bg-danger py-1">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="game_type" class="font-weight-bold">Tipo de juego</label>
-                                    <select class="custom-select @error('game_type') is-invalid @enderror" name="game_type"
-                                        id="game_type">
-                                        <option value="-1" selected>Seleccione un tipo de juego</option>
-                                        <option value="1">Ahorcado</option>
-                                        <option value="2">Sopa de Letras</option>
+                                    <label for="capacitador" class="font-weight-bold">Capacitador:</label>
+                                    <select class="form-control @error('capacitador') is-invalid @enderror"
+                                        name="capacitador" id="capacitador">
+                                        <option value="-1">Seleccione un capacitador</option>
+                                        @foreach ($capacitadores as $capacitador)
+
+                                            <option value="{{ $capacitador->email }}">
+                                                {{ $capacitador->fullname() }}
+                                            </option>
+
+                                        @endforeach
                                     </select>
-                                    @error('game_type')
-                                        <small id="helpId"
-                                            class="text-white font-weight-bold bg-danger py-1">{{ $message }}</small>
+                                    @error('capacitador')
+                                        <small id="helpId" class="text-white bg-danger py-1">{{ $message }}</small>
                                     @enderror
                                 </div>
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-block btn-primary">Registrar juego</button>
+                                <div class="form-group float-left">
+                                    <button type="submit" class="btn btn-outline-primary">Actualizar</button>
                                 </div>
                             </form>
                         </div>
-                        <div class="card-footer bg-primary py-4"></div>
                     </div>
-                @else
-                    @if ($tema->game->gameable->words()->count() != null)
-                        <button class="btn btn-block btn-primary"
-                            onclick="mostrar_ocultar_juego('play_game')">Jugar</button>
-                        <a href="{{ route('game.show', $tema->game) }}" class="btn btn-block btn-primary">Ver
-                            juego</a>
-                        <button type="button" class="btn btn-block btn-danger delete-game"
-                            data-game="{{ $tema->game->id }}">Eliminar</button>
+                </div>
+            @endif
+        </div>
+        @if (session('role') != 'capacitante')
+        <div class="card shadow">
+            <div class="card-header bg-translucent-white">
+                <h2 class="font-weight-bold mt-3">Progreso de Capacitantes</h2>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-inverse table-bordered">
+                        <thead class="bg-primary font-weight-bold text-center text-white">
+                            <tr>
+                                <th class="bg-translucent-white w-75">Capacitante</th>
+                                <th class="bg-translucent-default text-white w-25">Completado</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            @forelse ($myusers as $item)
+                                <tr>
+                                    <td>{{ $item->fullname() }}</td>
+                                    <td>
+                                        {!! returnCompleted($item->pivot->completed) !!}
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>No hay registros</tr>
+                            @endforelse
 
-                    @else
-                        <a href="{{ route('game.show', $tema->game) }}" class="btn btn-block btn-primary">Ver
-                            juego</a>
-                        <button type="button" class="btn btn-block btn-danger delete-game"
-                            data-game="{{ $tema->game->id }}">Eliminar</button>
-                    @endif
-                    <div id="play_game">
-                        @if ($tema->game->type == 1)
-                            @include('auth.games.hangman')
-                        @endif
-                        @if ($tema->game->type == 2)
-                            @include('auth.games.wordfind')
-                        @endif
-                    </div>
-                @endif
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
+        @endif
+
+        @if ($tema->game == null)
+            @if (session('role') != 'capacitante')
+                <div class="card shadow">
+                    <div class="card-header bg-translucent-white">
+                        <h2 class="font-weight-bold mt-3">Registrar Actividad Interactiva</h2>
+                    </div>
+                    <div class="card-body">
+                        <form action="{{ route('game.create') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="topic" value="{{ $tema->id }}">
+                            <div class="form-group">
+                                <label for="title_game" class="font-weight-bold">Titulo</label>
+                                <input type="text" name="title_game" id="title_game" value="{{ old('title_game') }}"
+                                    class="form-control @error('title_game') is-invalid @enderror" placeholder="Titulo"
+                                    aria-describedby="helpId">
+                                @error('title_game')
+                                    <small id="helpId" class="text-white font-weight-bold bg-danger py-1">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="game_type" class="font-weight-bold">Tipo</label>
+                                <select class="custom-select @error('game_type') is-invalid @enderror" name="game_type"
+                                    id="game_type">
+                                    <option value="-1" selected>Seleccione el tipo de actividad</option>
+                                    <option value="1">Ahorcado</option>
+                                    <option value="2">Sopa de Letras</option>
+                                </select>
+                                @error('game_type')
+                                    <small id="helpId" class="text-white font-weight-bold bg-danger py-1">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group float-right">
+                                <button type="submit" class="btn btn-outline-primary">Registrar juego</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            @else
+                <div class="alert alert-danger container text-center w-auto" role="alert">
+                    <strong>No hay registrado una actividad interactiva</strong>
+                </div>
+            @endif
+        @else
+            @if ($tema->game->gameable->words()->count() != null)
+                <button class="btn btn-outline-primary" onclick="mostrar_ocultar_juego('play_game')">Jugar</button>
+
+                @if (session('role') != 'capacitante')
+                    <a href="{{ route('game.show', $tema->game) }}" class="btn btn-outline-primary">Ver
+                        juego</a>
+                    <button type="button" class="btn float-right btn-outline-danger delete-game w-25"
+                        data-game="{{ $tema->game->id }}">Eliminar</button>
+                @endif
+            @else
+                <div class="row justify-content-end">
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Actividad Interactiva no completada</strong>
+                    </div>
+                </div>
+                @if (session('role') != 'capacitante')
+                    <a href="{{ route('game.show', $tema->game) }}" class="btn float-right btn-outline-primary w-25">Ver
+                        juego</a>
+                    <button type="button" class="btn float-right btn-outline-danger delete-game w-25"
+                        data-game="{{ $tema->game->id }}">Eliminar</button>
+                @endif
+            @endif
+            <div id="play_game">
+                @if ($tema->game->type == 1)
+                    @include('auth.games.hangman')
+                @endif
+                @if ($tema->game->type == 2)
+                    @include('auth.games.wordfind')
+                @endif
+            </div>
+        @endif
+        @include('layouts.argon_footer')
     </div>
+
 @endsection
 @section('scripts')
     <script>

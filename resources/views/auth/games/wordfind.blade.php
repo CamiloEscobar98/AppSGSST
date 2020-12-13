@@ -5,6 +5,8 @@
     <script src="{{ asset('js/wordfind.js') }}"></script>
     <script src="{{ asset('js/wordfindgame.js') }}"></script>
     <input type="hidden" id="wordfind" value="{{ $tema->game->gameable->id }}">
+    <input type="hidden" id="role" value="{{ session('role') }}">
+    <input type="hidden" id="user" value="{{ Auth()->user()->email }}">
     <div class="card">
         <div class="card-header bg-sgsst text-center py-4">
             <h2 class="my-0"> Sopa de Letras</h2>

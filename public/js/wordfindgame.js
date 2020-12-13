@@ -22,7 +22,7 @@
   *
   * @api private
   */
-  var WordFindGame = function() {
+  var WordFindGame = function () {
 
     // List of words for this game
     var wordList;
@@ -34,7 +34,7 @@
     * @param {[[String]]} puzzle: The puzzle to draw
     */
     var drawPuzzle = function (el, puzzle) {
-      
+
       var output = '';
       // for each row in the puzzle
       for (var i = 0, height = puzzle.length; i < height; i++) {
@@ -43,10 +43,10 @@
         output += '<div>';
         // for each element in that row
         for (var j = 0, width = row.length; j < width; j++) {
-            // append our button with the appropriate class
-            output += '<button class="puzzleSquare" x="' + j + '" y="' + i + '">';
-            output += row[j] || '&nbsp;';
-            output += '</button>';
+          // append our button with the appropriate class
+          output += '<button class="puzzleSquare" x="' + j + '" y="' + i + '">';
+          output += row[j] || '&nbsp;';
+          output += '</button>';
         }
         // close our div that represents a row
         output += '</div>';
@@ -62,7 +62,7 @@
     * @param {[String]} words: The words to draw
     */
     var drawWords = function (el, words) {
-      
+
       var output = '<ul>';
       for (var i = 0, len = words.length; i < len; i++) {
         var word = words[i];
@@ -112,7 +112,7 @@
       }
 
       // if the new square is actually the previous square, just return
-      var lastSquare = selectedSquares[selectedSquares.length-1];
+      var lastSquare = selectedSquares[selectedSquares.length - 1];
       if (lastSquare == target) {
         return;
       }
@@ -122,26 +122,26 @@
       var backTo;
       for (var i = 0, len = selectedSquares.length; i < len; i++) {
         if (selectedSquares[i] == target) {
-          backTo = i+1;
+          backTo = i + 1;
           break;
         }
       }
 
       while (backTo < selectedSquares.length) {
-        $(selectedSquares[selectedSquares.length-1]).removeClass('selected');
-        selectedSquares.splice(backTo,1);
-        curWord = curWord.substr(0, curWord.length-1);
+        $(selectedSquares[selectedSquares.length - 1]).removeClass('selected');
+        selectedSquares.splice(backTo, 1);
+        curWord = curWord.substr(0, curWord.length - 1);
       }
 
 
       // see if this is just a new orientation from the first square
       // this is needed to make selecting diagonal words easier
       var newOrientation = calcOrientation(
-          $(startSquare).attr('x')-0,
-          $(startSquare).attr('y')-0,
-          $(target).attr('x')-0,
-          $(target).attr('y')-0
-          );
+        $(startSquare).attr('x') - 0,
+        $(startSquare).attr('y') - 0,
+        $(target).attr('x') - 0,
+        $(target).attr('y') - 0
+      );
 
       if (newOrientation) {
         selectedSquares = [startSquare];
@@ -155,11 +155,11 @@
 
       // see if the move is along the same orientation as the last move
       var orientation = calcOrientation(
-          $(lastSquare).attr('x')-0,
-          $(lastSquare).attr('y')-0,
-          $(target).attr('x')-0,
-          $(target).attr('y')-0
-          );
+        $(lastSquare).attr('x') - 0,
+        $(lastSquare).attr('y') - 0,
+        $(target).attr('x') - 0,
+        $(target).attr('y') - 0
+      );
 
       // if the new square isn't along a valid orientation, just ignore it.
       // this makes selecting diagonal words less frustrating
@@ -175,15 +175,15 @@
       }
 
     };
-    
-    var touchMove = function(e) {
+
+    var touchMove = function (e) {
       var xPos = e.originalEvent.touches[0].pageX;
       var yPos = e.originalEvent.touches[0].pageY;
       var targetElement = document.elementFromPoint(xPos, yPos);
       select(targetElement)
     };
-    
-    var mouseMove = function() { 
+
+    var mouseMove = function () {
       select(this);
     };
 
@@ -215,15 +215,39 @@
 
       // see if we formed a valid word
       for (var i = 0, len = wordList.length; i < len; i++) {
-        
+
         if (wordList[i] === curWord) {
           $('.selected').addClass('found');
-          wordList.splice(i,1);
+          wordList.splice(i, 1);
           $('.' + curWord).addClass('wordFound');
+          console.log('hol2i: ' + i);
         }
 
         if (wordList.length === 0) {
           $('.puzzleSquare').addClass('complete');
+          console.log('holi: ' + i);
+          var wordfind = $tmp = document.getElementById('wordfind').value;
+          var role = $tmp = document.getElementById('role').value;
+          var user = $tmp = document.getElementById('user').value;
+          $.ajax({
+            async: false,
+            type: 'POST',
+            url: '/api/game/wordfind/win',
+            data: {
+              wordfind_id: wordfind,
+              game_type: 'wordfind',
+              role: role,
+              user: user,
+              _method: 'POST'
+            },
+            dataType: 'json'
+          }).done(function (res) {
+            Swal.fire(
+              '¡Éxito!',
+              res.message,
+              res.alert
+            )
+          });
         }
       }
 
@@ -270,8 +294,8 @@
       * @param {String} wordsEl: Selector to use when inserting the word list
       * @param {Options} options: WordFind options to use when creating the puzzle
       */
-      create: function(words, puzzleEl, wordsEl, options) {
-        
+      create: function (words, puzzleEl, wordsEl, options) {
+
         wordList = words.slice(0).sort();
 
         var puzzle = wordfind.newPuzzle(words, options);
@@ -305,21 +329,21 @@
       * @param {[[String]]} puzzle: The puzzle to solve
       * @param {[String]} words: The words to solve for
       */
-      solve: function(puzzle, words) {
+      solve: function (puzzle, words) {
 
         var solution = wordfind.solve(puzzle, words).found;
 
-        for( var i = 0, len = solution.length; i < len; i++) {
+        for (var i = 0, len = solution.length; i < len; i++) {
           var word = solution[i].word,
-              orientation = solution[i].orientation,
-              x = solution[i].x,
-              y = solution[i].y,
-              next = wordfind.orientations[orientation];
-
+            orientation = solution[i].orientation,
+            x = solution[i].x,
+            y = solution[i].y,
+            next = wordfind.orientations[orientation];
           if (!$('.' + word).hasClass('wordFound')) {
             for (var j = 0, size = word.length; j < size; j++) {
               var nextPos = next(x, y, j);
               $('[x="' + nextPos.x + '"][y="' + nextPos.y + '"]').addClass('solved');
+
             }
 
             $('.' + word).addClass('wordFound');

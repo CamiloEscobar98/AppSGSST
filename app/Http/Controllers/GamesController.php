@@ -40,6 +40,41 @@ class GamesController extends Controller
         }
     }
 
+    public function winHangman(Request $request)
+    {
+        // return response()->json(['data' => 'hola entro acá']);
+        if ($request->role == 'capacitante') {
+            $user = \App\User::where('email', $request->user)->first();
+            $hangman = \App\Models\Hangman::find($request->hangman_id);
+            $topic = $user->myTopics()->where('title', $hangman->game->topic->title)->get()->first();
+            if ($topic && $topic->pivot->completed == '0') {
+                $topic->pivot->completed = '1';
+                $topic->pivot->save();
+                return response()->json([
+                    'alert' => 'success',
+                    'message' => 'Se ha completado la temática'
+                ]);
+            }
+        }
+    }
+    public function winWordFind(Request $request)
+    {
+        if ($request->role == 'capacitante') {
+            $user = \App\User::where('email', $request->user)->first();
+            $wordfind = \App\Models\Wordfind::find($request->wordfind_id);
+            $topic = $user->myTopics()->where('title', $wordfind->game->topic->title)->get()->first();
+            // return response()->json(['data' => $topic]);
+            if ($topic && $topic->pivot->completed == '0') {
+                $topic->pivot->completed = '1';
+                $topic->pivot->save();
+                return response()->json([
+                    'alert' => 'success',
+                    'message' => 'Se ha completado la temática'
+                ]);
+            }
+        }
+    }
+
     public function getWordFind(Request $request)
     {
         if ($request->ajax()) {

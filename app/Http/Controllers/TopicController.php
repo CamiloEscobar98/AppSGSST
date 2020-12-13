@@ -25,8 +25,14 @@ class TopicController extends Controller
     public function show(\App\Models\Topic $topic)
     {
         $capacitadores = \App\Models\Role::where('name', 'capacitador')->first()->users;
+        $myusers = $topic->users;
         $capsules = $topic->capsules()->paginate(5);
-        return view('auth.profiles.tema', ['tema' => $topic, 'capacitadores' => $capacitadores, 'capsules' => $capsules]);
+        return view('auth.profiles.tema', [
+            'tema' => $topic,
+            'capacitadores' => $capacitadores,
+            'capsules' => $capsules,
+            'myusers' => $myusers
+        ]);
     }
 
     public function update(\App\Http\Requests\Topic\UpdateTopicRequest $request)

@@ -13,7 +13,7 @@ class UpdateGameRequest extends FormRequest
      */
     public function authorize()
     {
-        return session('role') == 'administrador';
+        return session('role') == 'administrador' || session('role') == 'capacitador';
     }
 
     /**

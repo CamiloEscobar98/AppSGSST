@@ -29,7 +29,9 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card shadow">
-                            <div class="card-header bg-primary py-5"></div>
+                            <div class="card-header bg-translucent-white">
+                                <h2 class="mt-3">Foto de Perfil</h2>
+                            </div>
                             <div class="card-body">
                                 <img src="{{ asset($usuario->image->url . '/' . $usuario->image->image) }}"
                                     class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|} mx-auto d-block"
@@ -52,17 +54,19 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-primary btn-block">Actualizar foto</button>
+                                        <button type="submit" class="btn btn-outline-primary btn-block">Actualizar
+                                            foto</button>
                                     </div>
                                 </form>
                             </div>
-                            <div class="card-footer bg-primary py-4"></div>
                         </div>
                     </div>
                     <div class="col-12 mt-4">
                         <div class="card">
-                            <div class="card-header bg-primary py-4 text-center">
-                                <h4 class="font-weight-bold my-0 text-white">Asignar rol de Usuario</h4>
+                            <div class="card-header bg-translucent-white">
+                                <h2 class="font-weight-bold mt-3">
+                                    Asignar rol de Usuario
+                                </h2>
                             </div>
                             <div class="card-body">
                                 <form action="{{ route('user.addRole') }}" method="post">
@@ -83,20 +87,21 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-block btn-primary">Agregar</button>
+                                        <button type="submit" class="btn btn-block btn-outline-warning">Agregar</button>
                                     </div>
                                 </form>
                             </div>
-                            <div class="card-footer bg-primary py-4"></div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-6 mt-5">
                 <div class="card shadow">
-                    <div class="card-header bg-primary py-5"></div>
+                    <div class="card-header bg-translucent-white">
+                        <h2 class="mt-3">Perfil de usuario</h2>
+                    </div>
                     <div class="card-body">
-                        <h4 class="card-title float-right">Perfil de usuario</h4>
+
                         <p class="card-text">Actualiza tu información</p>
                         @include('layouts.user.update-form-2')
                         <hr class="bg-primary my-4">
@@ -119,15 +124,14 @@
 
                         </ul>
                     </div>
-                    <div class="card-footer bg-primary py-4"></div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="row">
                     <div class="col-12 mt-5">
                         <div class="card shadow">
-                            <div class="card-header bg-primary py-4">
-                                <h4 class="my-0 font-weight-bold text-center text-white">Cambiar contraseña</h4>
+                            <div class="card-header bg-translucent-white">
+                                <h2 class="my-0 font-weight-bold mt-3">Cambiar contraseña</h2>
                             </div>
                             <div class="card-body">
                                 <form action="{{ route('user.update-password') }}" method="post">
@@ -146,19 +150,18 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-primary btn-block">Actualizar
+                                        <button type="submit" class="btn btn-outline-danger btn-block">Actualizar
                                             contraseña</button>
                                     </div>
                                 </form>
                             </div>
-                            <div class="card-footer bg-primary py-4"></div>
                         </div>
                     </div>
                     @if (session('role') == 'administrador')
                         <div class="col-12 mt-4">
                             <div class="card shadow">
-                                <div class="card-header bg-primary py-4">
-                                    <h4 class="my-0 font-weight-bold text-center text-white">Cambiar tipo de documento</h4>
+                                <div class="card-header bg-translucent-white">
+                                    <h2 class="my-0 font-weight-bold mt-3">Cambiar tipo de documento</h2>
                                 </div>
                                 <div class="card-body">
                                     <form action="{{ route('user.update-document') }}" method="post">
@@ -191,11 +194,10 @@
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-primary btn-block">Actualizar</button>
+                                            <button type="submit" class="btn btn-outline-primary btn-block">Actualizar</button>
                                         </div>
                                     </form>
                                 </div>
-                                <div class="card-footer bg-primary py-4"></div>
                             </div>
                         </div>
                     @endif
