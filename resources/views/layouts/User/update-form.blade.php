@@ -5,7 +5,7 @@
         <input type="hidden" name="email" value="{{ Auth()->user()->email }}">
     @endif
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
             <div class="form-group">
                 <label for="name" class="font-weight-bold text-capitalize">Nombres:</label>
                 <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name"
@@ -36,7 +36,7 @@
                 @enderror
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
             <div class="form-group">
                 <label for="email" class="font-weight-bold">Correo electrónico:</label>
                 <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" aria-describedby="helpId"

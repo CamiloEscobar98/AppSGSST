@@ -1,28 +1,7 @@
 @extends('layouts.argon')
 @section('title', 'Perfil/Usuario')
 @section('content')
-    <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
-        <div class="container-fluid">
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-                <!-- Navbar links -->
-                <ul class="navbar-nav align-items-center  ml-md-auto ">
-                    <li class="nav-item d-xl-none">
-                        <!-- Sidenav toggler -->
-                        <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin"
-                            data-target="#sidenav-main">
-                            <div class="sidenav-toggler-inner">
-                                <i class="sidenav-toggler-line"></i>
-                                <i class="sidenav-toggler-line"></i>
-                                <i class="sidenav-toggler-line"></i>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-                @include('layouts.argon_user_nav')
-            </div>
-        </div>
-    </nav>
+    @include('layouts.argon_nav_user_2')
     <section class="container-fluid mb-4">
         <div class="row justify-content-center">
             <div class="col-md-3 mt-5">
@@ -194,7 +173,8 @@
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-outline-primary btn-block">Actualizar</button>
+                                            <button type="submit"
+                                                class="btn btn-outline-primary btn-block">Actualizar</button>
                                         </div>
                                     </form>
                                 </div>

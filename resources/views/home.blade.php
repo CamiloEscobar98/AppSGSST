@@ -1,10 +1,10 @@
 @extends('layouts.argon')
 @section('title', 'Inicio')
 @section('content')
-   @include('layouts.argon_nav_user_2')
+    @include('layouts.argon_nav_user_2')
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-3 mt-5">
+            <div class="col-md-12 col-lg-12 col-xl-4 mt-5">
                 <div class="row">
                     <div class="col-12">
                         <div class="card shadow">
@@ -86,7 +86,7 @@
                 </div>
 
             </div>
-            <div class="col-md-6 mt-5">
+            <div class="col-md-12 col-lg-12 col-xl-4 mt-5">
                 <div class="card shadow">
                     <div class="card-header bg-translucent-white">
                         <h2 class="font-weight-bold mt-3">Actualiza tu información</h2>
@@ -97,7 +97,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-12 col-lg-12 col-xl-4">
                 <div class="row">
                     <div class="col-12 mt-5">
                         <div class="card shadow">
@@ -125,8 +125,8 @@
                                         <div class="custom-file">
                                             <input type="file"
                                                 class="custom-file-input @error('image') is-invalid @enderror"
-                                                id="customFileLang" lang="en" name="image">
-                                            <label class="custom-file-label" for="customFileLang"></label>
+                                                id="customFileLang" name="image">
+                                            <label class="custom-file-label" for="customFile"></label>
                                         </div>
                                         @error('image')
                                             <small id="helpId"
