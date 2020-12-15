@@ -31,7 +31,8 @@ class TopicController extends Controller
             'tema' => $topic,
             'capacitadores' => $capacitadores,
             'capsules' => $capsules,
-            'myusers' => $myusers
+            'myusers' => $myusers,
+            'capsules' => $topic->capsules()->paginate(5)
         ]);
     }
 

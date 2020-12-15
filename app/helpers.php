@@ -53,6 +53,20 @@ function checkColTopic($role)
             break;
     }
 }
+function checkColCapsule($role)
+{
+    switch ($role) {
+        case 'capacitador':
+            return 'col-xl-8';
+            break;
+        case 'capacitante':
+            return 'col-xl-12';
+            break;
+        default:
+            return 'col-xl-8';
+            break;
+    }
+}
 
 function returnCompleted($role)
 {
