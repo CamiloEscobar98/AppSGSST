@@ -2,7 +2,19 @@
 @section('title', 'Todas las temáticas')
 @section('content')
     @include('layouts.argon_nav_user_2')
-    <div class="container-fluid mt-4">
+    <div class="container-fluid mt-4 mb-4">
+        <div class="my-4">
+            @if (auth()
+            ->user()
+            ->completeTopics())
+                <div class="mt-4">
+                    <div class="alert alert-default" role="alert">
+                        <strong>¡Increíble!</strong> Has terminado de realizar todas las temáticas de la inducción.
+                    </div>
+                    <a href="{{ route('user.formato') }}" class="btn btn-outline-success">Realizar Formato de Inducción</a>
+                </div>
+            @endif
+        </div>
         <h2 class="font-weight-bold">Todas las temáticas</h2>
         <hr>
         <div class="row justify-content-start">

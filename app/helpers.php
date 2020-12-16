@@ -89,3 +89,8 @@ function isCompleted($topic)
         }
     }
 }
+function completeTopics($id)
+{
+    $user = \App\User::find($id);
+    return $user->completeTopics();
+}

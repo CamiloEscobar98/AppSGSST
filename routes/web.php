@@ -19,19 +19,19 @@ Route::get('/', function () {
     return view('welcome', ['topics' => $topics]);
 });
 
-Route::post('/user-create', [\App\Http\Controllers\UserController::class, 'create'])->name('user.create');
-Route::put('/user-update', [\App\Http\Controllers\UserController::class, 'update'])->name('user.update');
-Route::patch('user-update-password', [\App\Http\Controllers\UserController::class, 'updatePassword'])->name('user.update-password');
-Route::patch('/user-update-document', [\App\Http\Controllers\UserController::class, 'updateDocument'])->name('user.update-document');
-Route::patch('/user-update-photo', [\App\Http\Controllers\UserController::class, 'updatePhoto'])->name('user.update-photo');
-Route::delete('/user-delete', [\App\Http\Controllers\UserController::class, 'destroy'])->name('user.delete');
-Route::get('/perfil/{usuario}', [\App\Http\Controllers\UserController::class, 'show'])->name('user.show');
-Route::post('/user-add-role', [\App\Http\Controllers\UserController::class, 'addRole'])->name('user.addRole');
-Route::delete('/user-delete-role', [\App\Http\Controllers\UserController::class, 'deleteRole'])->name('user.deleteRole');
-Route::get('/mis-tematicas', [\App\Http\Controllers\UserController::class, 'myTopics'])->name('user.my-topics');
-Route::get('/tematicas', [\App\Http\Controllers\UserController::class, 'topics'])->name('user.topics');
-Route::post('/add-topic', [\App\Http\Controllers\UserController::class, 'addTopic'])->name('user.addtopic');
-Route::post('/massive-users', [\App\Http\Controllers\UserController::class, 'userImport'])->name('user.massive');
+Route::post('/user-create', 'UserController@create')->name('user.create');
+Route::put('/user-update', 'UserController@update')->name('user.update');
+Route::patch('user-update-password', 'UserController@updatePassword')->name('user.update-password');
+Route::patch('/user-update-document', 'UserController@updateDocument')->name('user.update-document');
+Route::patch('/user-update-photo', 'UserController@updatePhoto')->name('user.update-photo');
+Route::delete('/user-delete', 'UserController@destroy')->name('user.delete');
+Route::get('/perfil/{usuario}', 'UserController@show')->name('user.show');
+Route::post('/user-add-role', 'UserController@addRole')->name('user.addRole');
+Route::delete('/user-delete-role', 'UserController@deleteRole')->name('user.deleteRole');
+Route::get('/mis-tematicas', 'UserController@myTopics')->name('user.my-topics');
+Route::get('/tematicas', 'UserController@topics')->name('user.topics');
+Route::post('/add-topic', 'UserController@addTopic')->name('user.addtopic');
+Route::post('/massive-users', 'UserController@userImport')->name('user.massive');
 
 Route::post('/topic-create', 'TopicController@create')->name('topic.create');
 Route::delete('/topic-delete', 'TopicController@destroy')->name('topic.delete');
@@ -58,6 +58,9 @@ Route::get('/lista-capacitantes', 'HomeController@lista_capacitantes')->name('ca
 Route::get('/lista-capacitadores', 'HomeController@lista_capacitadores')->name('capacitadores');
 Route::get('/lista-temáticas', 'HomeController@lista_tematicas')->name('tematicas');
 Route::get('/lista-capsulas', 'HomeController@lista_capsulas')->name('capsulas');
+
+Route::get('/formato-induccion', 'UserController@formato')->name('user.formato');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

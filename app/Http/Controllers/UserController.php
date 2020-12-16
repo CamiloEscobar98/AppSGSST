@@ -251,4 +251,9 @@ class UserController extends Controller
             ]);
         }
     }
+
+    public function formato()
+    {
+        return view('auth.formato');
+    }
 }

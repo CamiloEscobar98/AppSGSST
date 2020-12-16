@@ -46,10 +46,27 @@ class User extends Authenticatable
 
     public function hasTopic($topic)
     {
+        $aux = null;
         if ($this->myTopics()->where('title', $topic)->first()) {
-            return $this->myTopics()->where('title', $topic)->first();
+            return  $this->myTopics()->where('title', $topic)->first();
         }
         return false;
+    }
+
+    public function completeTopics()
+    {
+        $topics = \App\Models\Topic::all();
+        // return sizeof($topics);
+        if (sizeof($topics) == sizeof($this->myTopics)) {
+            // return $this->myTopics()->where('completed', '1')->first();
+            if ($this->myTopics()->where('completed', '0')->first()) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
     }
 
     public function topics()
