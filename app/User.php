@@ -145,4 +145,9 @@ class User extends Authenticatable
     {
         return $this->name . ' ' . $this->lastname;
     }
+
+    public function formato()
+    {
+        return $this->hasOne(\App\Formato::class);
+    }
 }

@@ -256,4 +256,65 @@ class UserController extends Controller
     {
         return view('auth.formato');
     }
+
+    public function doFormato(Request $request)
+    {
+        // return $request->all();
+        $rules = [
+            'date' => ['required', 'date'],
+            'city' => ['required', 'string'],
+            'tipo_vinculacion' => ['required'],
+            'fullname' => ['required', 'string'],
+            'document_type' => ['required'],
+            'document' => ['required'],
+            'dependencia' => ['required'],
+            'cargo' => ['required', 'string'],
+            'sede' => ['required', 'string'],
+            'firma_asistente' => ['required', 'image', 'mimes:jpeg,jpg,png', 'max:2048']
+        ];
+        $isContratist = $request->esContratista;
+        if ($isContratist == 'on') {
+            $rules['razon_social'] = ['required', 'string'];
+            $rules['celular'] = ['required'];
+            $rules['email'] = ['required', 'email'];
+        }
+        $attributes = [
+            'date' => 'fecha de finalización',
+            'city' => 'ciudad',
+            'tipo_vinculacion' => 'tipo de vinculación',
+            'fullname' => 'Nombre completo',
+            'document_type' => 'tipo de documento',
+            'document' => 'documento',
+            'dependencia' => 'cargo',
+            'sede' => 'sede',
+            'firma_asistente' => 'Firma del Capacitante'
+        ];
+        $validated = $request->validate($rules, [], $attributes);
+        $image = $request->file('firma_asistente');
+        $nombre = time() . '_' . Auth()->user()->document->document . '.' . $image->getClientOriginalExtension();
+        $destino = public_path('storage/images/firmas');
+        $request->firma_asistente->move($destino, $nombre);
+        $info = [
+            'Fecha' => $validated['date'],
+            'Ciudad' => $validated['city'],
+            'Tipo_vinvulacion' => $validated['tipo_vinculacion'],
+            'Nombres' => $validated['fullname'],
+            'Tipo_documento' => $validated['document_type'],
+            'Documento' => $validated['document'],
+            'Dependencia' => $validated['dependencia'],
+            'Cargo' => $validated['cargo'],
+            'Sede' => $validated['sede'],
+            'Firma' => 'storage/images/firmas/' . $nombre
+        ];
+        if ($isContratist == 'on') {
+            $info['razon_social'] = $validated['razon_social'];
+            $info['celular'] = $validated['celular'];
+            $info['email'] = $validated['email'];
+        }
+        \App\Formato::create([
+            'user_id' => Auth()->user()->id,
+            'info' => $info
+        ]);
+        return redirect()->back()->with('update_complete', 'Se registró correctamente el formato de inducción.');
+    }
 }

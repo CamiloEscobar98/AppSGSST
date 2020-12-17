@@ -2,7 +2,7 @@
 @section('title', 'Formato de Inducción')
 @section('content')
     @include('layouts.argon_nav_user_2')
-    {{Auth()->user()->formato}}
+    {{ Auth()->user()->formato }}
     @if (!Auth()->user()->formato)
         <div class="container-fluid my-5">
             <div class="card shadow">

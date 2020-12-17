@@ -60,6 +60,7 @@ Route::get('/lista-temáticas', 'HomeController@lista_tematicas')->name('tematic
 Route::get('/lista-capsulas', 'HomeController@lista_capsulas')->name('capsulas');
 
 Route::get('/formato-induccion', 'UserController@formato')->name('user.formato');
+Route::post('/realizar-formato', 'UserController@doFormato')->name('user.doformato');
 
 Auth::routes();
 

@@ -11,7 +11,12 @@
                     <div class="alert alert-default" role="alert">
                         <strong>¡Increíble!</strong> Has terminado de realizar todas las temáticas de la inducción.
                     </div>
-                    <a href="{{ route('user.formato') }}" class="btn btn-outline-success">Realizar Formato de Inducción</a>
+                    @if (!Auth()->user()->formato)
+                        <a href="{{ route('user.formato') }}" class="btn btn-outline-success">Realizar Formato de
+                            Inducción</a>
+                    @else
+                        <a href="" class="btn btn-outline-default">Descargar Formato</a>
+                    @endif
                 </div>
             @endif
         </div>
