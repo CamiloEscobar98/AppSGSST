@@ -315,6 +315,6 @@ class UserController extends Controller
             'user_id' => Auth()->user()->id,
             'info' => $info
         ]);
-        return redirect()->back()->with('update_complete', 'Se registró correctamente el formato de inducción.');
+        return redirect()->route('user.my-topics')->with('update_complete', 'Se registró correctamente el formato de inducción.');
     }
 }
