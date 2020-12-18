@@ -2,7 +2,7 @@
 @section('title', 'Formato de Inducción')
 @section('content')
     @include('layouts.argon_nav_user_2')
-    {{Auth()->user()->formato}}
+    {{ Auth()->user()->formato }}
     @if (!Auth()->user()->formato)
         <div class="container-fluid my-5">
             <div class="card shadow">
@@ -49,6 +49,9 @@
                                         <option>Trabajador en Misión</option>
                                         <option>Contrato de Aprendizaje</option>
                                     </select>
+                                    @error('tipo_vinculacion')
+                                        <small id="helpId" class="bg-translucent-danger">{{ $message }}</small>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-12-col-md-12 col-lg-12 col-xl-6">
@@ -61,6 +64,9 @@
                                         <option>Estudiante en Prácticas</option>
 
                                     </select>
+                                    @error('rol_institucion')
+                                        <small id="helpId" class="bg-translucent-danger">{{ $message }}</small>
+                                    @enderror
                                 </div>
                             </div>
                         </div>

@@ -11,4 +11,9 @@ class Formato extends Model
     protected $casts = [
         'info' => 'array'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(\App\User::class, 'user_id');
+    }
 }

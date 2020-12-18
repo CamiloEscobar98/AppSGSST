@@ -15,7 +15,9 @@
                         <a href="{{ route('user.formato') }}" class="btn btn-outline-success">Realizar Formato de
                             Inducción</a>
                     @else
-                        <a href="" class="btn btn-outline-default">Descargar Formato</a>
+                        {{-- {{ Auth()->user()->formato }} --}}
+                        <a href="{{ route('user.downloadformato', Auth()->user()->formato) }}"
+                            class="btn btn-outline-default">Descargar Formato</a>
                     @endif
                 </div>
             @endif

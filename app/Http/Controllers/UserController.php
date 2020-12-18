@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -270,6 +271,7 @@ class UserController extends Controller
             'dependencia' => ['required'],
             'cargo' => ['required', 'string'],
             'sede' => ['required', 'string'],
+            'rol_institucion' => ['required', 'string'],
             'firma_asistente' => ['required', 'image', 'mimes:jpeg,jpg,png', 'max:2048']
         ];
         $isContratist = $request->esContratista;
@@ -287,6 +289,7 @@ class UserController extends Controller
             'document' => 'documento',
             'dependencia' => 'cargo',
             'sede' => 'sede',
+            'rol_institucion' => 'Rol dentro de la Institución',
             'firma_asistente' => 'Firma del Capacitante'
         ];
         $validated = $request->validate($rules, [], $attributes);
@@ -304,6 +307,7 @@ class UserController extends Controller
             'Dependencia' => $validated['dependencia'],
             'Cargo' => $validated['cargo'],
             'Sede' => $validated['sede'],
+            'Rol_institucion' => $validated['rol_institucion'],
             'Firma' => 'storage/images/firmas/' . $nombre
         ];
         if ($isContratist == 'on') {
@@ -315,6 +319,25 @@ class UserController extends Controller
             'user_id' => Auth()->user()->id,
             'info' => $info
         ]);
-        return redirect()->route('user.my-topics')->with('update_complete', 'Se registró correctamente el formato de inducción.');
+        return redirect()->route('user.topics')->with('update_complete', 'Se registró correctamente el formato de inducción.');
+    }
+
+    public function downloadFormato(Request $request, \App\Formato $formato)
+    {
+        // return $formato;
+        $data = [
+            'formato' => $formato
+        ];
+
+        // return PDF::loadView('auth.formato-descargar', $data)
+        //     ->stream('archivo.pdf');
+
+        $pdf = app('dompdf.wrapper');
+        $pdf = $pdf->loadView('auth.formato-descargar', $data);
+        return $pdf->stream('archivo.pdf');
+
+        // return view('auth.formato-descargar', [
+        //     'formato' => $formato
+        // ]);
     }
 }

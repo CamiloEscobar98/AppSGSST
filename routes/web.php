@@ -61,6 +61,7 @@ Route::get('/lista-capsulas', 'HomeController@lista_capsulas')->name('capsulas')
 
 Route::get('/formato-induccion', 'UserController@formato')->name('user.formato');
 Route::post('/realizar-formato', 'UserController@doFormato')->name('user.doformato');
+Route::get('/descargar-formato/{formato}', 'UserController@downloadFormato')->name('user.downloadformato');
 
 Auth::routes();
 
