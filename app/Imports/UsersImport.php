@@ -8,9 +8,19 @@ use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithUpserts;
 use Maatwebsite\Excel\Events\AfterSheet;
+use Illuminate\Validation\Rule;
 
 class UsersImport implements ToModel, WithHeadingRow, WithEvents, WithUpserts
 {
+
+    public function rules(): array
+    {
+        return [
+            'email' => Rule::unique('users', 'email'),
+        ];
+    }
+
+
     /**
      * @param array $row
      *

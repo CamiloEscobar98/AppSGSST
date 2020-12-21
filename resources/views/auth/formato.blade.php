@@ -20,7 +20,7 @@
                                 <div class="form-group">
                                     <label for="date" class="font-weight-bold">Fecha de Finalización</label>
                                     <input type="date" name="date" id="date" class="form-control" placeholder="date"
-                                        aria-describedby="helpId">
+                                        aria-describedby="helpId" value="{{ old('date') }}">
                                     @error('date')
                                         <small id="helpId" class="bg-translucent-danger">{{ $message }}</small>
                                     @enderror
@@ -30,7 +30,7 @@
                                 <div class="form-group">
                                     <label for="city" class="font-weight-bold">Ciudad</label>
                                     <input type="text" name="city" id="city" class="form-control" placeholder="Ciudad"
-                                        aria-describedby="helpId">
+                                        aria-describedby="helpId" value="{{ old('city') }}">
                                     @error('city')
                                         <small id="helpId" class="bg-translucent-danger">{{ $message }}</small>
                                     @enderror
@@ -85,7 +85,7 @@
                                 <div class="form-group">
                                     <label for="razon_social" class="font-weight-bold">Nombre o Razón Social</label>
                                     <input type="text" name="razon_social" id="razon_social" class="form-control"
-                                        placeholder="" aria-describedby="helpId">
+                                        placeholder="" aria-describedby="helpId" value="{{ old('razon_social') }}">
                                     @error('razon_social')
                                         <small id="helpId" class="bg-danger text-white">{{ $message }}</small>
                                     @enderror
@@ -95,7 +95,7 @@
                                 <div class="form-group">
                                     <label for="celular" class="font-weight-bold">Teléfono o Celular</label>
                                     <input type="text" name="celular" id="celular" class="form-control" placeholder=""
-                                        aria-describedby="helpId">
+                                        aria-describedby="helpId" value="{{ old('celular') }}">
                                     @error('celular')
                                         <small id="helpId" class="bg-danger text-white">{{ $message }}</small>
                                     @enderror
@@ -105,7 +105,7 @@
                                 <div class="form-group">
                                     <label for="email" class="font-weight-bold">Correo Electrónico</label>
                                     <input type="email" name="email" id="email" class="form-control" placeholder=""
-                                        aria-describedby="helpId">
+                                        aria-describedby="helpId" value="{{ old('email') }}">
                                     @error('email')
                                         <small id="helpId" class="bg-danger text-white">{{ $message }}</small>
                                     @enderror
@@ -148,7 +148,7 @@
                                 <div class="form-group">
                                     <label for="dependencia" class="font-weight-bold">Área o Dependencia</label>
                                     <input type="text" name="dependencia" id="dependencia" class="form-control"
-                                        aria-describedby="helpId"
+                                        aria-describedby="helpId" value="{{ old('dependencia') }}"
                                         placeholder="Por favor, escriba el área o la dependencia a la que pertenece">
                                     @error('dependencia')
                                         <small id="helpId" class="bg-translucent-danger">{{ $message }}</small>
@@ -157,7 +157,8 @@
                                 <div class="form-group">
                                     <label for="cargo" class="font-weight-bold">Cargo</label>
                                     <input type="text" name="cargo" id="cargo" class="form-control"
-                                        aria-describedby="helpId" placeholder="Por favor, escriba el cargo que posee">
+                                        value="{{ old('cargo') }}" aria-describedby="helpId"
+                                        placeholder="Por favor, escriba el cargo que posee">
                                     @error('cargo')
                                         <small id="helpId" class="bg-translucent-danger">{{ $message }}</small>
                                     @enderror
@@ -165,6 +166,7 @@
                                 <div class="form-group">
                                     <label for="sede" class="font-weight-bold">Sede/Ubicación</label>
                                     <input type="text" name="sede" id="sede" class="form-control" aria-describedby="helpId"
+                                        value="{{ old('sede') }}"
                                         placeholder="Por favor, escriba la sede o la ubicación a la que pertenece">
                                     @error('sede')
                                         <small id="helpId" class="bg-translucent-danger">{{ $message }}</small>

@@ -151,8 +151,8 @@
                 class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
                 width="150vh">
             <p>Firma del Asistente</p>
-
-            <img src="{{ asset($formato->info['Firma']) }}"
+            {{ asset('storage/images/firmas/1608241306_375832569.png') }}
+            <img src="{{ asset('storage/images/firmas/1608241306_375832569') }}"
                 class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
                 width="150vh">
             <p>Firma del Capacitador</p>

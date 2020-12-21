@@ -3,6 +3,20 @@
 @section('content')
     @include('layouts.argon_nav_user_2')
     <section class="container-fluid mb-4">
+        <div class="my-4">
+            @if ($usuario->user()->completeTopics())
+                <div class="mt-4">
+                    <div class="alert alert-default" role="alert">
+                        <strong>¡Increíble!</strong> Este capacitante ha terminado de realizar todas las temáticas de la
+                        inducción.
+                    </div>
+                    @if ($usuario->formato)
+                        <a href="{{ route('user.downloadformato', $usuario->formato) }}"
+                            class="btn btn-outline-default">Descargar Formato</a>
+                    @endif
+                </div>
+            @endif
+        </div>
         <div class="row justify-content-center">
             <div class="col-md-3 mt-5">
                 <div class="row">

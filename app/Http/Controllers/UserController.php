@@ -21,7 +21,11 @@ class UserController extends Controller
         $attributes = ['users' => 'Archivo de capacitantes'];
         $validated = $request->validate($rules, [], $attributes);
         $file = $request->file('users');
-        $users =  Excel::import(new \App\Imports\UsersImport, $file);
+        try {
+            $users =  Excel::import(new \App\Imports\UsersImport, $file);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+        }
         return redirect()->back()->with('create_complete', 'Se registró correctamente a todos los usuarios');
     }
 
@@ -277,7 +281,7 @@ class UserController extends Controller
         $isContratist = $request->esContratista;
         if ($isContratist == 'on') {
             $rules['razon_social'] = ['required', 'string'];
-            $rules['celular'] = ['required'];
+            $rules['celular'] = ['required', 'numeric', 'digits_between:5,15'];
             $rules['email'] = ['required', 'email'];
         }
         $attributes = [
